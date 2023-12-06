@@ -12,6 +12,6 @@ public class CommentServiceWebSocket {
     }
 
     public void sendComment(String comment) {
-        messagingTemplate.convertAndSend("/topic/comments", comment);
+        messagingTemplate.convertAndSend("/api/authors/topic/comments", comment);
     }
 }

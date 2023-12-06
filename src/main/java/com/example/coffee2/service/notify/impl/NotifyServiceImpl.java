@@ -22,9 +22,18 @@ public class NotifyServiceImpl implements NotifyService {
     private NotifyCustomer notifyCustomer;
 
     @Override
-    public List<NotifyResponse> getListNotify(NotifyRequest request) {
-        return notifyCustomer.getListNotify(request);
+    public List<NotifyResponse> createSqlGetListfromUser() {
+        return notifyCustomer.createSqlGetListfromUser();
+    }
 
+    @Override
+    public List<NotifyResponse> createSqlGetListIsCommentPost() {
+        return notifyCustomer.createSqlGetListIsCommentPost();
+    }
+
+    @Override
+    public List<NotifyResponse> createSqlGetListIsReplyComment() {
+        return notifyCustomer.createSqlGetListIsReplyComment();
     }
 
     @Override

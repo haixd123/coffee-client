@@ -60,7 +60,7 @@ public class AuthorServiceImpl implements AuthorCustomer {
             UserEntity user = users.get(0);
             if (passwordEncoder.matches(userDto.getPassWord(), user.getPassWord())) {
                 // Authentication successful
-                String token = jwtService.generateToken(user.getUserName());
+                String token = jwtService.generateAccessToken(user.getUserName());
 
                 String accessToken = jwtService.generateAccessToken(user.getUserName());
                 log.info("accessToken: " + accessToken);

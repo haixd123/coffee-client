@@ -5,8 +5,9 @@ import lombok.Data;
 @Data
 public class NotifyResponse {
     private Long id;
-    private String userId;
-    private String postId;
-    private String commentId;
+    private String fromUser;
+    private String isCommentPost;
+    private String isReplyComment;
+    private String postImage;
     private String createAt;
 }

@@ -9,6 +9,4 @@ public class NotifyRequest {
     private String postId;
     private String commentId;
     private String createAt;
-    private int isComment;
-    private int isRelyComment;
 }

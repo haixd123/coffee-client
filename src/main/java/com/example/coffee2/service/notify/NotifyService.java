@@ -9,7 +9,12 @@ import java.util.List;
 
 public interface NotifyService {
 
-    List<NotifyResponse> getListNotify(NotifyRequest request);
+
+    List<NotifyResponse> createSqlGetListfromUser();
+
+    List<NotifyResponse> createSqlGetListIsCommentPost();
+
+    List<NotifyResponse> createSqlGetListIsReplyComment();
 
     boolean create(NotifyRequest request);
 

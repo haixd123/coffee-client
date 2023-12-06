@@ -19,8 +19,10 @@ public class WebSocketController {
         this.commentServiceWebSocket = commentServiceWebSocket;
     }
 
-    @MessageMapping("/send-comment")
-    @SendTo("/topic/comments")
+//    @MessageMapping("/send-comment")
+    @MessageMapping("/api/authors/send-comment")
+//    @SendTo("/topic/comments")
+    @SendTo("/api/authors/topic/comments")
     public String sendComment(String comment) {
         commentServiceWebSocket.sendComment(comment);
         return comment;

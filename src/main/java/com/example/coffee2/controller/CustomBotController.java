@@ -22,7 +22,7 @@ import java.net.URL;
 @RestController
 @Log4j2
 //@CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(path = "bot")
+@RequestMapping(path = "api/authors/bot")
 public class CustomBotController {
 
 

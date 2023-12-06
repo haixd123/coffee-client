@@ -13,6 +13,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.example.coffee2.utils.Constants;
 
@@ -21,7 +22,7 @@ import java.util.List;
 @RestController
 @Log4j2
 //@CrossOrigin(origins = "*")
-@RequestMapping(path = "api/posts")
+@RequestMapping(path = "api")
 public class PostsController {
     @Autowired
     private PostsRepository repository;
@@ -29,6 +30,7 @@ public class PostsController {
     @Autowired
     private PostsService postsService;
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("")
     ResponseEntity<ResponseObject> findAllPosts() {
         List<PostsEntity> foundProduct = repository.findAllPosts();
@@ -38,7 +40,7 @@ public class PostsController {
         );
     }
 
-    @PostMapping("/searchTotalPost")
+    @PostMapping("/authors/posts/searchTotalPost")
     public ApiBaseResponse getTotalPost(@RequestBody PostsRequest request) {
         Long count = postsService.getTotalPosts(request);
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
@@ -46,7 +48,7 @@ public class PostsController {
         return apiBaseResponse;
     }
 
-    @PostMapping("/search")
+    @PostMapping("/authors/posts/search")
 //    public ResponseEntity<?> getListPosts(@RequestBody PostsRequest request) {
     public ApiBaseResponse getListPosts(@RequestBody PostsRequest request) {
         List<PostsResponse> listResult = postsService.getListPosts(request);
@@ -61,7 +63,7 @@ public class PostsController {
         return apiBaseResponse;
     }
 
-    @GetMapping("/search-list-category")
+    @GetMapping("/authors/posts/search-list-category")
     ResponseEntity<ResponseObject> searchListCategory() {
         List<String> listCategory = repository.getListCategory();
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "get AccountNumber successfully", listCategory));
@@ -77,14 +79,15 @@ public class PostsController {
 //    }
 
 
-    @PostMapping("/search/{title}")
-    ResponseEntity<ResponseObject> findByIdPost(@PathVariable String title) {
-        List<String> foundAccountNumber = repository.findByTitle(title);
-        log.info("foundAccountNumber: " + foundAccountNumber);
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "get AccountNumber successfully", foundAccountNumber));
-    }
+//    @PostMapping("/search/{title}")
+//    ResponseEntity<ResponseObject> findByIdPost(@PathVariable String title) {
+//        List<String> foundAccountNumber = repository.findByTitle(title);
+//        log.info("foundAccountNumber: " + foundAccountNumber);
+//        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "get AccountNumber successfully", foundAccountNumber));
+//    }
 
-    @PostMapping("/create")
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/posts/create")
     public ApiBaseResponse create(@RequestBody PostsRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         List<String> list = repository.findByTitle(request.getTitle());
@@ -111,7 +114,8 @@ public class PostsController {
     }
 
 
-    @PostMapping("/update")
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/posts/update")
     public ApiBaseResponse updatePosts(@RequestBody PostsRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
 //        List<String> list = repository.findByTitle(request.getTitle());
@@ -138,7 +142,8 @@ public class PostsController {
         return apiBaseResponse;
     }
 
-    @PostMapping("/delete")
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/posts/delete")
     public ApiBaseResponse delete(@RequestBody PostsRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         boolean rs = postsService.delete(request);

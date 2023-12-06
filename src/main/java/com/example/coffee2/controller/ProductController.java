@@ -12,6 +12,7 @@ import com.example.coffee2.service.product.ProductService;
 import com.example.coffee2.utils.Constants;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ import java.util.List;
 
 @RestController
 @Log4j2
-@RequestMapping(path = "api/product")
+@RequestMapping(path = "api")
 public class ProductController {
     @Autowired
     private ProductRepository repository;
@@ -29,7 +30,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @PostMapping("/search")
+    @PostMapping("/authors/product/search")
     public ApiBaseResponse getListCoffeeBean(@RequestBody ProductRequest request) {
         List<ProductResponse> listResult = productService.getListProduct(request);
         Long count = productService.getCountListProduct(request);
@@ -39,7 +40,8 @@ public class ProductController {
         return apiBaseResponse;
     }
 
-    @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/product/create")
 //    @PreAuthorize("hasRole()")
     public ApiBaseResponse create(@RequestBody ProductRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
@@ -58,7 +60,8 @@ public class ProductController {
         return apiBaseResponse;
     }
 
-    @PostMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/product/update")
     public ApiBaseResponse update(@RequestBody ProductRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         boolean rs = productService.update(request);
@@ -76,7 +79,8 @@ public class ProductController {
         return apiBaseResponse;
     }
 
-    @PostMapping("/delete")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/product/delete")
     public ApiBaseResponse delete(@RequestBody ProductRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         boolean rs = productService.delete(request);

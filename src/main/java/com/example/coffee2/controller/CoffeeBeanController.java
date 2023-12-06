@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @Log4j2
 //@CrossOrigin(origins = "*")
-@RequestMapping(path = "api/coffee")
+@RequestMapping(path = "api")
 public class CoffeeBeanController {
     @Autowired
     private CoffeeBeanRespository repository;
@@ -30,7 +30,7 @@ public class CoffeeBeanController {
     @Autowired
     private CoffeeBeanService coffeeBeanService;
 
-    @GetMapping("")
+    @GetMapping("/authors")
     ResponseEntity<ResponseObject> findAllCoffeeBean() {
         List<CoffeeBeanEntity> foundProduct = repository.findAllCoffeeBean();
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -38,7 +38,7 @@ public class CoffeeBeanController {
         );
     }
 
-    @PostMapping("/search")
+    @PostMapping("/authors/coffee/search")
     public ApiBaseResponse getListCoffeeBean(@RequestBody CoffeeBeanRequest request) {
         List<CoffeeBeanResponse> listResult = coffeeBeanService.getListCoffeeBean(request);
         Long count = coffeeBeanService.getCountListCoffeeBean(request);
@@ -48,8 +48,8 @@ public class CoffeeBeanController {
         return apiBaseResponse;
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/coffee/create")
 //    @PreAuthorize("hasRole()")
     public ApiBaseResponse create(@RequestBody CoffeeBeanRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
@@ -68,7 +68,8 @@ public class CoffeeBeanController {
         return apiBaseResponse;
     }
 
-    @PostMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/coffee/update")
     public ApiBaseResponse update(@RequestBody CoffeeBeanRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         boolean rs = coffeeBeanService.update(request);
@@ -86,7 +87,8 @@ public class CoffeeBeanController {
         return apiBaseResponse;
     }
 
-    @PostMapping("/delete")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/coffee/delete")
     public ApiBaseResponse delete(@RequestBody CoffeeBeanRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         boolean rs = coffeeBeanService.delete(request);

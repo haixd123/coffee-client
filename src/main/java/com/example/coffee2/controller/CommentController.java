@@ -11,6 +11,7 @@ import com.example.coffee2.service.comment.CommentService;
 import com.example.coffee2.utils.Constants;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +19,13 @@ import java.util.List;
 @RestController
 @Log4j2
 //@CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(path = "api/comment")
+@RequestMapping(path = "api")
 public class CommentController {
     @Autowired
     private CommentService commentService;
 
 
-    @PostMapping("/searchTotalCommentPost")
+    @PostMapping("/authors/comment/searchTotalCommentPost")
     public ApiBaseResponse getTotalLikePost(@RequestBody CommentRequest request) {
         Long count = commentService.getTotalCommentPosts(request);
         log.info("count: " + count);
@@ -33,7 +34,7 @@ public class CommentController {
         return apiBaseResponse;
     }
 
-    @PostMapping("/search")
+    @PostMapping("/authors/comment/search")
     public ApiBaseResponse getListLikePosts(@RequestBody CommentRequest request) {
         List<CommentResponse> listResult = commentService.getListComment(request);
         Long count = commentService.getCountListComment(request);
@@ -43,7 +44,8 @@ public class CommentController {
         return apiBaseResponse;
     }
 
-    @PostMapping("/create")
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/comment/create")
     public ApiBaseResponse create(@RequestBody CommentRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
 
@@ -64,7 +66,8 @@ public class CommentController {
         return apiBaseResponse;
     }
 
-    @PostMapping("/update")
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/comment/update")
     public ApiBaseResponse update(@RequestBody CommentRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         boolean rs = commentService.update(request);
@@ -82,7 +85,8 @@ public class CommentController {
         return apiBaseResponse;
     }
 
-    @PostMapping("/delete")
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/comment/delete")
     public ApiBaseResponse delete(@RequestBody CommentRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         boolean rs = commentService.delete(request);

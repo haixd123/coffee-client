@@ -13,6 +13,7 @@ import com.example.coffee2.service.likePosts.LikePostsService;
 import com.example.coffee2.utils.Constants;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
 @RestController
 @Log4j2
 //@CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(path = "api/LikePosts")
+@RequestMapping(path = "api")
 public class LikePostsController {
     @Autowired
     private LikePostsRepository repository;
@@ -28,7 +29,7 @@ public class LikePostsController {
     @Autowired
     private LikePostsService likePostsService;
 
-    @PostMapping("/searchTotalLikePost")
+    @PostMapping("/authors/LikePosts/searchTotalLikePost")
     public ApiBaseResponse getTotalLikePost(@RequestBody LikePostsRequest request) {
         Long count = likePostsService.getTotalLikePosts(request);
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
@@ -36,7 +37,7 @@ public class LikePostsController {
         return apiBaseResponse;
     }
 
-    @PostMapping("/search")
+    @PostMapping("/authors/LikePosts/search")
     public ApiBaseResponse getListLikePosts(@RequestBody LikePostsRequest request) {
         List<LikePostsResponse> listResult = likePostsService.getListLikePosts(request);
         Long count = likePostsService.getCountListLikePosts(request);
@@ -46,7 +47,8 @@ public class LikePostsController {
         return apiBaseResponse;
     }
 
-    @PostMapping("/create")
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/LikePosts/create")
     public ApiBaseResponse isLike(@RequestBody LikePostsRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         boolean rs = likePostsService.update(request);

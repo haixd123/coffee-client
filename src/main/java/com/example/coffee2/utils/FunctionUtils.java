@@ -7,6 +7,8 @@ import java.lang.reflect.Method;
 import java.sql.Clob;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 public class FunctionUtils {
@@ -40,5 +42,16 @@ public class FunctionUtils {
             listResult.add(subClazz);
         }
         return listResult;
+    }
+
+    public static String convertLowerCamelCase(String text) {
+        Pattern p = Pattern.compile("_([a-zA-Z])");
+        Matcher m = p.matcher(text.toLowerCase());
+        StringBuffer sb = new StringBuffer();
+        while (m.find()) {
+            m.appendReplacement(sb, m.group(1).toUpperCase());
+        }
+        m.appendTail(sb);
+        return sb.toString();
     }
 }

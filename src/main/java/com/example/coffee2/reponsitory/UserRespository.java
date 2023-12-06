@@ -35,6 +35,7 @@ public interface UserRespository extends JpaRepository<UserEntity, Long> {
     List<String> findAllUserName();
 
     Optional<UserEntity> findById(Long id);
+    Optional<UserEntity> findByUserNameAndStatus(String username, Long status);
 
 //
 //    @Query(
