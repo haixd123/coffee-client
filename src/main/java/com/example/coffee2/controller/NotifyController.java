@@ -63,14 +63,14 @@ public class NotifyController {
         return apiBaseResponse;
     }
 
-//    @PostMapping("/delete")
-//    public ApiBaseResponse delete(@RequestBody NotifyRequest request) {
-//        ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
-//        boolean rs = notifyService.delete(request);
-//        apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_SUCCESS);
-//        apiBaseResponse.setErrorDescription("Xoá thành công");
-//        apiBaseResponse.setData(request);
-//        apiBaseResponse.setOptional(1L);
-//        return apiBaseResponse;
-//    }
+    @PostMapping("/delete")
+    public ApiBaseResponse delete(@RequestBody NotifyRequest request) {
+        ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
+        boolean rs = notifyService.delete(request);
+        apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_SUCCESS);
+        apiBaseResponse.setErrorDescription("Xoá thành công");
+        apiBaseResponse.setData(request);
+        apiBaseResponse.setOptional(1L);
+        return apiBaseResponse;
+    }
 }

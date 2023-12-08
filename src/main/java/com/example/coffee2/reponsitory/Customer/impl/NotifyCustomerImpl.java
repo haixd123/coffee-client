@@ -91,7 +91,7 @@ public class NotifyCustomerImpl implements NotifyCustomer {
     private void createSqlGetListfromUser(StringBuilder sql, Map<String, Object> params, boolean isCount) {
         if (!isCount) {
             //Người gửi
-            sql.append("select user1.name, notify.id from user1,notify \n" +
+            sql.append("select user1.name, user1.user_name, notify.id from user1,notify \n" +
                     "where user1.id = notify.user_id \n");
         }
     }
@@ -100,7 +100,7 @@ public class NotifyCustomerImpl implements NotifyCustomer {
         if (!isCount) {
 
             //Người nhận khi user comment
-            sql.append("select user1.name, notify.comment_id, notify.id, posts.image_path from notify,user1,posts \n" +
+            sql.append("select user1.name, user1.user_name, notify.comment_id, notify.id, posts.category postsCategory, posts.id postsId, posts.image_path, notify.create_at from notify,user1,posts \n" +
                     "where notify.user_id = user1.id and posts.id = notify.post_id \n");
 
 
@@ -111,7 +111,7 @@ public class NotifyCustomerImpl implements NotifyCustomer {
         if (!isCount) {
 
             //Người nhận khi user reply comment
-            sql.append("select user1.name, notify.comment_id, notify.id, posts.image_path from notify,user1,comment, posts \n" +
+            sql.append("select user1.name, user1.user_name, notify.comment_id, notify.id,posts.category postsCategory , posts.id postsId, posts.image_path, notify.create_at from notify,user1,comment, posts \n" +
                     "where notify.user_id = user1.id and comment.comment_id = notify.comment_id and notify.post_id = posts.id");
         }
     }

@@ -44,8 +44,8 @@ public class CommentController {
         return apiBaseResponse;
     }
 
-    @PreAuthorize("hasRole('USER')")
-    @PostMapping("/comment/create")
+//    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/authors/comment/create")
     public ApiBaseResponse create(@RequestBody CommentRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
 

@@ -34,7 +34,7 @@ import java.util.zip.Inflater;
 @RestController
 @Log4j2
 //@CrossOrigin(origins = "*")
-@RequestMapping(path = "api/user")
+@RequestMapping(path = "api/authors/user")
 public class UserController {
     @Autowired
     private UserRespository repository;
