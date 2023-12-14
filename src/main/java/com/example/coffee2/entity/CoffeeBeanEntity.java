@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "Coffee_bean")
+@Table(name = "coffee_bean")
 public class CoffeeBeanEntity {
     @Id
     @SequenceGenerator(name = "coffee_bean_seq", allocationSize = 1)

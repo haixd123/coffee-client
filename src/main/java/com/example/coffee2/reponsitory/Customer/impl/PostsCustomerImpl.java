@@ -89,7 +89,7 @@ public class PostsCustomerImpl implements PostsRespositoryCustomer {
     }
 
     private void createSqlGetListPosts(PostsRequest request, StringBuilder sql, Map<String, Object> params, boolean isCount) {
-        log.info("request: "+ request);
+        log.info("request: " + request);
         if (isCount) {
             sql.append("select count(*) \n");
 
@@ -118,27 +118,29 @@ public class PostsCustomerImpl implements PostsRespositoryCustomer {
         sql.append("posts f \n");
         sql.append("where f.status != -1 \n");
         if (request.getCategory() != null) {
-            sql.append("and category = :category");
+            sql.append("and f.category = :category");
+//            params.put("category", "%" + request.getCategory() + "%");
             params.put("category", request.getCategory());
         }
         if (request.getTitle() != null) {
             sql.append("and f.title = :title \n");
-            params.put("title", request.getTitle());
+            params.put("title",request.getTitle());
+//            params.put("title", "%" +  request.getTitle() + "%");
         }
-        if (request.getUserId() != null) {
-            sql.append("and f.user_id = :userId \n");
-            params.put("userId", request.getUserId());
-        }
-        if(request.getSortLikeDown() == 1) {
+//        if (request.getUserId() != null) {
+//            sql.append("and f.user_id = :userId \n");
+//            params.put("userId", request.getUserId());
+//        }
+        if (request.getSortLikeDown() == 1) {
             sql.append("ORDER BY f.total_like DESC");
         }
-        if(request.getSortLikeUp() == 1) {
+        if (request.getSortLikeUp() == 1) {
             sql.append("ORDER BY f.total_like ASC");
         }
-        if(request.getSortCommentDown() == 1) {
+        if (request.getSortCommentDown() == 1) {
             sql.append("ORDER BY f.total_comment DESC");
         }
-        if(request.getSortCommentUp() == 1) {
+        if (request.getSortCommentUp() == 1) {
             sql.append("ORDER BY f.total_comment ASC");
         }
     }

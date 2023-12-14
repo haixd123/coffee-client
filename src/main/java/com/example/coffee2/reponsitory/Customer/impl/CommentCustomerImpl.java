@@ -99,6 +99,7 @@ public class CommentCustomerImpl implements CommentCustomer {
             sql.append("from \n");
             sql.append("comment f \n");
             sql.append("where f.status = 1 \n");
+            sql.append(" order by create_at desc \n");
         }
 
     }

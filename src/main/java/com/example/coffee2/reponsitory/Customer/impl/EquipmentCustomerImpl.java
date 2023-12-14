@@ -90,6 +90,7 @@ public class EquipmentCustomerImpl implements EquipmentCustomer {
         if (request.getName() != null) {
             sql.append("and f.name = :name \n");
             params.put("name", request.getName());
+//            params.put("name", "%" + request.getName() + "%");
         }
     }
 }

@@ -91,6 +91,7 @@ public class CoffeeBeanCustomerImpl implements CoffeeBeanCustomer {
         if (request.getName() != null) {
             sql.append("and f.name = :name \n");
             params.put("name", request.getName());
+//            params.put("name", "%" + request.getName() + "%");
         }
     }
 }
