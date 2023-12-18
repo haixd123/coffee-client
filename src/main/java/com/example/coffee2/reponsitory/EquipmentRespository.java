@@ -15,9 +15,14 @@ public interface EquipmentRespository extends JpaRepository<EquipmentEntity, Lon
     )
     List<EquipmentEntity> findAllEquipment();
 
-    List<String> findAllByName(@RequestParam String name);
 
-    List<String> findByName(@RequestBody String name);
+    @Query(
+            value = "SELECT e.* FROM equipment e where e.name = :name",
+            nativeQuery = true
+    )
+    EquipmentEntity findAllByName(@RequestParam String name);
+
+//    List<String> findByName(@RequestBody String name);
 
 
 }

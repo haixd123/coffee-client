@@ -16,11 +16,12 @@ public interface CoffeeBeanRespository extends JpaRepository<CoffeeBeanEntity, L
 
 
     @Query(
-            value = "SELECT e.name FROM coffee_bean e where e.name = :name",
+            value = "SELECT e.* FROM coffee_bean e where e.name = :name",
             nativeQuery = true
     )
-    List<String> findAllCoffeeBeanName(@RequestParam String name);
+    CoffeeBeanEntity findAllCoffeeBeanName(@RequestParam("name") String name);
 
+//    List<String> findAllCoffeeBeanName(@RequestParam String name);
 
 //    @Query(
 //            value = "SELECT slug FROM coffee_bean",

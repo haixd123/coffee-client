@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().ignoringAntMatchers("/**");
-        http.authorizeRequests().antMatchers("/api/authors/**", "/ws/websocket","/app/**", "/api/notify/**").permitAll()
+        http.authorizeRequests().antMatchers("/api/authors/**", "/ws/websocket","/app/**", "/api/notify/**", "http://localhost:4200/", "/").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable();
         //???

@@ -11,10 +11,7 @@ import org.apache.commons.lang3.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import java.util.RandomAccess;
+import java.util.*;
 
 @Service
 @Log4j2
@@ -38,15 +35,15 @@ public class CoffeeBeanServiceImpl implements CoffeeBeanService {
     @Override
     public boolean create(CoffeeBeanRequest request) {
         try {
-            List<String> checkNameExist = respository.findAllCoffeeBeanName(request.getName());
-            if (checkNameExist.contains(request.getName())) {
+            CoffeeBeanEntity checkNameExist = respository.findAllCoffeeBeanName(request.getName());
+            if (checkNameExist != null) {
                 log.error("Loại cafe đã tồn tại!");
                 return false;
             }
             CoffeeBeanEntity obj = new CoffeeBeanEntity();
             obj.setName(request.getName());
             obj.setTitle(request.getTitle());
-           obj.setStatus(1L);
+            obj.setStatus(1L);
             obj.setContentCoffee(request.getContentCoffee());
             obj.setImage(request.getImage());
             respository.save(obj);
@@ -59,15 +56,15 @@ public class CoffeeBeanServiceImpl implements CoffeeBeanService {
 
     public boolean update(CoffeeBeanRequest request) {
         try {
-//            List<String> checkNameExist = respository.getAllByName((request.getName()));
-//            if (checkNameExist.contains(request.getName())) {
-//                log.error("Loại cafe đã tồn tại!");
-//                return false;
-//            }
+            CoffeeBeanEntity checkNameExist = respository.findAllCoffeeBeanName((request.getName()));
+            if (checkNameExist != null && !Objects.equals(request.getId(), checkNameExist.getId())) {
+                log.error("Loại cafe đã tồn tại!");
+                return false;
+            }
             CoffeeBeanEntity obj = respository.findById(request.getId()).orElse(null);
             obj.setName(request.getName());
             obj.setTitle(request.getTitle());
-           obj.setStatus(request.getStatus());
+            obj.setStatus(request.getStatus());
             obj.setContentCoffee(request.getContentCoffee());
 //            obj.setSlug(request.getSlug());
             obj.setImage(request.getImage());

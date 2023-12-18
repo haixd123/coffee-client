@@ -54,18 +54,18 @@ public class EquipmentController {
     @PostMapping("/equipment/create")
     public ApiBaseResponse create(@RequestBody EquipmentRequest request){
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
-        List<String> list = repository.findByName(request.getName());
-        if(list.size() > 0) {
-            apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
-            apiBaseResponse.setErrorDescription("Model đã tồn tại");
-            apiBaseResponse.setData(request);
-            apiBaseResponse.setOptional(1L);
-            return apiBaseResponse;
-        }
+//        List<String> list = repository.findByName(request.getName());
+//        if(list.size() > 0) {
+//            apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
+//            apiBaseResponse.setErrorDescription("Model đã tồn tại");
+//            apiBaseResponse.setData(request);
+//            apiBaseResponse.setOptional(1L);
+//            return apiBaseResponse;
+//        }
         boolean rs = equipmentService.create(request);
         if(!rs) {
             apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
-            apiBaseResponse.setErrorDescription("Thêm mới model không thành công");
+            apiBaseResponse.setErrorDescription("Model đã tồn tại");
             apiBaseResponse.setData(request);
             apiBaseResponse.setOptional(1L);
             return apiBaseResponse;

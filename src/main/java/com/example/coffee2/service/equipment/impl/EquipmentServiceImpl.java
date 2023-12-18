@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Log4j2
@@ -36,9 +37,9 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public boolean create(EquipmentRequest request) {
         try {
-            List<String> chechNameExist = respository.findAllByName(request.getName());
+            EquipmentEntity chechNameExist = respository.findAllByName(request.getName());
 
-            if (chechNameExist.contains(request.getName())) {
+            if (chechNameExist != null) {
                 log.error("model đã tồn tại");
                 return false;
             }
@@ -60,11 +61,11 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public boolean update(EquipmentRequest request) {
         try {
-            List<String> chechNameExist = respository.findAllByName(request.getName());
-//            if (chechNameExist.contains(request.getModel())) {
-//                log.error("model đã tồn tại");
-//                return false;
-//            }
+            EquipmentEntity chechNameExist = respository.findAllByName(request.getName());
+            if (chechNameExist != null && !Objects.equals(request.getId(), chechNameExist.getId())) {
+                log.error("model đã tồn tại");
+                return false;
+            }
             EquipmentEntity obj = respository.findById(request.getId()).orElse(null);
             obj.setName(request.getName());
             obj.setTitle(request.getTitle());

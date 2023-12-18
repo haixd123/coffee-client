@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     @Query(
-            value = "select e.name from product e where e.name = :name",
+            value = "select e.* from product e where e.name = :name",
             nativeQuery = true
     )
-    List<String> findByName(@RequestParam String name);
+    ProductEntity findByName(String name);
 
     @Query(
             value = "select e.sku from product e where e.sku = :sku",

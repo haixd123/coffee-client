@@ -1,5 +1,6 @@
 package com.example.coffee2.service.posts.impl;
 
+import com.example.coffee2.entity.CoffeeBeanEntity;
 import com.example.coffee2.entity.PostsEntity;
 import com.example.coffee2.reponsitory.PostsRepository;
 import com.example.coffee2.request.LikePostsRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Log4j2
@@ -79,8 +81,9 @@ public class PostsServiceImpl implements PostsService {
             PostsEntity obj = repository.findById(request.getId()).orElse(null);
 //            PostsEntity obj = repository.getPostsId(request.getId());
 //            PostsEntity obj = repository.getPostsEntityByID(request.getId());
-            if (obj == null) {
-                log.error("update | không tìm thấy bản ghi");
+            PostsEntity checkNameExist = repository.getPostsName((request.getTitle()));
+            if (checkNameExist != null && !Objects.equals(request.getId(), checkNameExist.getId())) {
+                log.error("Loại cafe đã tồn tại!");
                 return false;
             }
             obj.setLike1(request.getLike1());

@@ -9,8 +9,6 @@ public class UserResponse {
     private String passWord;
     private String email;
     private String name;
-    private String address;
-    private Long age;
     private String role;
     private Long phoneNumber;
     private String dateOfBirth;

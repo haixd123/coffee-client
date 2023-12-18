@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Log4j2
@@ -36,10 +37,10 @@ public class ProductImpl implements ProductService {
     public boolean create(ProductRequest request) {
         Date now = new Date();
         try {
-            List<String> checkNameExist = repository.findByName(request.getName());
+            ProductEntity checkNameExist = repository.findByName(request.getName());
             List<String> checkSkuExist = repository.findBySku(request.getName());
 
-            if (checkNameExist.contains(request.getName()) || checkSkuExist.contains(request.getSku())) {
+            if (checkNameExist != null || checkSkuExist.contains(request.getSku())) {
                 log.error("create | Tên sản phẩm hoặc phân loại sản phẩm đã tồn tại");
                 return false;
             }
@@ -66,8 +67,10 @@ public class ProductImpl implements ProductService {
     public boolean update(ProductRequest request) {
         Date now = new Date();
         try {
+            ProductEntity checkNameExist = repository.findByName(request.getName());
+
             ProductEntity obj = repository.findById(request.getId()).orElse(null);
-            if (obj == null) {
+            if (checkNameExist != null && !Objects.equals(checkNameExist.getId(), request.getId())) {
                 log.error("update | không tìm thấy bản ghi");
                 return false;
             }

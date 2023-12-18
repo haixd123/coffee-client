@@ -27,10 +27,10 @@ public interface PostsRepository extends JpaRepository<PostsEntity, Long> {
     List<String> getListCategory();
 
     @Query(
-            value = "select e.id from posts e where e.id = :id",
+            value = "select e.* from posts e where e.title = :title",
             nativeQuery = true
     )
-    PostsEntity getPostsId(@RequestParam Long id);
+    PostsEntity getPostsName( String title);
 
 
 //    List<String> findAllByName(@RequestParam String name);
