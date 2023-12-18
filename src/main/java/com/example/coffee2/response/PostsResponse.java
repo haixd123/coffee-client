@@ -8,7 +8,6 @@ import java.util.Date;
 public class PostsResponse {
     private Long id;
     private Long like1;
-    private Long share;
     private Long comment;
     private String title;
     private String contentPost;

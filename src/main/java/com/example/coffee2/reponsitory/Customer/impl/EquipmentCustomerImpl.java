@@ -78,10 +78,7 @@ public class EquipmentCustomerImpl implements EquipmentCustomer {
             sql.append("f.name, \n");
             sql.append("f.title, \n");
             sql.append("f.content_equipment, \n");
-            sql.append("f.power, \n");
-            sql.append("f.price, \n");
             sql.append("f.image, \n");
-            sql.append("f.description, \n");
             sql.append("f.status \n");
         }
         sql.append("from \n");

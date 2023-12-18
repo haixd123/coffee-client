@@ -8,10 +8,7 @@ public class EquipmentResponse {
     private String name;
     private String title;
     private String contentEquipment;
-    private String power;
-    private Double price;
     private String image;
-    private String description;
     private Long status;
 
 

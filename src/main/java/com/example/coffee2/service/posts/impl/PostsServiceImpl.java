@@ -54,7 +54,6 @@ public class PostsServiceImpl implements PostsService {
             }
             PostsEntity obj = new PostsEntity();
             obj.setLike1(request.getLike1());
-            obj.setShare(request.getShare());
             obj.setComment(request.getComment());
             obj.setContentPost(request.getContentPost());
             obj.setContentDetail(request.getContentDetail());
@@ -85,7 +84,6 @@ public class PostsServiceImpl implements PostsService {
                 return false;
             }
             obj.setLike1(request.getLike1());
-            obj.setShare(request.getShare());
             obj.setComment(request.getComment());
             obj.setContentPost(request.getContentPost());
             obj.setTitle(request.getTitle());

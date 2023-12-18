@@ -77,8 +77,6 @@ public class UserCustomerImpl implements UserCustomer {
             sql.append("f.password, \n");
             sql.append("f.email, \n");
             sql.append("f.name, \n");
-            sql.append("f.address, \n");
-            sql.append("f.age, \n");
             sql.append("f.role, \n");
             sql.append("f.phone_number, \n");
             sql.append("f.date_of_birth, \n");

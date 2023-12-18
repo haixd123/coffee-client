@@ -19,9 +19,6 @@ public class PostsEntity {
     @Column(name = "total_like")
     private Long like1;
 
-    @Column(name = "total_share")
-    private Long share;
-
     @Column(name = "total_comment")
     private Long comment;
 

@@ -98,7 +98,6 @@ public class PostsCustomerImpl implements PostsRespositoryCustomer {
             sql.append("select \n");
             sql.append("f.id, \n");
             sql.append("f.total_like, \n");
-            sql.append("f.total_share, \n");
             sql.append("f.total_comment, \n");
 //            sql.append(" '' a, \n");
 //            sql.append(" '' b, \n");

@@ -72,7 +72,7 @@ public class CommentServiceImpl implements CommentService {
             obj.setUserId(request.getUserId());
             obj.setPostId(request.getPostId());
             obj.setCommentText(request.getCommentText());
-            obj.setCreateAt(DateProc.dateToStringYYYYMMDD(request.getCreateAt()));
+//            obj.setCreateAt(DateProc.dateToStringYYYYMMDD(request.getCreateAt()));
 //            requestMail.setRequestDate(DateProc.getDatetimeFormatYYYYMMDDHH24MISS());
 //            groupEntity.setFileName(DateProc.dateToStringYYYYMMDD(new Date()) + getFileName(request.getBankId()));
 //            rsModel.setApprovedDateStr(DateProc.dateToStringDDMMYYYYMMSS(rsModel.getApprovedDate()));

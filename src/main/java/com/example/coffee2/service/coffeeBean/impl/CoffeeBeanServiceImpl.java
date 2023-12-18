@@ -46,11 +46,7 @@ public class CoffeeBeanServiceImpl implements CoffeeBeanService {
             CoffeeBeanEntity obj = new CoffeeBeanEntity();
             obj.setName(request.getName());
             obj.setTitle(request.getTitle());
-            obj.setPopular(request.getPopular());
-            obj.setDescription(request.getDescription());
-            obj.setOrigin(request.getOrigin());
-            obj.setPlantingInstructions(request.getPlantingInstructions());
-            obj.setStatus(1L);
+           obj.setStatus(1L);
             obj.setContentCoffee(request.getContentCoffee());
             obj.setImage(request.getImage());
             respository.save(obj);
@@ -71,11 +67,7 @@ public class CoffeeBeanServiceImpl implements CoffeeBeanService {
             CoffeeBeanEntity obj = respository.findById(request.getId()).orElse(null);
             obj.setName(request.getName());
             obj.setTitle(request.getTitle());
-            obj.setPopular(request.getPopular());
-            obj.setDescription(request.getDescription());
-            obj.setOrigin(request.getOrigin());
-            obj.setPlantingInstructions(request.getPlantingInstructions());
-            obj.setStatus(request.getStatus());
+           obj.setStatus(request.getStatus());
             obj.setContentCoffee(request.getContentCoffee());
 //            obj.setSlug(request.getSlug());
             obj.setImage(request.getImage());

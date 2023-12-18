@@ -77,10 +77,6 @@ public class CoffeeBeanCustomerImpl implements CoffeeBeanCustomer {
             sql.append("f.id, \n");
             sql.append("f.name, \n");
             sql.append("f.title, \n");
-            sql.append("f.popular, \n");
-            sql.append("f.description, \n");
-            sql.append("f.origin, \n");
-            sql.append("f.planting_instructions, \n");
             sql.append("f.status, \n");
             sql.append("f.content_coffee, \n");
             sql.append("f.image \n");

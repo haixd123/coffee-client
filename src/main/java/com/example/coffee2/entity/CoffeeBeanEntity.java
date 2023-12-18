@@ -19,19 +19,6 @@ public class CoffeeBeanEntity {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "popular")
-    private String popular;
-
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "origin")
-    private String origin;
-
-    @Column(name = "planting_instructions")
-    private String plantingInstructions;
-
-
     @Column(name = "status")
     private Long status;
 

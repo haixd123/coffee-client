@@ -22,17 +22,8 @@ public class EquipmentEntity {
     @Column(name = "content_equipment")
     private String contentEquipment;
 
-    @Column(name = "power")
-    private String power;
-
-    @Column(name = "price")
-    private Double price;
-
     @Column(name = "image")
     private String image;
-
-    @Column(name = "description")
-    private String description;
 
     @Column(name = "status")
     private Long status;

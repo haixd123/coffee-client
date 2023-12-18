@@ -46,10 +46,7 @@ public class EquipmentServiceImpl implements EquipmentService {
             obj.setName(request.getName());
             obj.setTitle(request.getTitle());
             obj.setContentEquipment(request.getContentEquipment());
-            obj.setPower(request.getPower());
-            obj.setPrice(null);
             obj.setImage(request.getImage());
-            obj.setDescription(request.getDescription());
             obj.setStatus(1L);
             respository.save(obj);
             return true;
@@ -72,10 +69,7 @@ public class EquipmentServiceImpl implements EquipmentService {
             obj.setName(request.getName());
             obj.setTitle(request.getTitle());
             obj.setContentEquipment(request.getContentEquipment());
-            obj.setPower(request.getPower());
-            obj.setPrice(null);
             obj.setImage(request.getImage());
-            obj.setDescription(request.getDescription());
             obj.setStatus(request.getStatus());
             respository.save(obj);
             return true;
