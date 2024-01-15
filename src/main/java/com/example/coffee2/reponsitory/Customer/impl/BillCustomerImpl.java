@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +70,11 @@ public class BillCustomerImpl implements BillCustomer {
         return null;
     }
 
+//    @Override
+//    public void exprot(HttpServletResponse response, List<BillResponse> listResponse, BillRequest request) throws IOException {
+//
+//    }
+
     private void createSqlGetListBill(BillRequest request, StringBuilder sql, Map<String, Object> params, boolean isCount) {
         if (isCount) {
             sql.append("select count(*) \n");
@@ -79,7 +86,9 @@ public class BillCustomerImpl implements BillCustomer {
             sql.append("f.email, \n");
             sql.append("f.phone, \n");
             sql.append("f.address, \n");
-            sql.append("f.detail \n");
+            sql.append("f.detail, \n");
+            sql.append("f.create_date, \n");
+            sql.append("f.total \n");
         }
         sql.append("from \n");
         sql.append("bill f \n");
@@ -89,5 +98,6 @@ public class BillCustomerImpl implements BillCustomer {
             params.put("name", request.getName());
 //            params.put("name", "%" + request.getName() + "%");
         }
+//        sql.append("order by create_date desc");
     }
 }

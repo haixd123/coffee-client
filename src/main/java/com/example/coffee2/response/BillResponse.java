@@ -10,4 +10,7 @@ public class BillResponse {
     private String phone;
     private String address;
     private String detail;
+    private String createDate;
+    private String total;
+
 }

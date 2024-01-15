@@ -3,6 +3,7 @@ package com.example.coffee2.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -27,4 +28,10 @@ public class BillEntity {
 
     @Column(name = "detail")
     private String detail;
+
+    @Column(name = "create_date")
+    private Date createDate;
+
+    @Column(name = "total")
+    private String total;
 }

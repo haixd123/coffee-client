@@ -61,6 +61,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+
+
+//        @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .cors().and().csrf().disable() // Tắt CSRF để dễ dàng thử nghiệm với Postman
+//                .authorizeRequests()
+//                .anyRequest().permitAll()
+//                .and()
+//                .httpBasic(); // Sử dụng xác thực cơ bản
+//    }
+
+
+
+
 //    @Bean
 //    public CorsConfigurationSource corsConfigurationSource() {
 //        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -144,15 +159,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    }
 
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .cors().and().csrf().disable() // Tắt CSRF để dễ dàng thử nghiệm với Postman
-//                .authorizeRequests()
-//                .anyRequest().permitAll()
-//                .and()
-//                .httpBasic(); // Sử dụng xác thực cơ bản
-//    }
+
 //
 //    @Bean
 //    public PasswordEncoder passwordEncoder() {

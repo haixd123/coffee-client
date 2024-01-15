@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,7 +35,7 @@ import java.util.zip.Inflater;
 @RestController
 @Log4j2
 //@CrossOrigin(origins = "*")
-@RequestMapping(path = "api/authors/user")
+//@RequestMapping(path = "api/authors/user")
 public class UserController {
     @Autowired
     private UserRespository repository;
@@ -42,7 +43,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("")
+    @GetMapping("api/authors/user")
     ResponseEntity<ResponseObject> findAllCoffeeBean() {
         List<UserEntity> foundProduct = repository.findAllUser();
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -50,7 +51,7 @@ public class UserController {
         );
     }
 
-    @PostMapping("/search")
+    @PostMapping("api/authors/user/search")
     public ApiBaseResponse getListUser(@RequestBody UserRequest request) {
         List<UserResponse> listResult = userService.getListUser(request);
         Long count = userService.getCountListUser(request);
@@ -60,14 +61,14 @@ public class UserController {
         return apiBaseResponse;
     }
 
-    @PostMapping("/search/{id}")
+    @PostMapping("api/authors/user/search/{id}")
     ResponseEntity<ResponseObject> findByIdUser(@PathVariable Long id) {
         Optional<UserEntity> foundAccountNumber = repository.findById(id);
         log.info("foundAccountNumber: " + foundAccountNumber);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "get AccountNumber successfully", foundAccountNumber));
     }
 
-    @PostMapping("/create")
+    @PostMapping("api/authors/user/create")
     public ApiBaseResponse create(@RequestBody UserRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         //List<String>
@@ -94,27 +95,27 @@ public class UserController {
         return apiBaseResponse;
     }
 
-
-    @PostMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("api/user/update")
     public ApiBaseResponse update(@RequestBody UserRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         boolean rs = userService.update(request);
         if (!rs) {
             apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
-            apiBaseResponse.setErrorDescription("Cập nhật bài viết không thành công");
+            apiBaseResponse.setErrorDescription("Sửa thông tin người dùng không thành công");
             apiBaseResponse.setData(request);
             apiBaseResponse.setOptional(1l);
             return apiBaseResponse;
 
         }
         apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_SUCCESS);
-        apiBaseResponse.setErrorDescription("Cập nhật bài viết thành công");
+        apiBaseResponse.setErrorDescription("Sửa thông tin người dùng thành công");
         apiBaseResponse.setData(request);
         apiBaseResponse.setOptional(1l);
         return apiBaseResponse;
     }
 
-    @PostMapping("/updateInfo")
+    @PostMapping("api/authors/user/updateInfo")
     public ApiBaseResponse updateInfo(@RequestBody UserRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         boolean rs = userService.updateInfo(request);

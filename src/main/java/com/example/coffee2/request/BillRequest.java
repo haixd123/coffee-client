@@ -10,6 +10,8 @@ public class BillRequest {
     private String phone;
     private String address;
     private String detail;
+    private String createDate;
+    private String total;
 
     private int pageIndex;
     private int pageSize;

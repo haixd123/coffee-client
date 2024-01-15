@@ -93,7 +93,7 @@ public class PostsServiceImpl implements PostsService {
             obj.setStatus(request.getStatus());
             obj.setImagePath(request.getImagePath());
             obj.setUserId(request.getUserId());
-            obj.setCreatedAt(DateProc.stringToDateDDMMYYYY(request.getCreatedAt()));
+//            obj.setCreatedAt(DateProc.stringToDateDDMMYYYY(request.getCreatedAt()));
             obj.setUpdatedAt(now);
 //            obj.setTotalComment(request.getTotalComment());
             obj.setCategory(request.getCategory());

@@ -48,6 +48,21 @@
             <version>0.11.2</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.9</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.9</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
 
 <!--        -->
         <dependency>
@@ -120,6 +135,16 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 <!--        <dependency>-->
+<!--            <groupId>org.apache.poi</groupId>-->
+<!--            <artifactId>poi-ooxml</artifactId>-->
+<!--            <version>5.2.3</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.poi</groupId>-->
+<!--            <artifactId>poi</artifactId>-->
+<!--            <version>5.2.3</version>-->
+<!--        </dependency>-->
+        <!--        <dependency>-->
 <!--            <groupId>org.springframework</groupId>-->
 <!--            <artifactId>spring-websocket</artifactId>-->
 <!--            <version>4.3.30.RELEASE</version> &lt;!&ndash; Hoặc phiên bản tương ứng &ndash;&gt;-->

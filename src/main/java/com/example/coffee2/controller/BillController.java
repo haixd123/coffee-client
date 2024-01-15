@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -53,4 +54,22 @@ public class BillController {
 //        apiBaseResponse.setOptional(1L);
         return apiBaseResponse;
     }
+
+    @PostMapping("/authors/bill/export")
+    public void export(HttpServletResponse response, @RequestBody BillRequest request) throws Exception {
+        List<BillResponse> listResult = billService.getListBill(request);
+        billService.exprot(response, listResult, request);
+//        log.info("listResult: " + listResult);
+//        Long count = billService.getCountListBill(request);
+//        ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
+//        apiBaseResponse.setData(listResult);
+//        apiBaseResponse.setOptional(count);
+//        return apiBaseResponse;
+    }
+
+//    @PostMapping("/exprotFmisAccountNumber")
+//    public void exprotFmisAccountNumber(HttpServletResponse response, @RequestBody FmisAccountNumberRequest request) throws Exception {
+//        List<FmisAccountNumberResponse> listResponse = responsitoryInterface.listManagerAccountNumber(request);
+//        responsitoryInterface.exprot(response, listResponse, request);
+//    }
 }
