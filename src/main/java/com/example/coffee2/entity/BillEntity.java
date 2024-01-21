@@ -32,6 +32,9 @@ public class BillEntity {
     @Column(name = "create_date")
     private Date createDate;
 
+    @Column(name = "payed")
+    private boolean payed;
+
     @Column(name = "total")
     private String total;
 }

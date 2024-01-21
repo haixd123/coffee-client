@@ -18,6 +18,7 @@ import com.example.coffee2.utils.ExcelUtil;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class BillServiceImpl implements BillService {
             obj.setDetail(request.getDetail());
             obj.setCreateDate(DateProc.stringToDateDDMMYYYY(request.getCreateDate()));
             obj.setTotal(request.getTotal());
+            obj.setPayed(false);
             respository.save(obj);
             return true;
         } catch (Exception e) {
@@ -58,6 +60,35 @@ public class BillServiceImpl implements BillService {
             return false;
         }
     }
+
+    @Override
+    public BillEntity create(BillRequest request, boolean payed){
+        BillEntity obj = new BillEntity();
+        obj.setName(request.getName());
+        obj.setEmail(request.getEmail());
+        obj.setPhone(request.getPhone());
+        obj.setAddress(request.getAddress());
+        obj.setDetail(request.getDetail());
+        try {
+            obj.setCreateDate(DateProc.stringToDateDDMMYYYY(request.getCreateDate()));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        obj.setTotal(request.getTotal());
+        obj.setPayed(payed);
+        return respository.save(obj);
+    }
+
+    @Override
+    public void updateBillPayed(Long id) {
+
+        BillEntity bill = respository.findById(id).orElseThrow(() -> new RuntimeException("Not found bill"));
+        log.info(id);
+        log.info(bill);
+        bill.setPayed(true);
+        respository.save(bill);
+    }
+
 
     @Override
     public void exprot(HttpServletResponse response, List<BillResponse> listResponse, BillRequest request) throws IOException {

@@ -1,5 +1,6 @@
 package com.example.coffee2.service.comment;
 
+import com.example.coffee2.entity.CommentEntity;
 import com.example.coffee2.request.CommentRequest;
 import com.example.coffee2.request.LikePostsRequest;
 import com.example.coffee2.response.CommentResponse;
@@ -19,4 +20,6 @@ public interface CommentService {
     boolean update(CommentRequest request);
 
     boolean delete(CommentRequest request);
+
+    CommentEntity getById(Long commentId);
 }

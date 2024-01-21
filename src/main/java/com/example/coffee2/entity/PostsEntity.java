@@ -28,7 +28,7 @@ public class PostsEntity {
     @Column(name = "content_post")
     private String contentPost;
 
-    @Column(name = "content_detail")
+    @Column(name = "content_detail",length = 1000)
     private String contentDetail;
 
     @Column(name = "status")

@@ -20,4 +20,5 @@ public interface Constants {
     String CALL_API_EXCEPTION_DESCRIPTION = "Có lỗi trong quá trình xử lý, vui lòng thử lại";
 
     String CALL_API_COLLECTION_TRANSACTION = "04";
+    Integer NOTIFICATION_USER_COMMENT_POST_TYPE = 1;
 }

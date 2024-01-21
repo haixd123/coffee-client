@@ -39,11 +39,11 @@ public class UserEntity {
 
     @Column(name = "image")
     private String image;
+
 //
 //    @Column(name = "image_data")
 //    @Lob
 //    private byte[] data;
-
 
 
 //    @Override

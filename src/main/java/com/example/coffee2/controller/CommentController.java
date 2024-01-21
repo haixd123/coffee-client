@@ -1,9 +1,8 @@
 package com.example.coffee2.controller;
 
-import com.example.coffee2.request.CoffeeBeanRequest;
-import com.example.coffee2.request.CommentRequest;
-import com.example.coffee2.request.EquipmentRequest;
-import com.example.coffee2.request.LikePostsRequest;
+import com.example.coffee2.entity.CommentEntity;
+import com.example.coffee2.pusher.UserCommentPusher;
+import com.example.coffee2.request.*;
 import com.example.coffee2.response.CommentResponse;
 import com.example.coffee2.response.LikePostsResponse;
 import com.example.coffee2.response.base.ApiBaseResponse;
@@ -25,6 +24,9 @@ public class CommentController {
     private CommentService commentService;
 
 
+    @Autowired
+    private UserCommentPusher userCommentPusher;
+
     @PostMapping("/authors/comment/searchTotalCommentPost")
     public ApiBaseResponse getTotalLikePost(@RequestBody CommentRequest request) {
         Long count = commentService.getTotalCommentPosts(request);
@@ -44,7 +46,7 @@ public class CommentController {
         return apiBaseResponse;
     }
 
-//    @PreAuthorize("hasRole('USER')")
+    //    @PreAuthorize("hasRole('USER')")
     @PostMapping("/authors/comment/create")
     public ApiBaseResponse create(@RequestBody CommentRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
@@ -62,8 +64,24 @@ public class CommentController {
         apiBaseResponse.setErrorDescription("Thêm mới bình luận thành công");
         apiBaseResponse.setData(request);
         apiBaseResponse.setOptional(count);
-
+        // push notification
+        if (request.getReplyCommentId() != null) {
+            CommentEntity comment = commentService.getById(request.getReplyCommentId());
+            if (comment != null) {
+                pushUserCommentNotification(request.getPostId(), request.getUserId(), comment.getUserId());
+            }
+        } else {
+            pushUserCommentNotification(request.getPostId(), request.getUserId(), null);
+        }
         return apiBaseResponse;
+    }
+
+    public void pushUserCommentNotification(Long postId, Long fromUserId, Long replyFrom) {
+        UserCommentEventRequest userCommentEventRequest = new UserCommentEventRequest();
+        userCommentEventRequest.setFromUser(fromUserId);
+        userCommentEventRequest.setReplyUser(replyFrom);
+        userCommentEventRequest.setPostId(postId);
+        userCommentPusher.pushCommentNotificationForUser(userCommentEventRequest);
     }
 
     @PreAuthorize("hasRole('USER')")
@@ -71,7 +89,7 @@ public class CommentController {
     public ApiBaseResponse update(@RequestBody CommentRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         boolean rs = commentService.update(request);
-        if(!rs) {
+        if (!rs) {
             apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
             apiBaseResponse.setErrorDescription("Chỉnh sửa bình luận không thành công");
             apiBaseResponse.setData(request);
@@ -90,7 +108,7 @@ public class CommentController {
     public ApiBaseResponse delete(@RequestBody CommentRequest request) {
         ApiBaseResponse apiBaseResponse = new ApiBaseResponse();
         boolean rs = commentService.delete(request);
-        if(!rs) {
+        if (!rs) {
             apiBaseResponse.setErrorCode(Constants.CALL_API_CODE_FAIL);
             apiBaseResponse.setErrorDescription("Xóa bình luận không thành công");
             apiBaseResponse.setData(request);

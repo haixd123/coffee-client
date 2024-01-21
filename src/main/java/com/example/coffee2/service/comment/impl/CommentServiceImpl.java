@@ -104,4 +104,9 @@ public class CommentServiceImpl implements CommentService {
 
 
     }
+
+    @Override
+    public CommentEntity getById(Long commentId) {
+        return commentRepository.findById(commentId).orElse(null);
+    }
 }

@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().ignoringAntMatchers("/**");
-        http.authorizeRequests().antMatchers("/api/authors/**", "/ws/websocket","/app/**", "/api/notify/**", "http://localhost:4200/", "/").permitAll()
+        http.authorizeRequests().antMatchers("/api/authors/**","/api/payment/**", "/ws/websocket", "/app/**", "/api/notify/**", "http://localhost:4200/", "/").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable();
         //???
@@ -62,7 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
 //        @Override
 //    protected void configure(HttpSecurity http) throws Exception {
 //        http
@@ -72,8 +71,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and()
 //                .httpBasic(); // Sử dụng xác thực cơ bản
 //    }
-
-
 
 
 //    @Bean
@@ -95,7 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        return source;
 //    }
 
-        // xắc thực
+    // xắc thực
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
@@ -157,7 +154,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 ////                .anyRequest().authenticated()
 //                .and().httpBasic();
 //    }
-
 
 
 //

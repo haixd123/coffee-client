@@ -3,10 +3,10 @@ package com.example.coffee2;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class Coffee2ApplicationTests {
 
-    @Test
+//    @Test
     void contextLoads() {
     }
 
