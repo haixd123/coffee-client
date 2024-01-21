@@ -17,6 +17,8 @@ public class NotificationResponse {
 
     private String postCategory;
 
-//    private LocalDateTime createdAt;
-    private String createdAt;
+    private LocalDateTime createdAt;
+    private String imagePost;
+
+//    private String createdAt;
 }

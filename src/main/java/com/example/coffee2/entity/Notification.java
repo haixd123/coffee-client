@@ -5,7 +5,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Data
@@ -26,7 +25,9 @@ public class Notification {
     private int notificationType;
 
     private Long postId;
-//    @CreationTimestamp
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    private String imagePost;
 //    private LocalDateTime createdAt;
-    private Date createdAt;
 }

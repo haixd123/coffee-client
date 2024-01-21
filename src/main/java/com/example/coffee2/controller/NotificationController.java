@@ -39,17 +39,18 @@ public class NotificationController {
     public ResponseEntity<?> getAllNotificationByUser(@PathVariable(name = "userId") Long userId) {
         try {
             UserEntity user = userRespository.findById(userId).orElse(null);
-            List<Notification> notifications = notificationRepository.findAllByUser(user);
+            List<Notification> notifications = notificationRepository.findAllByUserOrderByCreatedAtDesc(user);
             List<NotificationResponse> notificationResponses = notifications.stream().map((n) -> {
                 PostsEntity postsEntity = postsRepository.findById(n.getPostId()).orElse(null);
                 NotificationResponse notificationResponse = new NotificationResponse();
-                notificationResponse.setCreatedAt(String.valueOf(n.getCreatedAt()));
+                notificationResponse.setCreatedAt(n.getCreatedAt());
                 notificationResponse.setUsername(n.getUser().getUserName());
                 notificationResponse.setReaded(n.isReaded());
                 notificationResponse.setId(n.getId());
                 notificationResponse.setPostId(n.getPostId());
                 notificationResponse.setContent(n.getContent());
                 notificationResponse.setFromUser(n.getFromUser());
+                notificationResponse.setImagePost(n.getImagePost());
                 if (postsEntity != null) {
                     notificationResponse.setPostCategory(postsEntity.getCategory());
                 }

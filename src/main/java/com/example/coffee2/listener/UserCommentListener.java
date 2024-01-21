@@ -9,14 +9,12 @@ import com.example.coffee2.reponsitory.PostsRepository;
 import com.example.coffee2.reponsitory.UserRespository;
 import com.example.coffee2.response.NotificationResponse;
 import com.example.coffee2.utils.Constants;
-import com.example.coffee2.utils.DateProc;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.Objects;
 
 @Component
@@ -58,18 +56,17 @@ public class UserCommentListener {
         notification.setReaded(false);
         notification.setNotificationType(Constants.NOTIFICATION_USER_COMMENT_POST_TYPE);
         notification.setPostId(postId);
+        notification.setImagePost(postsEntity.getImagePath());
         Notification savedNotification = notificationRepository.save(notification);
 
         NotificationResponse notificationResponse = new NotificationResponse();
         notificationResponse.setPostId(postId);
-
-        notificationResponse.setCreatedAt(DateProc.dateToStringDDMMYYYYMMSS(new Date()));
-
         notificationResponse.setContent(savedNotification.getContent());
         notificationResponse.setFromUser(savedNotification.getFromUser());
         notificationResponse.setUsername(savedNotification.getUser().getUserName());
         notificationResponse.setReaded(false);
-        notificationResponse.setCreatedAt(String.valueOf(savedNotification.getCreatedAt()));
+        notificationResponse.setImagePost(savedNotification.getImagePost());
+        notificationResponse.setCreatedAt(savedNotification.getCreatedAt());
         messagingTemplate.convertAndSend("/notifications", notificationResponse);
     }
 }

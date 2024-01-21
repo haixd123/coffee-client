@@ -1,8 +1,11 @@
 package com.example.coffee2.dto;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import java.util.Date;
 
+@Data
 public class UserDto {
     private Long id;
     private String userName;
@@ -17,6 +20,7 @@ public class UserDto {
     private int sex;
     private Date createDate;
     private int status;
+    private String image;
 
     public UserDto(Long id, String userName, String passWord, String email, String name, String address, int age, int role, int phoneNumber, Date dateOfBirth, int sex, Date createDate, int status) {
         this.id = id;
