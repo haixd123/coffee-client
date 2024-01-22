@@ -91,60 +91,74 @@ public class PostsCustomerImpl implements PostsRespositoryCustomer {
     private void createSqlGetListPosts(PostsRequest request, StringBuilder sql, Map<String, Object> params, boolean isCount) {
         log.info("request: " + request);
         if (isCount) {
-            sql.append("select count(*) \n");
-
+            sql.append("select count(*) ");
         } else {
-//            sql.append("select f.* \n");
-            sql.append("select \n");
-            sql.append("f.id, \n");
-            sql.append("f.total_like, \n");
-            sql.append("f.total_comment, \n");
-//            sql.append(" '' a, \n");
-//            sql.append(" '' b, \n");
-//            sql.append(" '' c, \n");
-//            sql.append(" '' d, \n");
-            sql.append("f.title, \n");
-            sql.append("f.content_post, \n");
-            sql.append("f.content_detail, \n");
-            sql.append("f.status, \n");
-            sql.append("f.image_path, \n");
-            sql.append("f.user_id, \n");
-            sql.append("f.created_at, \n");
-            sql.append("f.updated_at, \n");
-            sql.append("f.category \n");
+//            sql.append("select f.* ");
+            sql.append("select ");
+            sql.append("f.id, ");
+            sql.append("f.total_like, ");
+            sql.append("f.total_comment, ");
+//            sql.append(" '' a, ");
+//            sql.append(" '' b, ");
+//            sql.append(" '' c, ");
+//            sql.append(" '' d, ");
+            sql.append("f.title, ");
+            sql.append("f.content_post, ");
+            sql.append("f.content_detail, ");
+            sql.append("f.status, ");
+            sql.append("f.image_path, ");
+            sql.append("f.user_id, ");
+            sql.append("f.created_at, ");
+            sql.append("f.updated_at, ");
+            sql.append("f.category, ");
+            sql.append("f.rating ");
         }
-        sql.append("from \n");
-        sql.append("posts f \n");
-        sql.append("where f.status != -1 \n");
+        sql.append("from ");
+        sql.append("posts f ");
+        sql.append("where f.status != -1 ");
+        if (request.getUserId() != null) {
+            sql.append(" and f.user_id = :userId ");
+//            params.put("category", "%" + request.getCategory() + "%");
+            params.put("userId", request.getUserId());
+        }
+        if (request.getStatus() != null) {
+            sql.append(" and f.status = :status ");
+//            params.put("category", "%" + request.getCategory() + "%");
+            params.put("status", request.getStatus());
+        }
         if (request.getCategory() != null) {
-            sql.append(" and f.category = :category " );
+            sql.append(" and f.category = :category ");
 //            params.put("category", "%" + request.getCategory() + "%");
             params.put("category", request.getCategory());
         }
         if (request.getTitle() != null) {
-            sql.append(" and f.title = :title \n");
+            sql.append(" and f.title = :title ");
             params.put("title", request.getTitle());
 //            params.put("title", "%" +  request.getTitle() + "%");
         }
 //        if (request.getUserId() != null) {
-//            sql.append("and f.user_id = :userId \n");
+//            sql.append("and f.user_id = :userId ");
 //            params.put("userId", request.getUserId());
 //        }
         if (!isCount) {
-            sql.append(" ORDER BY f.created_at desc, id desc \n");
+            sql.append(" ORDER BY ");
         }
 
-        if (request.getSortLikeDown() == 1) {
-            sql.append(" ORDER BY f.total_like DESC ");
+        if (!isCount && request.getSortLikeDown() == 1) {
+            sql.append("  f.total_like DESC, ");
         }
-        if (request.getSortLikeUp() == 1) {
-            sql.append(" ORDER BY f.total_like ASC ");
+        if (!isCount && request.getSortLikeUp() == 1) {
+            sql.append("  f.total_like ASC, ");
         }
-        if (request.getSortCommentDown() == 1) {
-            sql.append(" ORDER BY f.total_comment DESC ");
+        if (!isCount && request.getSortCommentDown() == 1) {
+            sql.append("  f.total_comment DESC, ");
         }
-        if (request.getSortCommentUp() == 1) {
-            sql.append(" ORDER BY f.total_comment ASC ");
+        if (!isCount && request.getSortCommentUp() == 1) {
+            sql.append("  f.total_comment ASC, ");
+        }
+
+        if (!isCount) {
+            sql.append(" f.created_at desc, id desc ");
         }
 
     }
@@ -170,9 +184,9 @@ public class PostsCustomerImpl implements PostsRespositoryCustomer {
     }
 
     private void createSqlGetTotalPosts(PostsRequest request, StringBuilder sql, Map<String, Object> params) {
-        sql.append("select sum(status) from posts  \n");
-        sql.append("where 1 = 1 \n");
-        sql.append("and user_id = :userId \n");
+        sql.append("select sum(status) from posts  ");
+        sql.append("where 1 = 1 ");
+        sql.append("and user_id = :userId ");
         params.put("userId", request.getUserId());
     }
 }

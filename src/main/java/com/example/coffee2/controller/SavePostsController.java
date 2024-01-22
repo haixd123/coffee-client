@@ -31,6 +31,7 @@ public class SavePostsController {
         apiBaseResponse.setOptional(count);
         return apiBaseResponse;
     }
+
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/save-posts/update")
     public ApiBaseResponse isSave(@RequestBody SavePostsRequest request) {

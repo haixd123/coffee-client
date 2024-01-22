@@ -8,6 +8,7 @@ public class SavePostsRequest {
     private Long userId;
     private Long postId;
     private Long isSave;
+//    private Long status;
 
     private int pageIndex;
     private int pageSize;

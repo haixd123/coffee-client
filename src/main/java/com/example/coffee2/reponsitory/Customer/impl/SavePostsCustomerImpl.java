@@ -77,6 +77,10 @@ public class SavePostsCustomerImpl implements SavePostsCustomer {
                 sql.append(" and userId = :userId \n");
                 params.put("userId", request.getUserId());
             }
+//            if (request.getStatus() != null) {
+//                sql.append(" and status = :userId \n");
+//                params.put("userId", request.getUserId());
+//            }
         } else {
             sql.append("select \n");
             sql.append("f.id, \n");
@@ -85,7 +89,11 @@ public class SavePostsCustomerImpl implements SavePostsCustomer {
             sql.append("f.is_save \n");
             sql.append("from \n");
             sql.append("save_posts f \n");
-        }
+            if (request.getUserId() != null) {
+                sql.append(" and userId = :userId \n");
+                params.put("userId", request.getUserId());
+            }
 
+        }
     }
 }

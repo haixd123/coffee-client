@@ -60,7 +60,7 @@ public class PostsServiceImpl implements PostsService {
             obj.setContentPost(request.getContentPost());
             obj.setContentDetail(request.getContentDetail());
             obj.setTitle(request.getTitle());
-            obj.setStatus(1L);
+            obj.setStatus(request.getStatus());
             obj.setImagePath(request.getImagePath());
             obj.setUserId(request.getUserId());
             obj.setCreatedAt(now);

@@ -40,6 +40,29 @@ public class PostsController {
         );
     }
 
+    @GetMapping("/authors/posts/like-post")
+    ResponseEntity<ResponseObject> findLikePost() {
+        List<PostsEntity> foundProduct = repository.findLikePost();
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "get full product successfully", foundProduct)
+        );
+    }
+
+    @GetMapping("/authors/posts/comment-post")
+    ResponseEntity<ResponseObject> findCommentPost() {
+        List<PostsEntity> foundProduct = repository.findCommentPost();
+        log.info("foundProduct: " + foundProduct);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "get full product successfully", foundProduct)
+        );
+    }
+
+    @GetMapping("/authors/posts/search-list-category")
+    ResponseEntity<ResponseObject> searchListCategory() {
+        List<String> listCategory = repository.getListCategory();
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "get AccountNumber successfully", listCategory));
+    }
+
     @PostMapping("/authors/posts/searchTotalPost")
     public ApiBaseResponse getTotalPost(@RequestBody PostsRequest request) {
         Long count = postsService.getTotalPosts(request);
@@ -63,11 +86,7 @@ public class PostsController {
         return apiBaseResponse;
     }
 
-    @GetMapping("/authors/posts/search-list-category")
-    ResponseEntity<ResponseObject> searchListCategory() {
-        List<String> listCategory = repository.getListCategory();
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "get AccountNumber successfully", listCategory));
-    }
+
 
 //    @PostMapping("/search-item-category")
 //    ApiBaseResponse searchItemCategory(@RequestBody PostsRequest request) {
