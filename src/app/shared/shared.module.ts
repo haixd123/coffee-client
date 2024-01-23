@@ -60,7 +60,6 @@ import {FilterPipe} from './pipe/filter.pipe';
     NzBackTopModule,
     NzRadioModule,
     CKEditorModule,
-
   ],
   exports: [
     CommonModule,

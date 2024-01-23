@@ -1,0 +1,20 @@
+* {
+  font-family: "OpenSans", sans-serif;
+}
+
+.layout {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 15px;
+  .info-group {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 10px;
+    .field {
+      font-weight: 700;
+    }
+    .value {
+      margin-left: auto;
+    }
+  }
+}

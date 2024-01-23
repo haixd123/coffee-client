@@ -31,6 +31,8 @@ import { PaymentResultComponent } from './component/home/payment-result/paymen-r
 import {WaittingPostComponent} from './component/home/user/waitting-post/waitting-post.component';
 import {DraftPostComponent} from './component/home/user/draft-post/draft-post.component';
 import {RefusePostComponent} from './component/home/user/refuse-post/refuse-post.component';
+import { TableCommentComponent } from './component/admin/table-comment/table-comment.component';
+import { TableReportComponent } from './component/admin/table-report/table-report.component';
 
 
 const routes: Routes = [
@@ -46,7 +48,7 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
-    canActivate: [RoleGuard],
+    // canActivate: [RoleGuard],
     children: [
       {
         path: 'admin',
@@ -75,6 +77,14 @@ const routes: Routes = [
       {
         path: 'bill',
         component: BillComponent,
+      },
+      {
+        path: 'comment',
+        component: TableCommentComponent,
+      },
+      {
+        path: 'report',
+        component: TableReportComponent,
       }
     ],
     data: {

@@ -1,0 +1,55 @@
+<!--  <button nz-button [nzType]="'primary'" (click)="showModal()"><span>Show Modal</span></button>-->
+<nz-modal
+  nzWidth="1000px"
+  [(nzVisible)]="isInfo"
+  nzTitle="Thông tin bài viết"
+  (nzOnCancel)="handleCancel(false)"
+  [nzFooter]="null"
+>
+  <div class="layout">
+    <div class="info-group">
+      <div class="field">Tiêu đề</div>
+      <div class="value">{{ data.title }}</div>
+    </div>
+    <div class="info-group">
+      <div class="field">Nội dung</div>
+      <div class="value">{{ data.contentPost }}</div>
+    </div>
+    <div class="info-group">
+      <div class="field">Chi tiết</div>
+      <div class="value">{{ data.contentDetail }}</div>
+    </div>
+    <div class="info-group">
+      <div class="field">Loại</div>
+      <div class="value">{{ data.category }}</div>
+    </div>
+    <div class="info-group">
+      <div class="field">Được tạo lúc</div>
+      <div class="value">{{ data.createdAt | date: 'dd/MM/yyyy hh:mm a' }}</div>
+    </div>
+    <div class="info-group">
+      <div class="field">Cập nhật lúc</div>
+      <div class="value">{{ data.updatedAt | date: 'dd/MM/yyyy hh:mm a' }}</div>
+    </div>
+    <div class="info-group">
+      <div class="field">Số lượt thích</div>
+      <div class="value">{{ data.like1 }}</div>
+    </div>
+    <div class="info-group">
+      <div class="field">Số lượt bình luận</div>
+      <div class="value">{{ data.comment }}</div>
+    </div>
+    <div class="info-group">
+      <div class="field">Trạng thái</div>
+      <div class="value">{{ data.status }}</div>
+    </div>
+    <div class="info-group">
+      <div class="field">Lý do từ chối</div>
+      <div class="value">{{ data.reason_deline }}</div>
+    </div>
+    <div class="info-group">
+      <div class="field"></div>
+      <div class="value"><img [src]="data.imagePath" alt="" /></div>
+    </div>
+  </div>
+</nz-modal>
