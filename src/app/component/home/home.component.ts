@@ -115,32 +115,32 @@ export class HomeComponent implements OnInit {
     this.http.get('http://localhost:8080/api/authors/notifications/' + this.userLocalstorage?.id).subscribe((res: any) => {
       this.notificationReceiver = res;
     });
-    this.http.get('http://localhost:8080/api/authors/notify/search-list-isComment-post').subscribe((res: any) => {
-      this.dataCommentPost = res.data;
-      console.log('this.dataCommentPost: ', this.dataCommentPost);
-      for (const item of this.dataCommentPost) {
-        if (item.commentId == null) {
-          if (item.userName == this.userLocalstorage.userName) {
-            this.dataReceiveNotifyFromPost.push(item);
-          }
-        }
-        if (item.commentId != null) {
-          this.dataReceiveNotifyFromReplyComment.push(item);
-        }
-      }
-    });
-    this.http.get('http://localhost:8080/api/authors/notify/search-list-isReply-comment').subscribe((res: any) => {
-      this.dataReplyComment = res.data;
-      for (const item of this.dataReplyComment) {
-        for (const item1 of this.dataReceiveNotifyFromReplyComment) {
-          if (item.commentId == item1.commentId) {
-            if (item1.userName == this.userLocalstorage.userName) {
-              this.dataReceiveNotifyFromPost.push(item1);
-            }
-          }
-        }
-      }
-    });
+    // this.http.get('http://localhost:8080/api/authors/notify/search-list-isComment-post').subscribe((res: any) => {
+    //   this.dataCommentPost = res.data;
+    //   console.log('this.dataCommentPost: ', this.dataCommentPost);
+    //   for (const item of this.dataCommentPost) {
+    //     if (item.commentId == null) {
+    //       if (item.userName == this.userLocalstorage.userName) {
+    //         this.dataReceiveNotifyFromPost.push(item);
+    //       }
+    //     }
+    //     if (item.commentId != null) {
+    //       this.dataReceiveNotifyFromReplyComment.push(item);
+    //     }
+    //   }
+    // });
+    // this.http.get('http://localhost:8080/api/authors/notify/search-list-isReply-comment').subscribe((res: any) => {
+    //   this.dataReplyComment = res.data;
+    //   for (const item of this.dataReplyComment) {
+    //     for (const item1 of this.dataReceiveNotifyFromReplyComment) {
+    //       if (item.commentId == item1.commentId) {
+    //         if (item1.userName == this.userLocalstorage.userName) {
+    //           this.dataReceiveNotifyFromPost.push(item1);
+    //         }
+    //       }
+    //     }
+    //   }
+    // });
 
 
     // this.formSearchNotify.get('toUser').setValue(JSON.parse(localStorage.getItem('user')).id);
@@ -151,7 +151,7 @@ export class HomeComponent implements OnInit {
 
     this.searchModel.pageIndex = 1;
     this.searchModel.pageSize = 150;
-    await this.api.getListPosts(this.searchModel).toPromise().then((data: any) => {
+    // await this.api.getListPosts(this.searchModel).toPromise().then((data: any) => {
       // for (const item of data.data) {
       //   for (const item2 of this.dataNotify) {
       //     if (item.id == item2.postId) {
@@ -160,7 +160,7 @@ export class HomeComponent implements OnInit {
       //     }
       //   }
       // }
-    });
+    // });
 
   }
 

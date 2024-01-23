@@ -4,9 +4,10 @@ import {HttpClient} from '@angular/common/http';
 import {Subscription} from 'rxjs';
 import {ShareDataService} from '../../../services/share-data.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {Api} from '../../../services/api';
 import {WebsocketService} from '../../../services/Websocket.service';
+import {NzPlacementType} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-detail',
@@ -20,6 +21,9 @@ export class DetailComponent implements OnInit {
 
   formSearch: FormGroup;
 
+  dataTopLikePost: any[];
+  dataTopCommentPost: any[];
+
   data: any[];
   total: number;
 
@@ -28,6 +32,9 @@ export class DetailComponent implements OnInit {
 
   idPostsLocalstorage: string;
   dataIdPost: any;
+
+  listOfPosition: NzPlacementType[] = ['bottomLeft'];
+
 
   // categoryPostsLocalstorage: string;
 
@@ -38,7 +45,11 @@ export class DetailComponent implements OnInit {
     private router: Router,
     private api: Api,
     private websocketService: WebsocketService,
+    private fb: FormBuilder,
   ) {
+    this.formSearch = this.fb.group({
+      status: null,
+    });
 
     this.handleSearch();
     this.subscription = this.shareDataService.dataCategory$.subscribe((data) => {
@@ -59,6 +70,14 @@ export class DetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.http.get('http://localhost:8080/api/authors/posts/like-post').toPromise().then((data: any) => {
+      // console.log('res like: ', data);
+      this.dataTopLikePost = data.data;
+    });
+    this.http.get('http://localhost:8080/api/authors/posts/comment-post').toPromise().then((data: any) => {
+      this.dataTopCommentPost = data.data;
+      // console.log('res comment: ', data);
+    });
     // this.activatedRoute.url.subscribe(params => {
     //   console.log('params2: ', params);
     // });
@@ -74,6 +93,8 @@ export class DetailComponent implements OnInit {
   handleSearch() {
     this.searchModel.pageIndex = 1;
     this.searchModel.pageSize = 100;
+    this.formSearch.get('status').setValue(1);
+    this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
     this.handleUpdate(this.searchModel, true);
   }
 

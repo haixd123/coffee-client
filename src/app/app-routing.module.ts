@@ -28,6 +28,9 @@ import {ProductComponent} from './component/home/product/product.component';
 import {CheckoutComponent} from './component/home/checkout/checkout.component';
 import {BillComponent} from './component/admin/table-bill/bill.component';
 import { PaymentResultComponent } from './component/home/payment-result/paymen-result.component';
+import {WaittingPostComponent} from './component/home/user/waitting-post/waitting-post.component';
+import {DraftPostComponent} from './component/home/user/draft-post/draft-post.component';
+import {RefusePostComponent} from './component/home/user/refuse-post/refuse-post.component';
 
 
 const routes: Routes = [
@@ -142,8 +145,20 @@ const routes: Routes = [
             component: MyPostsComponent,
           },
           {
+            path: 'waittingPosts',
+            component: WaittingPostComponent,
+          },
+          {
             path: 'savePosts',
             component: SavePostsComponent,
+          },
+          {
+            path: 'draftPosts',
+            component: DraftPostComponent,
+          },
+          {
+            path: 'refusePosts',
+            component: RefusePostComponent,
           }
         ],
         data: {

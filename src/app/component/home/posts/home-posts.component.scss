@@ -8,9 +8,22 @@
   cursor: pointer;
 }
 
+.moreButton1 {
+  z-index: 5;
+  display: none;
+  cursor: pointer;
+}
+
 .hoverEditPosts:hover {
   background-color: #f2f2f2;
   cursor: pointer;
 }
 
+.editPost {
+  display: none;
+}
+
+.moreButton:hover .editPost {
+  display: block;
+}
 

@@ -30,6 +30,8 @@ export class EditPostsComponent implements OnInit, OnChanges {
   isVisible = false;
   isLoading = false;
 
+  dataCategory: any;
+
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -45,10 +47,11 @@ export class EditPostsComponent implements OnInit, OnChanges {
       imagePath: null,
       contentPost: null,
       contentDetail: null,
+      category: null,
+      categoryCur: [null],
       createdAt: null,
       createdAtCur: null,
       updatedAt: null,
-      category: null,
       like1: null,
       comment: null,
     });
@@ -57,6 +60,7 @@ export class EditPostsComponent implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.dataEdit) {
       this.formEdit.reset();
+      // console.log('this.dataEdit: ', this.dataEdit);
       this.formEdit.patchValue({
         id: this.dataEdit.id,
         title: this.dataEdit.title,
@@ -66,19 +70,24 @@ export class EditPostsComponent implements OnInit, OnChanges {
         contentDetail: this.dataEdit.contentDetail,
         userId: this.dataEdit.userId,
         createdAt: this.dataEdit.createdAt,
-        category: this.dataEdit.category,
+        categoryCur: [this.dataEdit.category],
         like1: this.dataEdit.like1,
         comment: this.dataEdit.comment,
       });
       this.urlImage = this.dataEdit.imagePath;
-      this.dataEdit.get('id').setValue(this.dataEdit.id);
-      this.dataEdit.get('userId').setValue(this.dataEdit.userId);
-      this.dataEdit.get('like1').setValue(this.dataEdit.like1);
-      this.dataEdit.get('comment').setValue(this.dataEdit.comment);
+      this.formEdit.get('id')?.setValue(this.dataEdit.id);
+      this.formEdit.get('userId')?.setValue(this.dataEdit.userId);
+      this.formEdit.get('like1')?.setValue(this.dataEdit.like1);
+      this.formEdit.get('comment')?.setValue(this.dataEdit.comment);
     }
   }
 
   ngOnInit(): void {
+    this.http.get('http://localhost:8080/api/authors/posts/search-list-category').toPromise().then((data: any) => {
+      this.dataCategory = data.data;
+      // this.total = data.optional;
+      console.log('dataCategory: ', data.data);
+    });
   }
 
   get f() {
@@ -125,6 +134,7 @@ export class EditPostsComponent implements OnInit, OnChanges {
   handleOk(): void {
     this.formEdit.get('imagePath').setValue(this.dataEdit.imagePath);
     this.formEdit.get('createdAt').setValue(this.datePipe.transform(this.dataEdit.createdAt, 'dd/MM/yyyy'));
+    this.formEdit.get('category').setValue(this.formEdit.get('categoryCur').value.toString());
     this.api.updatePosts(this.formEdit.value).toPromise().then((data: any) => {
       if (data.errorCode == '00') {
         this.notificationService.showMessage('success', 'Sửa bài đăng thành công');
@@ -147,8 +157,11 @@ export class EditPostsComponent implements OnInit, OnChanges {
 
   handleCancel(value: any): void {
     this.closePopup.emit(value);
-
+    // console.log('success');
+    // this.formEdit.get('categoryCur').setValue([null]);
+    // console.log('success');
     this.isEdit = false;
+
   }
 
 }

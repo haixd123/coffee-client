@@ -17,15 +17,10 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    Phân loại
+    Thể loại
     <div class="mt-2 mb-3">
-      <nz-select style="width: 180px" nzPlaceHolder="Trang thiết bị" formControlName="category">
-        <nz-option nzValue="Cà phê" nzLabel="Cà phê"></nz-option>
-        <nz-option nzValue="Trang thiết bị" nzLabel="Trang thiết bị"></nz-option>
-        <nz-option nzValue="Giới thiệu" nzLabel="Giới thiệu"></nz-option>
-        <nz-option nzValue="Hẹn hò" nzLabel="Hẹn hò"></nz-option>
-        <nz-option nzValue="Du lịch" nzLabel="Du lịch"></nz-option>
-        <nz-option nzValue="Sự kiện" nzLabel="Sự kiện"></nz-option>
+      <nz-select style="width: 180px" nzMode="tags" [nzMaxMultipleCount]="1" formControlName="categoryCur" >
+        <nz-option *ngFor="let item of dataCategory" [nzValue]="item" [nzLabel]="item"></nz-option>
       </nz-select>
     </div>
 

@@ -1,87 +1,129 @@
 <form nz-form [formGroup]="formSearch">
+  <div class="row">
+    <div class="col-3 mb-3 ">
+      <label>Trạng thái bài viết</label>
+      <div>
+        <nz-select style="width: 100%;" formControlName="status">
+          <nz-option nzValue="0" nzLabel="Chờ duyệt"></nz-option>
+          <nz-option nzValue="1" nzLabel="Đã đăng"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+    <!--    <div class="col-4">-->
+    <!--      <label>Bài viết đã đăng</label>-->
+    <!--      <div></div>-->
+    <!--    </div>-->
+    <div class="col-3">
+      <!--      <nz-input-group [nzSuffix]="suffixIconSearch">-->
+      <label>Tiêu đề</label>
+      <div>
+        <input class="px-2" formControlName="title" (change)="handleSearch()" type="text" nz-input
+               placeholder="Tìm theo tiêu đề bài viết"/>
+      </div>
+      <!--      </nz-input-group>-->
+      <!--      <ng-template #suffixIconSearch>-->
+      <!--        <i class="mb-2" nz-icon nzType="search"></i>-->
+      <!--      </ng-template>-->
+    </div>
+  </div>
 
   <div class="d-flex align-items-center justify-content-between mb-4">
     <div class="d-flex">
-      <button style="border-radius: 5px" class="d-flex align-items-center ml-3" nz-button nzType="primary"
+      <button style="border-radius: 5px" class="d-flex align-items-center mr-3" nz-button nzType="primary"
               (click)="handleSearch()">
         <i nz-icon nzType="search" nzTheme="outline"></i> Tìm kiếm
       </button>
-      <button style="border-radius: 5px" class="d-flex align-items-center ml-3" nz-button nzType="primary"
+      <button style="border-radius: 5px" class="d-flex align-items-center" nz-button nzType="primary"
               (click)="handleAdd()">
         <i nz-icon nzType="plus" nzTheme="outline"></i> Thêm mới
       </button>
     </div>
-
-    <div class="d-flex justify-content-end">
-      <nz-input-group [nzSuffix]="suffixIconSearch">
-        <input class="px-1" formControlName="title" (change)="handleSearch()" type="text" nz-input
-               placeholder="Tìm theo tiêu đề bài viết"/>
-      </nz-input-group>
-      <ng-template #suffixIconSearch>
-        <i class="mb-2" nz-icon nzType="search"></i>
-      </ng-template>
-    </div>
   </div>
-  <nz-table
-    #basicTable
-    [nzData]="data"
-    [(nzPageIndex)]="searchModel.pageIndex"
-    [nzFrontPagination]="false"
-    nzBordered
-    nzShowSizeChanger
-    [nzScroll]="{ x: '1300px'}"
-  >
-    <!--    [(nzPageSize)]="total"-->
-    <!--    [(nzPageIndex)]="searchModel.pageIndex"-->
-    <!--    [nzPageSizeOptions]="pageSize"-->
-    <thead>
-    <tr>
-      <th>STT</th>
-      <th>Id</th>
-      <th [nzShowSort]="true" [nzSortDirections]="['ascend', 'descend']" (click)="handleLikeSort('like1')">Lượt thích</th>
-      <th [nzShowSort]="true" [nzSortDirections]="['ascend', 'descend']" (click)="handleCommentSort('comment')">Lượt bình luận</th>
-      <th>Tiêu đề</th>
-      <th>Giới thiệu</th>
-      <th>Mô tả chi tiết</th>
-      <!--        <th>Status</th>-->
-      <th>Ảnh</th>
-      <th>Ngày tạo</th>
-      <th>Ngày cập nhật</th>
-      <th>Thể loại</th>
-      <th>Hành động</th>
-    </tr>
-    </thead>
-    <tbody>
-<!--    <tr *ngFor="let item of data | filter:searchValue | sort:sortValue:isSort | filter:searchValue, let i = index">-->
-    <tr *ngFor="let item of data | filter:searchValue | filter:searchValue, let i = index">
-      <td class="text-nowrap">{{validateService.getRowIndex(i, basicTable.nzPageIndex, basicTable.nzPageSize)}}</td>
-      <td>{{ item.id }}</td>
-      <td>{{ item.like1 }} </td>
-      <td>{{ item.comment }}</td>
-      <td>{{ item.title }}</td>
-      <td style=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{ item.contentPost }}</td>
-      <td style=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{ item.contentDetail }}</td>
-      <!--        <td>{{ item.status }}</td>-->
-      <td><img style="width: 100%" [src]="item.imagePath"></td>
-      <td>{{ item.createdAt | dateFormat: 'dd/MM/yyyy' }}</td>
-      <td>{{ item.updatedAt | dateFormat: 'dd/MM/yyyy' }}</td>
-      <td>{{item.category}}</td>
+</form>
 
-      <td>
+<nz-table
+  #basicTable
+  [nzData]="data"
+  [(nzPageIndex)]="searchModel.pageIndex"
+  [nzFrontPagination]="false"
+  nzBordered
+  nzShowSizeChanger
+  [nzScroll]="{ x: '1800px'}"
+>
+  <!--    [(nzPageSize)]="total"-->
+  <!--    [(nzPageIndex)]="searchModel.pageIndex"-->
+  <!--    [nzPageSizeOptions]="pageSize"-->
+  <thead>
+  <tr>
+    <th>STT</th>
+    <th>Id</th>
+    <th [nzShowSort]="true" [nzSortDirections]="['ascend', 'descend']" (click)="handleLikeSort('like1')">Lượt thích
+    </th>
+    <th [nzShowSort]="true" [nzSortDirections]="['ascend', 'descend']" (click)="handleCommentSort('comment')">Lượt
+      bình luận
+    </th>
+    <th>Tiêu đề</th>
+    <th>Giới thiệu</th>
+    <th>Mô tả chi tiết</th>
+    <!--        <th>Status</th>-->
+    <th>Ảnh</th>
+    <th>Ngày tạo</th>
+    <th>Ngày cập nhật</th>
+    <th>Thể loại</th>
+    <th>Trạng thái</th>
+    <th>Hành động</th>
+  </tr>
+  </thead>
+  <tbody>
+  <!--    <tr *ngFor="let item of data | filter:searchValue | sort:sortValue:isSort | filter:searchValue, let i = index">-->
+  <tr *ngFor="let item of data | filter:searchValue | filter:searchValue, let i = index">
+    <td class="text-nowrap">{{validateService.getRowIndex(i, basicTable.nzPageIndex, basicTable.nzPageSize)}}</td>
+    <td>{{ item.id }}</td>
+    <td>{{ item.like1 }} </td>
+    <td>{{ item.comment }}</td>
+    <td>{{ item.title }}</td>
+    <td style=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{ item.contentPost }}</td>
+    <td style=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{ item.contentDetail }}</td>
+    <!--        <td>{{ item.status }}</td>-->
+    <td><img style="width: 100%" [src]="item.imagePath"></td>
+    <td>{{ item.createdAt | dateFormat: 'dd/MM/yyyy' }}</td>
+    <td>{{ item.updatedAt | dateFormat: 'dd/MM/yyyy' }}</td>
+    <td>{{item.category}}</td>
+    <td>{{item.status == 0 ? "Chờ duyệt" : "Đã đăng"}}</td>
+
+    <td>
+      <div class="d-flex justify-content-center">
+        <a *ngIf="item.status == 0" style="font-size: 21px" class="mr-3" nz-popconfirm
+           nzPopconfirmTitle="Bạn chắc chắn muốn duyệt đăng này?"
+           (nzOnConfirm)="handleCheck(item)">
+          <i nz-icon nzType="check" nzTheme="outline"></i>
+        </a>
         <a style="font-size: 21px" class="mr-3" (click)="handleEdit(item)"><i nz-icon nzType="edit"
                                                                               nzTheme="outline"></i></a>
-        <a style="font-size: 21px" nz-popconfirm nzPopconfirmTitle="Bạn chắc chắn muốn xóa bài đăng này?"
+        <a *ngIf="item.status == 1" style="font-size: 21px" nz-popconfirm
+           nzPopconfirmTitle="Bạn chắc chắn muốn xóa bài đăng này?"
            (nzOnConfirm)="handleDelete(item)"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
-      </td>
-    </tr>
-    </tbody>
-  </nz-table>
-  <div class="d-flex justify-content-end">
-    <nz-pagination class="pb-4" (nzPageIndexChange)="handlechangePage($event)" [(nzPageIndex)]="curPage"
-                   [nzPageSize]="10" [nzTotal]="total"></nz-pagination>
-  </div>
-  <!--  (click)="changePage()"-->
-</form>
+        <!--        <a *ngIf="item.status == 0" style="font-size: 21px" nz-popconfirm nzPopconfirmTitle="Bạn chắc chắn muốn xóa bài đăng này?"-->
+        <!--           (nzOnConfirm)="handleRefuse(item)"><i nz-icon nzType="delete" nzTheme="outline"></i></a>-->
+        <a *ngIf="item.status == 0" style="font-size: 21px" (click)="handleRefuse(item)">
+          <i nz-icon nzType="delete" nzTheme="outline"></i>
+        </a>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+<div class="d-flex justify-content-end">
+  <nz-pagination class="pb-4" (nzPageIndexChange)="handlechangePage($event)" [(nzPageIndex)]="curPage"
+                 [nzPageSize]="10" [nzTotal]="total"></nz-pagination>
+</div>
+<!--  (click)="changePage()"-->
+
+<nz-modal [(nzVisible)]="isRefuse" [nzTitle]="'Lý do từ chối bài đăng'" (nzOnCancel)="handleCancelRefuse()"
+          (nzOnOk)="handleOkRefuse()">
+  <input class="p-2" type="text" nz-input [(ngModel)]="inputValue" placeholder="Nhập thông tin">
+</nz-modal>
+
 
 <app-add-posts [isAdd]="isAdd" (closePopup)=handleClosePopup($event)></app-add-posts>
 <app-edit-posts [isEdit]="isEdit" [dataEdit]="dataEdit" (closePopup)=handleClosePopup($event)></app-edit-posts>

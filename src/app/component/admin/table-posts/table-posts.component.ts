@@ -92,8 +92,11 @@ export class TablePostsComponent implements OnInit {
   searchValue: string;
   sortValue: string;
   isSort = true;
-
+  isSort1 = true;
   displayedData: any[] = [];
+
+  isRefuse = false;
+  inputValue = '';
 
   constructor(
     private fb: FormBuilder,
@@ -110,6 +113,7 @@ export class TablePostsComponent implements OnInit {
       sortLikeUp: null,
       sortCommentDown: null,
       sortCommentUp: null,
+      status: null,
     });
     this.handleSearch();
     // this.changePage();
@@ -130,6 +134,10 @@ export class TablePostsComponent implements OnInit {
   handleSearch() {
     this.searchModel.pageIndex = 1;
     this.searchModel.pageSize = 100;
+    this.formSearch.get('sortCommentDown').setValue(0);
+    this.formSearch.get('sortCommentUp').setValue(0);
+    this.formSearch.get('sortLikeDown').setValue(0);
+    this.formSearch.get('sortLikeUp').setValue(0);
     // this.formSearch.get('title').setValue(this.formSearch.get('title').value);
     this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
     if (this.formSearch.get('title').value == '') {
@@ -195,6 +203,10 @@ export class TablePostsComponent implements OnInit {
     });
   }
 
+  handleRefuse(item: any) {
+    this.isRefuse = true;
+  }
+
   handleLikeSort(value: string) {
     if (this.isSort) {
       this.formSearch.get('sortLikeUp').setValue(1);
@@ -204,7 +216,8 @@ export class TablePostsComponent implements OnInit {
       this.searchModel.pageIndex = 1;
       this.searchModel.pageSize = 10;
       this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
-      this.api.getListPosts(this.formSearch.value).subscribe(res => {
+      // this.api.getListPosts(this.formSearch.value).subscribe(res => {
+        this.api.getListPosts(this.searchModel).subscribe(res => {
         this.data = res.data;
       });
       this.isSort = !this.isSort;
@@ -218,7 +231,8 @@ export class TablePostsComponent implements OnInit {
       this.searchModel.pageIndex = 1;
       this.searchModel.pageSize = 10;
       this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
-      this.api.getListPosts(this.formSearch.value).subscribe(res => {
+      this.api.getListPosts(this.searchModel).subscribe(res => {
+        // this.api.getListPosts(this.formSearch.value).subscribe(res => {
         this.data = res.data;
       });
       this.isSort = !this.isSort;
@@ -229,7 +243,7 @@ export class TablePostsComponent implements OnInit {
   }
 
   handleCommentSort(value: string) {
-    if (this.isSort) {
+    if (this.isSort1) {
       this.formSearch.get('sortCommentUp').setValue(1);
       this.formSearch.get('sortCommentDown').setValue(0);
       this.formSearch.get('sortLikeDown').setValue(0);
@@ -237,26 +251,50 @@ export class TablePostsComponent implements OnInit {
       this.searchModel.pageIndex = 1;
       this.searchModel.pageSize = 10;
       this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
-      this.api.getListPosts(this.formSearch.value).subscribe(res => {
+      this.api.getListPosts(this.searchModel).subscribe(res => {
+        // this.api.getListPosts(this.formSearch.value).subscribe(res => {
         this.data = res.data;
       });
-      this.isSort = !this.isSort;
+      this.isSort1 = !this.isSort1;
       return;
     }
-    if (!this.isSort) {
+    if (!this.isSort1) {
       this.formSearch.get('sortCommentDown').setValue(1);
       this.formSearch.get('sortCommentUp').setValue(0);
       this.formSearch.get('sortLikeDown').setValue(0);
       this.formSearch.get('sortLikeUp').setValue(0);
       this.searchModel.pageIndex = 1;
       this.searchModel.pageSize = 10;
+
       this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
-      this.api.getListPosts(this.formSearch.value).subscribe(res => {
-        this.data = res.data;
+      // this.api.getListPosts(this.formSearch.value).subscribe(res => {
+        this.api.getListPosts(this.searchModel).subscribe(res => {
+
+          this.data = res.data;
       });
-      this.isSort = !this.isSort;
+      this.isSort1 = !this.isSort1;
       return;
     }
   }
 
+  handleCheck(value: any) {
+    const a = value;
+    a.status = 1;
+    // this.formSearch = value;
+    // console.log('this.formSearch: ', this.formSearch);
+    // this.formSearch.status = 1;
+    // console.log('this.formSearch: ', this.formSearch);
+    // this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
+    this.api.updatePosts(a).subscribe((res: any) => {
+      this.notificationService.showMessage('success', 'Duyệt bài viết thành công');
+    }, error => this.notificationService.showMessage('error', 'Duyệt bài viết thất bại'));
+  }
+
+  handleOkRefuse() {
+    this.isRefuse = false;
+  }
+
+  handleCancelRefuse() {
+    this.isRefuse = false;
+  }
 }

@@ -1,8 +1,8 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Api } from '../../../services/api';
-import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import {Component, OnInit, Renderer2} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Api} from '../../../services/api';
+import {Router} from '@angular/router';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-checkout',
@@ -54,7 +54,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   handleCheckout() {
-    
+
     if (this.formAdd.valid) {
       //handle checkout
       const dataCart: any[] = [];
@@ -66,7 +66,7 @@ export class CheckoutComponent implements OnInit {
 
       this.formAdd.get('detail').setValue(dataCart?.toString());
       this.formAdd.get('createDate').setValue(this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss'));
-      this.formAdd.get('total').setValue(this.totalPrice);      
+      this.formAdd.get('total').setValue(this.totalPrice);
 
       if (this.radioValue == 1) {
         this.api.createBill(this.formAdd.value).subscribe((res: any) => {
@@ -78,22 +78,22 @@ export class CheckoutComponent implements OnInit {
         const total = {
           total: this.totalPrice,
         };
-      this.formAdd.get('createDate').setValue(this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss'));
+        this.formAdd.get('createDate').setValue(this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss'));
         this.formAdd.patchValue(total);
         this.api.createPaymentWithVnPay(this.formAdd.value).subscribe({
           next: (res) => {
+            //??? de lam gi
             localStorage.setItem('billId', res.billId);
             const newTab = this.renderer.createElement('a');
             this.renderer.setProperty(newTab, 'href', res.url);
-  
             const body = this.renderer.selectRootElement('body');
             this.renderer.appendChild(body, newTab);
-  
             newTab.click();
-  
             this.renderer.removeChild(body, newTab);
+            localStorage.removeItem('cartItems');
           },
-          error: (err) => {},
+          error: (err) => {
+          },
         });
       }
     }

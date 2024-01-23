@@ -20,12 +20,15 @@ export class PostsDetailComponent implements OnInit {
   @ViewChild('textareaComment') textareaComment: ElementRef;
   @ViewChild('textareaReply') textareaReply: ElementRef;
 
+
   searchModel: SearchModelEntity = new SearchModelEntity();
   formAdd: FormGroup;
   formNotify: FormGroup;
   formReply: FormGroup;
   // formSearch: FormGroup;
   formLikeComment: FormGroup;
+
+  formSearchPost: FormGroup;
 
   isReplyComment = false;
   isLike = false;
@@ -57,6 +60,8 @@ export class PostsDetailComponent implements OnInit {
   imgPostDetail: string;
   categoryDetail: string;
   subscription: Subscription;
+  idOfPostUser: any;
+
 
   constructor(
     private fb: FormBuilder,
@@ -68,6 +73,10 @@ export class PostsDetailComponent implements OnInit {
     private notificationService: NotificationService,
     private shareDataService: ShareDataService,
   ) {
+    this.formSearchPost = this.fb.group({
+      status: 1,
+    });
+
     this.formLikeComment = this.fb.group({
       id: null,
       commentId: null,
@@ -118,7 +127,6 @@ export class PostsDetailComponent implements OnInit {
       });
     });
     this.api.getListComment(this.searchModel).toPromise().then((data: any) => {
-      console.log('comment: ', data);
       this.dataComment = data.data;
     });
   }
@@ -143,9 +151,10 @@ export class PostsDetailComponent implements OnInit {
 
     this.api.getListUser(this.searchModel).toPromise().then((data: any) => {
       this.dataUser = data.data;
-      console.log('this.dataUser: ', this.dataUser);
     });
 
+    this.formSearchPost.get('status').setValue(1);
+    this.searchModel = Object.assign({}, this.searchModel, this.formSearchPost.value);
     this.api.getListPosts(this.searchModel).toPromise().then((data: any) => {
       this.dataPosts = data.data;
       for (const item of data.data) {
@@ -153,6 +162,8 @@ export class PostsDetailComponent implements OnInit {
           this.imgPostDetail = item.imagePath;
           this.categoryDetail = item.category;
           this.dataInfoPostNotification = item;
+          // gán id chủ bài viết
+          this.idOfPostUser = item.userId;
         }
       }
     });
@@ -336,7 +347,7 @@ export class PostsDetailComponent implements OnInit {
     this.isEditPosts = !this.isEditPosts;
   }
 
-  editPosts(item?: any) {
+  editComment(item?: any) {
     this.isReplyComment = true;
     this.textareaReply.nativeElement.focus();
     this.formAdd.patchValue({
@@ -354,7 +365,7 @@ export class PostsDetailComponent implements OnInit {
 
   }
 
-  deletePosts(item: any) {
+  deleteComment(item: any) {
     this.api.deleteComment(item).subscribe((res: any) => {
       if (res.errorCode == '00') {
         this.notificationService.showMessage('success', 'Xóa luận thành công');
@@ -367,6 +378,10 @@ export class PostsDetailComponent implements OnInit {
     // this.api.deleteNotify(item).toPromise().then(res => {
     // });
     this.websocketService.sendComment('1', '2');
+  }
+
+  reportComment(item: any) {
+
   }
 
   handleLikeComment(item: any) {

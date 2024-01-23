@@ -2,8 +2,13 @@
   <div class="col-2 mt-4">
     <div style="position: fixed; top: 73px">
       <div style="font-size: 18px; font-weight: 500; cursor: pointer; color: #000" class="py-3">
-        <a [routerLink]="['/home/user/info']">Thông tin cá nhân</a>
-
+        <a [routerLink]="['/home/user/info']">Thông tin tài khoản</a>
+      </div>
+      <div style="font-size: 18px; font-weight: 500; cursor: pointer; color: #000" class="py-3">
+        <a [routerLink]="['/home/user/draftPosts']">Bài viết nháp</a>
+      </div>
+      <div style="font-size: 18px; font-weight: 500; cursor: pointer; color: #000" class="py-3">
+        <a [routerLink]="['/home/user/refusePosts']">Bài viết bị từ chối</a>
       </div>
       <div style="font-size: 18px; font-weight: 500; cursor: pointer; color: #000" class="py-3">
         <a [routerLink]="['/home/user/myPosts']">Bài viết đã đăng</a>
@@ -26,7 +31,7 @@
         <span style="font-size: 18px; font-weight: 600">Mức độ yêu thích</span><br/>
       </div>
       <div class="py-2" style="border-bottom: 1px solid #c3c3c3; border-top: 1px solid #c3c3c3">
-        <span>Tổng số bài viết</span><br/>
+        <span>Tổng số bài viết đã đăng</span><br/>
         <span>{{totalPosts ? totalPosts : 0}}</span>
       </div>
       <div class="py-2" style="border-bottom: 1px solid #c3c3c3">

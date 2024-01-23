@@ -9,7 +9,7 @@ import {NotificationService} from '../../../services/notification.service';
 import {Api} from 'src/app/services/api';
 import {ShareDataService} from '../../../services/share-data.service';
 import {Subscription} from 'rxjs';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-viet-bai',
@@ -20,6 +20,8 @@ export class VietBaiComponent implements OnInit {
   @Input() isReset = false;
   // @Input() dataEdit: any;
   public Editor = ClassicEditor;
+  cam = ['Mỹ phẩm', 'tắm trắng', 'đông y', 'trị mụn', 'tiêm môi', 'giảm cân'];
+
 
   selectedFile: File;
   urlImage: string;
@@ -28,9 +30,10 @@ export class VietBaiComponent implements OnInit {
   dataEdit: any;
 
   subscription: Subscription;
+  userLocalstorage: any;
 
-
-  // @ts-ignore
+  dataCategory: any;
+  tags: any;
 
   constructor(
     private fb: FormBuilder,
@@ -41,6 +44,8 @@ export class VietBaiComponent implements OnInit {
     private shareDataService: ShareDataService,
     private router: Router,
   ) {
+    this.userLocalstorage = JSON.parse(localStorage.getItem('user'));
+
     this.formAdd = this.fb.group({
       id: null,
       title: [null, [Validators.required]],
@@ -49,7 +54,8 @@ export class VietBaiComponent implements OnInit {
       imagePath: null,
       userId: null,
       createdAt: null,
-      category: 'Trang thiết bị',
+      category: null,
+      categoryCur: [null],
       like1: null,
       comment: null,
       status: null,
@@ -59,7 +65,7 @@ export class VietBaiComponent implements OnInit {
     this.subscription = this.shareDataService.dataEditPosts$.subscribe(data => {
       this.dataEdit = data;
     });
-    console.log('this.dataEdit: ', this.dataEdit)
+    console.log('this.dataEdit: ', this.dataEdit);
     if (this.dataEdit != null) {
       this.formAdd.patchValue({
         id: this.dataEdit.id,
@@ -70,7 +76,7 @@ export class VietBaiComponent implements OnInit {
         imagePath: this.dataEdit.imagePath,
         userId: this.dataEdit.userId,
         createdAt: this.dataEdit.createdAt,
-        category: this.dataEdit.category,
+        categoryCur: [this.dataEdit.category],
         like1: this.dataEdit.like1,
         comment: this.dataEdit.comment,
       });
@@ -87,7 +93,11 @@ export class VietBaiComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.http.get('http://localhost:8080/api/authors/posts/search-list-category').toPromise().then((data: any) => {
+      this.dataCategory = data.data;
+      // this.total = data.optional;
+      console.log('dataCategory: ', data.data);
+    });
 
     // this.subscription = this.shareDataService.isResetFormCreatePost$.subscribe(data => {
     //   this.formAdd.reset();
@@ -127,40 +137,114 @@ export class VietBaiComponent implements OnInit {
     // );
   }
 
+  checkForBannedKeywords(content: string) {
+    let a = null;
+    if (this.cam.some(keyword => {
+      a = keyword;
+      return content.includes(keyword);
+    })) {
+      console.log('a: ', a);
+      return a;
+    }
+    console.log('a: ', a);
+    return a;
+  }
+
+
   Submit() {
     if (this.formAdd.get('title').value?.trim()) {
       if (this.dataEdit == null || !this.dataEdit) {
-        setTimeout(() => {
-          this.formAdd.get('userId').setValue(JSON.parse(localStorage.getItem('user')).id);
-          this.formAdd.get('imagePath').setValue(this.urlImage);
-          this.api.createPosts(this.formAdd.value).toPromise().then((data: any) => {
-            if (data.errorCode == '00') {
-              this.notificationService.showMessage('success', 'Đăng bài thành công');
-              this.router.navigate(['/home/posts']);
-              this.urlImage = null
-              this.formAdd.reset();
-            } else {
-              this.notificationService.showMessage('error', 'Đăng bài thất bại');
-            }
-          });
-        });
+        this.formAdd.get('userId').setValue(JSON.parse(localStorage.getItem('user')).id);
+        this.formAdd.get('imagePath').setValue(this.urlImage);
+        const a = this.checkForBannedKeywords(this.formAdd.get('contentDetail').value);
+        const b = this.checkForBannedKeywords(this.formAdd.get('title').value);
+        const c = this.checkForBannedKeywords(this.formAdd.get('contentPost').value);
+        if (a == null && b == null && c == null) {
+          if (this.userLocalstorage.role == 'ADMIN') {
+            this.formAdd.get('status').setValue(1);
+            this.formAdd.get('category').setValue(this.formAdd.get('categoryCur').value.toString());
+            console.log('this.tags: ', this.tags);
+            // setTimeout(() => {
+            this.api.createPosts(this.formAdd.value).toPromise().then((data: any) => {
+              if (data.errorCode == '00') {
+                this.notificationService.showMessage('success', 'Đăng bài thành công');
+                this.router.navigate(['/home/posts']);
+                this.urlImage = null;
+                this.formAdd.reset();
+              } else {
+                this.notificationService.showMessage('error', 'Đăng bài thất bại');
+              }
+            });
+          } else {
+            this.formAdd.get('status').setValue(0);
+            this.formAdd.get('category').setValue(this.formAdd.get('categoryCur').value);
+            this.api.createPosts(this.formAdd.value).toPromise().then((data: any) => {
+              if (data.errorCode == '00') {
+                this.notificationService.showMessage('success', 'Đăng bài thành công, chờ quản trị viên duyệt');
+                this.router.navigate(['/home/posts']);
+                this.urlImage = null;
+                this.formAdd.reset();
+              } else {
+                this.notificationService.showMessage('error', 'Đăng bài thất bại');
+              }
+            });
+          }
+        } else {
+          this.notificationService.showMessage('error', `Bài viết của bạn chứa từ khóa bị cấm: ${a ? a : b ? b : c}`);
+        }
+
+        // });
       }
 
       if (this.dataEdit != null) {
         this.formAdd.get('imagePath').setValue(this.urlImage ? this.urlImage : this.dataEdit.imagePath);
-        // this.formAdd.get('imagePath').setValue(this.dataEdit.imagePath);
-        this.api.updatePosts(this.formAdd.value).toPromise().then((data: any) => {
-          if (data.errorCode == '00') {
-            this.notificationService.showMessage('success', 'Sửa bài đăng thành công');
-            this.router.navigate(['/home/posts']);
-            this.formAdd.reset();
-            this.dataEdit = null;
-            this.urlImage = null
-          } else {
-            this.notificationService.showMessage('error', 'Sửa bài đăng thất bại');
-          }
-        });
+        if (this.userLocalstorage.role == 'ADMIN') {
+          this.formAdd.get('status').setValue(1);
+          this.formAdd.get('category').setValue(this.formAdd.get('categoryCur').value);
+          this.api.updatePosts(this.formAdd.value).toPromise().then((data: any) => {
+            if (data.errorCode == '00') {
+              this.notificationService.showMessage('success', 'Sửa bài đăng thành công');
+              this.router.navigate(['/home/posts']);
+              this.formAdd.reset();
+              this.dataEdit = null;
+              this.urlImage = null;
+            } else {
+              this.notificationService.showMessage('error', 'Sửa bài đăng thất bại');
+            }
+          });
+        } else {
+          this.formAdd.get('status').setValue(0);
+          this.formAdd.get('category').setValue(this.formAdd.get('categoryCur').value);
+          this.api.updatePosts(this.formAdd.value).toPromise().then((data: any) => {
+            if (data.errorCode == '00') {
+              this.notificationService.showMessage('success', 'Sửa bài đăng thành công, chờ quản trị viên duyệt');
+              this.router.navigate(['/home/posts']);
+              this.formAdd.reset();
+              this.dataEdit = null;
+              this.urlImage = null;
+            } else {
+              this.notificationService.showMessage('error', 'Sửa bài đăng thất bại');
+            }
+          });
+        }
       }
     }
   }
+
+  Save() {
+    this.formAdd.get('status').setValue(2);
+    this.formAdd.get('category').setValue(this.formAdd.get('categoryCur').value.toString());
+    console.log('this.tags: ', this.tags);
+    // setTimeout(() => {
+    this.api.createPosts(this.formAdd.value).toPromise().then((data: any) => {
+      if (data.errorCode == '00') {
+        this.notificationService.showMessage('success', 'Lưu bài viết nháp thành công');
+        this.router.navigate(['/home/posts']);
+        this.urlImage = null;
+        this.formAdd.reset();
+      } else {
+        this.notificationService.showMessage('error', 'Lưu bài viết nháp thất bại');
+      }
+  });
+}
 }

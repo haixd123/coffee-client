@@ -7,6 +7,7 @@ import {Subscription} from 'rxjs';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Api} from '../../../services/api';
 import {NotificationService} from '../../../services/notification.service';
+import {NzPlacementType} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-posts',
@@ -18,6 +19,7 @@ export class HomePostsComponent implements OnInit, OnChanges {
   searchModel: SearchModelEntity = new SearchModelEntity();
   total: number;
   formSearch: FormGroup;
+  formSearchInput: FormGroup;
   PostsId: any;
   data: any[];
   curPage: number;
@@ -29,12 +31,20 @@ export class HomePostsComponent implements OnInit, OnChanges {
   listIsReplyComment: any;
 
   searchCoffee: string;
+  idPostsLocalstorage: string;
+
 
   category: string;
   subscription: Subscription;
 
   PostIdLocalStorage: string;
   userLocalstorage: any;
+
+  dataTopCommentPost: any[];
+  dataTopLikePost: any[];
+  postOfUser: any;
+
+  listOfPosition: NzPlacementType[] = ['bottomLeft'];
 
   constructor(
     private fb: FormBuilder,
@@ -47,6 +57,10 @@ export class HomePostsComponent implements OnInit, OnChanges {
   ) {
     this.formSearch = this.fb.group({
       category: null,
+      status: 1,
+    });
+    this.formSearchInput = this.fb.group({
+      inputSearch: null
     });
     this.subscription = this.shareDataService.dataCategory$.subscribe((data) => {
       this.category = data;
@@ -65,6 +79,8 @@ export class HomePostsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.idPostsLocalstorage = localStorage.getItem('postsId');
+
     //???
     this.activatedRoute.paramMap.subscribe(params => {
       this.category = params.get('category');
@@ -74,6 +90,16 @@ export class HomePostsComponent implements OnInit, OnChanges {
       if (!this.category) {
         this.search(null);
       }
+    });
+
+    this.http.get('http://localhost:8080/api/authors/posts/comment-post').toPromise().then((data: any) => {
+      this.dataTopCommentPost = data.data;
+      // console.log('res comment: ', data);
+    });
+
+    this.http.get('http://localhost:8080/api/authors/posts/like-post').toPromise().then((data: any) => {
+      // console.log('res like: ', data);
+      this.dataTopLikePost = data.data;
     });
 
 //???
@@ -101,6 +127,11 @@ export class HomePostsComponent implements OnInit, OnChanges {
     this.api.getListPosts(this.searchModel).toPromise().then((data: any) => {
       this.data = data.data;
       this.total = data.optional;
+      for (const item of data.data) {
+        if (this.idPostsLocalstorage == item.id) {
+          this.postOfUser = item.userId;
+        }
+      }
     });
   }
 
@@ -148,5 +179,11 @@ export class HomePostsComponent implements OnInit, OnChanges {
         this.notificationService.showMessage('error', 'Xóa đăng thất bại');
       }
     });
+  }
+
+  changeToDetailPosts(item) {
+    localStorage.setItem('postsId', item.id);
+    this.idPostsLocalstorage = item.id;
+    this.router.navigate([`/home/detail/posts/${item.category}/${item.id}`]);
   }
 }

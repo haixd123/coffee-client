@@ -21,7 +21,7 @@
         </div>
         <!--        content3-->
         <div>
-          <a style="padding: 22px 10px; color: #fff" (click)="linkToPost()">Bài viết</a>
+          <a style="padding: 22px 10px; color: #fff" (click)="linkToPost()">Chia sẻ</a>
         </div>
         <div>
           <a style="padding: 22px 10px; color: #fff" (click)="linkToProduct()">Sản phẩm</a>
@@ -61,7 +61,7 @@
           <a class="d-flex align-items-center px-3 " style="color: #fff">
             <i nz-icon nzType="unordered-list" nzTheme="outline" class="mr-1"></i>Danh mục
           </a>
-          <div class="category">
+          <div class="category" style="max-height: 321px; overflow-y: auto">
             <div>
               <div *ngFor="let item of dataCategory" class="item-category">
                 <!--                style="border-top: 1px solid #fff; border-bottom: 1px solid #fff">-->
@@ -147,13 +147,34 @@
                 <i class="mr-3" nz-icon nzType="audit" nzTheme="outline"></i>
                 Thông tin tài khoản</a>
               <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"
+                 [routerLink]="['/home/user/draftPosts']">
+<!--                <i class="mr-3" nz-icon nzType="user" nzTheme="outline"></i>-->
+                <i class="mr-3" nz-icon nzType="file-ppt" nzTheme="outline"></i>
+
+                Bài viết nháp</a>
+              <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"
+                 [routerLink]="['/home/user/refusePosts']">
+<!--                <i class="mr-3" nz-icon nzType="user" nzTheme="outline"></i>-->
+                <i class="mr-3" nz-icon nzType="file-excel" nzTheme="outline"></i>
+
+                Bài viết bị từ chối</a>
+              <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"
                  [routerLink]="['/home/user/myPosts']" (click)="noBody()">
-                <i class="mr-3" nz-icon nzType="user" nzTheme="outline"></i>
-                Trang cá nhân</a>
+<!--                <i class="mr-3" nz-icon nzType="user" nzTheme="outline"></i>-->
+                <i class="mr-3" nz-icon nzType="file-done" nzTheme="outline"></i>
+
+                Bài viết đã đăng</a>
+              <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"
+                 [routerLink]="['/home/user/waittingPosts']">
+<!--                <i class="mr-3" nz-icon nzType="star" nzTheme="outline"></i>-->
+                <i class="mr-3" nz-icon nzType="file-sync" nzTheme="outline"></i>
+
+                Bài viết chờ duyệt</a>
               <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"
                  [routerLink]="['/home/user/savePosts']" (click)="noBody()">
+<!--                <i class="mr-3" nz-icon nzType="star" nzTheme="outline"></i>-->
                 <i class="mr-3" nz-icon nzType="star" nzTheme="outline"></i>
-                Bài viết yêu thích</a>
+                Bài viết đã lưu</a>
               <!--              <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"-->
               <!--                 (click)="noBody()">-->
               <!--                <i class="mr-3" nz-icon nzType="info-circle" nzTheme="outline"></i>-->

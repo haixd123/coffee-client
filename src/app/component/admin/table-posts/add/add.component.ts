@@ -27,6 +27,8 @@ export class AddPostsComponent implements OnInit {
   selectedFile: File;
   urlImage: string;
   isLoading = false;
+  userLocalstorage: any;
+  dataCategory: any;
 
   constructor(
     private fb: FormBuilder,
@@ -35,19 +37,27 @@ export class AddPostsComponent implements OnInit {
     private storage: AngularFireStorage,
     public datePipe: DatePipe,
     private api: Api,
-
   ) {
+    this.userLocalstorage = JSON.parse(localStorage.getItem('user'));
     this.formAdd = this.fb.group({
       title: [null, [Validators.required]],
       contentPost: [null, [Validators.required]],
       imagePath: null,
-      category: 'Trang thiết bị',
+      category: [null],
+      categoryCur: [null],
       contentDetail: [null, [Validators.required]],
       createAt: null,
+      status: null,
+      userId: null,
     });
   }
 
   ngOnInit(): void {
+    this.http.get('http://localhost:8080/api/authors/posts/search-list-category').toPromise().then((data: any) => {
+      this.dataCategory = data.data;
+      // this.total = data.optional;
+      console.log('dataCategory: ', data.data);
+    });
   }
 
   get f() {
@@ -94,21 +104,24 @@ export class AddPostsComponent implements OnInit {
 
   handleOk(): void {
     // setTimeout(() => {
-      // if (this.urlImage) {
-      this.formAdd.get('imagePath').setValue(this.urlImage);
-      // }
-      this.formAdd.get('createAt').setValue(this.datePipe.transform(new Date(), 'dd/MM/yyyy'));
-      this.api.createPosts(this.formAdd.value).toPromise().then((data: any) => {
-        if (data.errorCode == '00') {
-          this.notificationService.showMessage('success', 'Thêm mới bài đăng thành công');
-          this.handleCancel(true);
-          this.isAdd = false;
-          this.formAdd.reset();
-        } else {
-          this.notificationService.showMessage('error', 'Bài đăng đã tồn tại');
-          // this.handleCancel(true);
-        }
-      });
+    // if (this.urlImage) {
+    this.formAdd.get('imagePath').setValue(this.urlImage);
+    // }
+    this.formAdd.get('createAt').setValue(this.datePipe.transform(new Date(), 'dd/MM/yyyy'));
+    this.formAdd.get('status').setValue(1);
+    this.formAdd.get('userId').setValue(this.userLocalstorage.id);
+    this.formAdd.get('category').setValue(this.formAdd.get('categoryCur').value.toString());
+    this.api.createPosts(this.formAdd.value).toPromise().then((data: any) => {
+      if (data.errorCode == '00') {
+        this.notificationService.showMessage('success', 'Thêm mới bài đăng thành công');
+        this.handleCancel(true);
+        this.isAdd = false;
+        this.formAdd.reset();
+      } else {
+        this.notificationService.showMessage('error', 'Bài đăng đã tồn tại');
+        // this.handleCancel(true);
+      }
+    });
 
     // }, 2000);
   }
