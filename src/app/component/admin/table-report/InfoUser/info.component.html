@@ -1,0 +1,46 @@
+<!--  <button nz-button [nzType]="'primary'" (click)="showModal()"><span>Show Modal</span></button>-->
+<nz-modal nzWidth="800px" [(nzVisible)]="isInfo" nzTitle="Thông tin người báo cáo"
+          (nzOnCancel)="handleCancel(false)"
+          [nzFooter]="null">
+  
+          <div class="layout">
+
+            <div class="info-group">
+                <div class="field">Tài khoản</div>
+                <div class="value">{{ data.username}}</div>
+            </div>
+            <div class="info-group">
+                <div class="field">Email</div>
+                <div class="value">{{ data.email}}</div>
+            </div>
+            <div class="info-group">
+                <div class="field">Tên</div>
+                <div class="value">{{ data.name}}</div>
+            </div>
+            <div class="info-group">
+                <div class="field">Vai trò</div>
+                <div class="value">{{ data.role}}</div>
+            </div>
+            <div class="info-group">
+                <div class="field">Số điện thoại</div>
+                <div class="value">{{ data.phoneNumber}}</div>
+            </div>
+            <div class="info-group">
+                <div class="field">Ngày sinh</div>
+                <div class="value">{{ data.dateOfBirth | date}}</div>
+            </div>
+            <div class="info-group">
+                <div class="field">Giới tính</div>
+                <div class="value">{{ data.sex}}</div>
+            </div>
+            <div class="info-group">
+                <div class="field">Trạng thái</div>
+                <div class="value">{{ data.status}}</div>
+            </div>
+            <div class="info-group">
+                <div class="field">Ảnh</div>
+                <div class="value"><img [src]="data.image" alt=""></div>
+            </div>
+            
+          </div>
+</nz-modal>

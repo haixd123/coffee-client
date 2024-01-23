@@ -1,22 +1,20 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {SearchModelEntity} from '../component/admin/search-model-entiry';
-import {BaseService} from '../shared/base-service/base-service.service';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { SearchModelEntity } from '../component/admin/search-model-entiry';
+import { BaseService } from '../shared/base-service/base-service.service';
+import { Comment } from '../component/admin/table-report/interface/comment';
 
 // import {BaseService} from './base-service.service';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 // export class ImgUploadService extends BaseService {
 export class Api extends BaseService {
-
   // imgUpload(url: string, formData: FormData): Observable<any> {
   //   return this.http.post(url, formData);
   // }
-
 
   //CoffeeBean
   getListCoffee(searchModel: SearchModelEntity) {
@@ -35,7 +33,6 @@ export class Api extends BaseService {
     return this.post('/coffee/delete', searchModel);
   }
 
-
   //Equipment
   getListEquipment(searchModel: SearchModelEntity) {
     return this.post('/authors/equipment/search', searchModel);
@@ -52,7 +49,6 @@ export class Api extends BaseService {
   deleteEquipment(searchModel: SearchModelEntity) {
     return this.post('/equipment/delete', searchModel);
   }
-
 
   //Posts
   getListPosts(searchModel: SearchModelEntity) {
@@ -79,6 +75,9 @@ export class Api extends BaseService {
     return this.post('/posts/delete', searchModel);
   }
 
+  changeStatusPost(postId: number,status:number){
+    return this.httpClient.post(`http://localhost:8080/api/posts/${postId}/change-status/${status}`,null);
+  }
 
   //Product
   getListProduct(searchModel: SearchModelEntity) {
@@ -97,9 +96,8 @@ export class Api extends BaseService {
     return this.post('/product/delete', searchModel);
   }
 
-
-//////////
-//Comment
+  //////////
+  //Comment
   getTotalCommentPost(searchModel: SearchModelEntity) {
     return this.post('/authors/comment/searchTotalCommentPost', searchModel);
   }
@@ -120,7 +118,6 @@ export class Api extends BaseService {
     return this.post('/comment/delete', searchModel);
   }
 
-
   //LikePosts
   getTotalLikePost(searchModel: SearchModelEntity) {
     return this.post('/authors/LikePosts/searchTotalLikePost', searchModel);
@@ -133,7 +130,6 @@ export class Api extends BaseService {
   isLike(searchModel: SearchModelEntity) {
     return this.post('/LikePosts/create', searchModel);
   }
-
 
   // Notify
   // createSqlGetListfromUser(searchModel: SearchModelEntity) {
@@ -148,7 +144,6 @@ export class Api extends BaseService {
   //   return this.post('/authors/notify/search-list-isReply-comment', searchModel);
   // }
 
-
   createNotify(searchModel: SearchModelEntity) {
     return this.post('/authors/notify/create', searchModel);
   }
@@ -156,7 +151,6 @@ export class Api extends BaseService {
   deleteNotify(searchModel: SearchModelEntity) {
     return this.post('/notify/delete', searchModel);
   }
-
 
   //SavePosts
   getListSavePosts(searchModel: SearchModelEntity) {
@@ -187,16 +181,95 @@ export class Api extends BaseService {
 
   // payment online
 
-  createPaymentWithVnPay(searchModel: SearchModelEntity){
+  createPaymentWithVnPay(searchModel: SearchModelEntity) {
     return this.post('/payment/authors/create-payment', searchModel);
   }
 
-  getVnPaymentInfo(params: HttpParams){
+  getVnPaymentInfo(params: HttpParams) {
     return this.get('/payment/payment-info', params);
   }
 
   // User
   updateUser(searchModel: SearchModelEntity) {
     return this.post('/user/update', searchModel);
+  }
+
+  // comment
+
+  changeStatusComment(commentId: number,status:number){
+    return this.httpClient.post(`http://localhost:8080/api/comment/${commentId}/change-status/${status}`,null);
+  }
+  getAllCommentByCommentContaining(
+    page: number,
+    size: number,
+    infix: string
+  ): Observable<any> {
+    return this.httpClient.get<any>(
+      'http://localhost:8080/api/comment/by-content',
+      {
+        params: new HttpParams()
+          .append('page', page + '')
+          .append('size', size + '')
+          .append('text', infix),
+      }
+    );
+  }
+  getAllCommentByUserId(
+    page: number,
+    size: number,
+    userId: number
+  ): Observable<any> {
+    return this.httpClient.get<any>(
+      `http://localhost:8080/api/comment/by-user/${userId}`,
+      {
+        params: new HttpParams()
+          .append('page', page + '')
+          .append('size', size + '')
+      }
+    );
+  }
+  getAllCommentByPostId(
+    page: number,
+    size: number,
+    postId: number
+  ): Observable<any> {
+    return this.httpClient.get<any>(
+        `http://localhost:8080/api/comment/by-post/${postId}`,
+      {
+        params: new HttpParams()
+          .append('page', page + '')
+          .append('size', size + '')
+      }
+    );
+  }
+  getAllCommentByStatus(
+    page: number,
+    size: number,
+    status: number
+  ): Observable<any> {
+    return this.httpClient.get<any>(
+      `http://localhost:8080/api/comment/by-status/${status}`,
+      {
+        params: new HttpParams()
+          .append('page', page + '')
+          .append('size', size + '')
+      }
+    );
+  }
+  // report
+  getAllReport(page: number,size:number):Observable<any>{
+    return this.httpClient.get(`http://localhost:8080/api/authors/reports`,{
+      params: new HttpParams().append('page', page + '')
+      .append('size', size + '')
+    })
+  }
+  getSearchReport(page:number,size:number,reason: string):Observable<any>{
+    return this.httpClient.get(`http://localhost:8080/api/authors/reports/search/{reason}`,{
+      params: new HttpParams().append('page', page + '')
+      .append('size', size + '')
+    })
+  }
+  deleteReport(id:number):Observable<any>{
+    return this.httpClient.delete(`http://localhost:8080/api/authors/reports/${id}`)
   }
 }
