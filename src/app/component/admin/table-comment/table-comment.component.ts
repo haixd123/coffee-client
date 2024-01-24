@@ -39,7 +39,7 @@ export class TableCommentComponent implements OnInit {
 
   isRefuse = false;
   inputValue = '';
-  placeholderValue: string = 'cụm từ bình luận';
+  placeholderValue: string = 'Bình luận';
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -126,7 +126,7 @@ export class TableCommentComponent implements OnInit {
     //   this.placeholderValue = 'trạng thái';
     // }
     if (value == '2') {
-      this.placeholderValue = 'cụm từ bình luận';
+      this.placeholderValue = 'Bình luận';
     }
   }
 
@@ -189,16 +189,14 @@ export class TableCommentComponent implements OnInit {
   }
 
   handleDelete(item: any) {
-    // this.api.deletePosts(item).subscribe((data: any) => {
-    //   if (data.errorCode == '00') {
-    //     this.notificationService.showMessage('success', 'Xóa bài đăng thành công');
-    //     this.isEdit = false;
-    //   } else {
-    //     this.notificationService.showMessage('error', 'Xóa bài đăng thất bại');
-    //     this.isEdit = false;
-    //   }
-    //   this.changePage();
-    // });
+    this.api.deleteComment(item).subscribe((data: any) => {
+      if (data.errorCode == '00') {
+        this.notificationService.showMessage('success', 'Xóa bình luận thành công');
+      } else {
+        this.notificationService.showMessage('error', 'Xóa bình luận thất bại');
+      }
+      this.changePage();
+    });
   }
 
   handleRefuse(item: any) {

@@ -28,7 +28,8 @@ export class PostsDetailComponent implements OnInit {
     // formSearch: FormGroup;
     formLikeComment: FormGroup;
     formSearchPost: FormGroup;
-    formReport: FormGroup;
+    formRating: FormGroup;
+
 
     isReplyComment = false;
     isLike = false;
@@ -67,6 +68,7 @@ export class PostsDetailComponent implements OnInit {
 
     dataReportComment: any;
     abc: any[];
+    inputRating: number;
 
     constructor(
         private fb: FormBuilder,
@@ -442,4 +444,15 @@ export class PostsDetailComponent implements OnInit {
         this.isRefuse = false;
     }
 
+    rating() {
+        console.log('inputRating: ', this.inputRating)
+        this.formRating = this.fb.group({
+            postId: null,
+            userId: null,
+            rating: null,
+        })
+        this.api.updateRating(this.formRating.value).subscribe((res: any) => {
+            console.log('res: ', res)
+        })
+    }
 }

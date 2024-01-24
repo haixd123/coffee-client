@@ -2,7 +2,7 @@
 <nz-modal nzWidth="500px" [(nzVisible)]="isInfo" nzTitle="Thông tin bình luận"
           (nzOnCancel)="handleCancel(false)"
           [nzFooter]="null">
-  
+
           <div class="layout">
             <div class="info-group">
               <div class="field">Người bình luận</div>
@@ -20,13 +20,13 @@
               <div class="field">Cập nhật lúc</div>
               <div class="value">{{ data.updateAt | date: 'dd/MM/yyyy hh:mm a' }}</div>
             </div>
-            <div class="info-group">
-              <div class="field">Số lượt thích</div>
-              <div class="value">{{ data.likeComment }}</div>
-            </div>
-            <div class="info-group">
-              <div class="field">Trạng thái</div>
-              <div class="value">{{ data.status }}</div>
-            </div>
+<!--            <div class="info-group">-->
+<!--              <div class="field">Số lượt thích</div>-->
+<!--              <div class="value">{{ data.likeComment }}</div>-->
+<!--            </div>-->
+<!--            <div class="info-group">-->
+<!--              <div class="field">Trạng thái</div>-->
+<!--              <div class="value">{{ data.status }}</div>-->
+<!--            </div>-->
           </div>
 </nz-modal>

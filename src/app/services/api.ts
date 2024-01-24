@@ -79,6 +79,10 @@ export class Api extends BaseService {
         return this.httpClient.post(`http://localhost:8080/api/posts/${postId}/change-status/${status}`, null);
     }
 
+    updateRating(value: any) {
+        return this.post('/authors/post-rating', value);
+    }
+
     //Product
     getListProduct(searchModel: SearchModelEntity) {
         return this.post('/authors/product/search', searchModel);
@@ -279,7 +283,7 @@ export class Api extends BaseService {
     }
 
     getSearchReport(page: number, size: number, reason: string): Observable<any> {
-        return this.httpClient.get(`http://localhost:8080/api/authors/reports/search/{reason}`, {
+        return this.httpClient.get(`http://localhost:8080/api/authors/reports/search/${reason}`, {
             params: new HttpParams().append('page', page + '')
                 .append('size', size + '')
         })

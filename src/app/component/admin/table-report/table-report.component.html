@@ -61,7 +61,7 @@
             <!--        //   | sort : sortValue : isSort-->
             <!--        //   | filter : searchValue;-->
             <!--        // let i = index-->
-            <td class="text-nowrap">
+            <td>
                 {{
                 validateService.getRowIndex(
                     i,
@@ -72,7 +72,7 @@
             </td>
             <td
             >
-                <span class="can-click" (click)="showUserInfo(item.userReport)">{{ item.userReport.name }}</span>
+                <span>{{ item.userReportId }}</span>
             </td>
             <!--        <td>{{ item.passWord }}</td>-->
             <!--      <td style=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{ item.passWord }}</td>-->
@@ -84,21 +84,22 @@
                 <span class="can-click"
                       (click)="showPostOrComment(item.reportType,item.data)">{{ item.reportType == 1 ? "Bài viết" : "Bình luận" }}</span>
 
-                <a
-                        [nz-tooltip]="'Gỡ ' + (item.reportType == 1 ? 'bài viết' : 'bình luận')"
-                        style="font-size: 21px; color: rgb(227, 97, 97);"
-                        nz-popconfirm
-                        [nzPopconfirmTitle]="'Bạn chắc chắn muốn xóa '+(item.reportType == 1 ? 'bài viết' : 'bình luận')+' bài đăng này?'"
-                        (nzOnConfirm)="handleRemovePostOrComment(item.reportType,item.data.id)"
-                >
-                    <i nz-icon nzType="close" nzTheme="outline"></i
-                    ></a>
+                <!--                <a-->
+                <!--                        [nz-tooltip]="'Gỡ ' + (item.reportType == 1 ? 'bài viết' : 'bình luận')"-->
+                <!--                        style="font-size: 21px; color: rgb(227, 97, 97);"-->
+                <!--                        nz-popconfirm-->
+                <!--                        [nzPopconfirmTitle]="'Bạn chắc chắn muốn xóa '+(item.reportType == 1 ? 'bài viết' : 'bình luận')+' bài đăng này?'"-->
+                <!--                        (nzOnConfirm)="handleRemovePostOrComment(item.reportType,item.data.id)"-->
+                <!--                >-->
+                <!--                    <i nz-icon nzType="close" nzTheme="outline"></i-->
+                <!--                    ></a>-->
             </td>
 
             <td>
                 {{ item.reason }}
             </td>
-            <td style="min-width: 100px">
+            <!--            <td style="min-width: 100px">-->
+            <td>
                 <!-- <a [nz-tooltip]="'Chấp nhận'"style="font-size: 21px" class="mr-3" (click)="handleApproved(item)">
                   <i nz-icon nzType="check" nzTheme="outline"></i
                 ></a>
@@ -109,11 +110,12 @@
                         [nz-tooltip]="'Xoá'"
                         style="font-size: 21px"
                         nz-popconfirm
-                        nzPopconfirmTitle="Bạn chắc chắn muốn xóa bài đăng này?"
-                        (nzOnConfirm)="handleDelete(item.data)"
+                        nzPopconfirmTitle="{{item.reportType == 1 ? 'Bạn chắc chắn muốn gỡ bài đăng này' : 'Bạn chắc chắn muốn gỡ bình luận này'}}"
+                        (nzOnConfirm)="handleDelete(item.id)"
                 >
                     <i nz-icon nzType="delete" nzTheme="outline"></i
                     ></a>
+                <!--                        nzPopconfirmTitle='"Bạn chắc chắn muốn gỡ " + {{item.reportType == 1 ? 'bài viết' : 'bình luận'}} +  " bài đăng này?"'-->
             </td>
         </tr>
         </tbody>
@@ -140,5 +142,5 @@
                 [data]="dataInfo"></app-info-posts>
 <app-info-comment *ngIf="showInfo == 'comment'" (closePopup)="handleClosePopup($event)" [isInfo]="true"
                   [data]="dataInfo"></app-info-comment>
-<app-info-user *ngIf="showInfo == 'user'" (closePopup)="handleClosePopup($event)" [isInfo]="true"
-               [data]="dataInfo"></app-info-user>
+<!--<app-info-user *ngIf="showInfo == 'user'" (closePopup)="handleClosePopup($event)" [isInfo]="true"-->
+<!--               [data]="dataInfo"></app-info-user>-->

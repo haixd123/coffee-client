@@ -33,7 +33,7 @@ export class ProductComponent implements OnInit, OnChanges {
       720: {
         items: 4
       },
-      
+
     },
   }
   customOptions: any = {
@@ -59,7 +59,7 @@ export class ProductComponent implements OnInit, OnChanges {
       960: {
         items: 5
       },
-      
+
     },
   };
 
@@ -98,7 +98,7 @@ export class ProductComponent implements OnInit, OnChanges {
     // this.data = Array(10).fill(this.rawData);
     // this.dataTop5= Array(10).fill(this.rawData);
     // this.datProduct50k= Array(10).fill(this.rawData);
-    // this.voucher = Array(5).fill(1);
+    this.voucher = Array(5).fill(1);
 
     this.api.getListProduct(this.searchModel).subscribe((data: any) => {
       this.data = data.data;

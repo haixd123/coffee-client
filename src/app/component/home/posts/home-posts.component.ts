@@ -20,6 +20,7 @@ export class HomePostsComponent implements OnInit, OnChanges {
   total: number;
   formSearch: FormGroup;
   formSearchInput: FormGroup;
+  formSearchPost: FormGroup;
   PostsId: any;
   data: any[];
   curPage: number;
@@ -43,7 +44,10 @@ export class HomePostsComponent implements OnInit, OnChanges {
   dataTopCommentPost: any[];
   dataTopLikePost: any[];
   postOfUser: any;
+  isRefuse = false;
+  inputValue = '';
 
+  dataReportPost: any;
   listOfPosition: NzPlacementType[] = ['bottomLeft'];
 
   constructor(
@@ -188,6 +192,28 @@ export class HomePostsComponent implements OnInit, OnChanges {
   }
 
   reportPosts(value: any) {
+    this.isRefuse = true;
+    this.dataReportPost = value;
+  }
+
+  handleOkRefuse() {
+    this.formSearchPost = this.fb.group({
+      dataReportId: Number(this.dataReportPost?.id),
+      reportType: 1,
+      userReportId: Number(this.userLocalstorage.id),
+      reason: this.inputValue,
+    });
+    this.api.createReport(this.formSearchPost.value).subscribe((res: any) => {
+      this.notificationService.showMessage('success', res.message);
+      this.isRefuse = false;
+    })
+  }
+
+  handleCancelRefuse() {
+    this.isRefuse = false;
+  }
+
+  SearchForDate() {
 
   }
 }

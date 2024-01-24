@@ -143,7 +143,7 @@ export class TableReportComponent implements OnInit {
     let page = this.curPage -1;
     let size = 10;
     let reason = this.formSearch.get('reason').value;
-    if ((reason + '').trim().length > 0) {
+    if (reason != null && (reason + '').trim().length > 0) {
       this.api.getSearchReport(page, size, reason).subscribe({
         next: (res) => {
           this.data = res.data.content;

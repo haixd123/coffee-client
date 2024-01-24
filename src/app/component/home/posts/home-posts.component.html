@@ -39,6 +39,14 @@
                         <div class="mb-1 d-flex align-items-center">
                             <i *ngIf="item.category" class="mr-1 mb-1" nz-icon nzType="menu" nzTheme="outline"></i>
                             {{item.category}}</div>
+                        <div class="d-flex mb-1">
+                            <div class="mr-4 d-flex align-items-center"><i class="mr-1" nz-icon nzType="like"
+                                                 nzTheme="outline"></i> {{item.like1}}</div>
+                            <div class="mr-4 d-flex align-items-center"><i class="mr-1" nz-icon nzType="comment"
+                                                 nzTheme="outline"></i> {{item.comment}}</div>
+                            <div class="mr-4 d-flex align-items-center"><i class="mr-1" nz-icon nzType="star"
+                                                 nzTheme="outline"></i> {{item.rating}}</div>
+                        </div>
                         <div>
                             <a
                                     style="text-overflow: ellipsis; display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; max-width: 90%">{{item.contentPost}}</a>
@@ -53,7 +61,8 @@
                        (click)="handleMoreBtn(item)"></i>
                     <div class="editPost"
                          style="border: 1px solid #c3c3c3; position: absolute; top: 32px; right: 7px; background-color: #fff; z-index: 100; width: 110px;">
-                        <div *ngIf="userLocalstorage?.role != 'ADMIN'" style="padding: 6px 10px 6px 10px"
+                        <div *ngIf="userLocalstorage?.role != 'ADMIN' && (userLocalstorage?.id != item.userId)"
+                             style="padding: 6px 10px 6px 10px"
                              class="hoverEditPosts d-flex justify-content-center" (click)="reportPosts(item)">Báo xấu
                         </div>
                         <div *ngIf="userLocalstorage?.id == item.userId" style="padding: 6px 40px 6px 40px"
@@ -75,20 +84,21 @@
                     <div class="mb-3">
                         <span style="font-size: 23px; font-weight: 600">Bài viết được nhiều người yêu thích nhất</span>
                     </div>
-                    <div class="mb-4 d-flex justify-content-between" style="width: 370px !important;">
+                    <div class="mb-4 d-flex justify-content-between">
                         <div>
                             <label style="font-size: 18px; font-weight: 600;">Sắp xếp theo: </label>
                         </div>
                         <div>
                             <ng-container class="mb-3" *ngFor="let position of listOfPosition">
-                                <button nz-button nz-dropdown class="d-flex align-items-center" [nzDropdownMenu]="menu" [nzPlacement]="position">
-                                    Tuần  <i nz-icon nzType="down"></i>
+                                <button nz-button nz-dropdown class="d-flex align-items-center" [nzDropdownMenu]="menu"
+                                        [nzPlacement]="position">
+                                    Tuần <i nz-icon nzType="down"></i>
                                 </button>
                                 <nz-dropdown-menu #menu="nzDropdownMenu">
                                     <ul nz-menu>
-                                        <li nz-menu-item>1st menu item length</li>
-                                        <li nz-menu-item>2nd menu item length</li>
-                                        <li nz-menu-item>3rd menu item length</li>
+                                        <li nz-menu-item (click)="SearchForDate()">Tuần</li>
+                                        <li nz-menu-item (click)="SearchForDate()">Tháng</li>
+                                        <li nz-menu-item (click)="SearchForDate()">Năm</li>
                                     </ul>
                                 </nz-dropdown-menu>
                             </ng-container>
@@ -107,12 +117,13 @@
                                     </a>
                                 </div>
                                 <div class="ml-2 mb-3" style="font-weight: 500; font-size: 14px">
-                <span
-                        style="text-overflow: ellipsis; display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2;">{{item.title}}</span>
+                                    <span
+                                            style="text-overflow: ellipsis; display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2;">{{item.title}}</span>
                                     <div class="d-flex align-items-center my-1">
                                         <i *ngIf="item.category" class="mr-1 mb-1" nz-icon nzType="menu"
                                            nzTheme="outline"></i>
                                         {{item.category}}</div>
+
                                     <span
                                             style="text-overflow: ellipsis; display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2;">{{item.contentPost}}</span>
                                 </div>
@@ -131,14 +142,15 @@
                         </div>
                         <div>
                             <ng-container class="mb-3" *ngFor="let position of listOfPosition">
-                                <button nz-button nz-dropdown class="d-flex align-items-center" [nzDropdownMenu]="menu" [nzPlacement]="position">
-                                    Tuần  <i nz-icon nzType="down"></i>
+                                <button nz-button nz-dropdown class="d-flex align-items-center" [nzDropdownMenu]="menu"
+                                        [nzPlacement]="position">
+                                    Tuần <i nz-icon nzType="down"></i>
                                 </button>
                                 <nz-dropdown-menu #menu="nzDropdownMenu">
                                     <ul nz-menu>
-                                        <li nz-menu-item>1st menu item length</li>
-                                        <li nz-menu-item>2nd menu item length</li>
-                                        <li nz-menu-item>3rd menu item length</li>
+                                        <li nz-menu-item (click)="SearchForDate()">Tuần</li>
+                                        <li nz-menu-item (click)="SearchForDate()">Tháng</li>
+                                        <li nz-menu-item (click)="SearchForDate()">Năm</li>
                                     </ul>
                                 </nz-dropdown-menu>
                             </ng-container>
@@ -244,5 +256,10 @@
                        [nzPageSize]="10"></nz-pagination>
     </div>
 </div>
+
+<nz-modal [(nzVisible)]="isRefuse" [nzTitle]="'Lý do tố cáo bình luận'" (nzOnCancel)="handleCancelRefuse()"
+          (nzOnOk)="handleOkRefuse()">
+    <input class="p-2" type="text" nz-input [(ngModel)]="inputValue" placeholder="Nhập thông tin">
+</nz-modal>
 <!--<app-posts-detail [PostsId]="PostsId"></app-posts-detail>-->
 <!--<app-detail style="display:none;" [postDetailCategory]="postDetailCategory"></app-detail>-->

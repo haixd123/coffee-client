@@ -127,6 +127,11 @@
         <!--    </div>-->
 
         <!--        <div style="width: 100%" class="mt-2 mb-5">{{this.hashTag}}</div>-->
+
+        <div class="mb-2 mt-3">
+            <nz-rate [(ngModel)]="inputRating" nzAllowHalf (click)="rating()"></nz-rate>
+        </div>
+
         <div style="border: 2px solid #c3c3c3" class="ant-col-23 mb-5 mx-1">
             <!--      <div style="border: 2px solid #c3c3c3; position: absolute; bottom: 0;" class="ant-col-23 mb-5 mx-1">-->
             <div class="m-3">
@@ -249,7 +254,7 @@
 
 <nz-modal [(nzVisible)]="isRefuse" [nzTitle]="'Lý do tố cáo bình luận'" (nzOnCancel)="handleCancelRefuse()"
           (nzOnOk)="handleOkRefuse()">
-  <input class="p-2" type="text" nz-input [(ngModel)]="inputValue" placeholder="Nhập thông tin">
+    <input class="p-2" type="text" nz-input [(ngModel)]="inputValue" placeholder="Nhập thông tin">
 </nz-modal>
 <!--<app-notification [dataInfoUserNotification]="dataInfoUserNotification"></app-notification>-->
 <!--<app-notification></app-notification>-->
