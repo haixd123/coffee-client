@@ -292,10 +292,6 @@ export class TablePostsComponent implements OnInit {
         // this.changePage();
     }
 
-<<<<<<< Updated upstream
-=======
-// <<<<<<< Updated upstream
->>>>>>> Stashed changes
   handleCancelRefuse() {
     this.isRefuse = false;
   }
@@ -309,12 +305,5 @@ export class TablePostsComponent implements OnInit {
       return item;
     })
   }
-<<<<<<< Updated upstream
-=======
-// =======
-//     handleCancelRefuse() {
-//         this.isRefuse = false;
-//     }
-// >>>>>>> Stashed changes
->>>>>>> Stashed changes
+
 }
