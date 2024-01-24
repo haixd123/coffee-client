@@ -47,9 +47,9 @@ export class WebsocketService {
   }
   handleNotification(notification: any) {
     console.log(this.currentUser.userName);
-    if (notification?.username == this.currentUser.userName) {
+    // if (notification?.username == this.currentUser.userName) {
       this.notificationSubject.next(notification);
-    }
+    // }
   }
 
   // Phương thức để gửi comment lên server

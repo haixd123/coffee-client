@@ -6,89 +6,91 @@ import {Api} from '../../../../services/api';
 import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
-  selector: 'app-save-posts',
-  templateUrl: './save-posts.component.html',
-  styleUrls: ['./save-posts.component.scss']
+    selector: 'app-save-posts',
+    templateUrl: './save-posts.component.html',
+    styleUrls: ['./save-posts.component.scss']
 })
 export class SavePostsComponent implements OnInit {
-  searchModel: SearchModelEntity = new SearchModelEntity();
-  formSearch: FormGroup;
+    searchModel: SearchModelEntity = new SearchModelEntity();
+    formSearch: FormGroup;
 
-  dataDetailPost = [];
-  dataSavePost = [];
-  total: number;
-  p = 1; // Trang hiện tại
-  PostsId: any;
-  savePostsUserId: any;
+    dataDetailPost = [];
+    dataSavePost = [];
+    total: number;
+    p = 1; // Trang hiện tại
+    PostsId: any;
+    savePostsUserId: any;
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private api: Api,
-    private fb: FormBuilder,
-  ) {
-    this.formSearch = this.fb.group({
-      status: 1,
-    });
+    constructor(
+        private http: HttpClient,
+        private router: Router,
+        private api: Api,
+        private fb: FormBuilder,
+    ) {
+        this.formSearch = this.fb.group({
+            status: 1,
+        });
 
-    this.handleSearch();
-    this.savePostsUserId = JSON.parse(localStorage.getItem('user')).id;
-  }
-
-  ngOnInit(): void {
-  }
-
-  handleUpdate(searchModel: SearchModelEntity, reset = false) {
-    let a = [];
-    this.api.getListSavePosts(this.searchModel).toPromise().then((data: any) => {
-      for (const i of data.data) {
-        if (i.userId == this.savePostsUserId) {
-          this.dataSavePost.push(i.postId);
-        }
-      }
-      console.log('data.data: ', data);
-      this.total = data.optional;
-    });
-    this.searchModel.pageSize = 200;
-    this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
-    this.api.getListPosts(this.searchModel).toPromise().then((data: any) => {
-      a = [];
-      this.dataDetailPost = [];
-      for (const i of data.data) {
-        for (const item of this.dataSavePost) {
-          if (i.id == item) {
-            a.push(i);
-          }
-        }
-      }
-      console.log('a: ', a);
-      this.dataDetailPost = a;
-      // this.dataDetailPost = data.data;
-      // this.total = this.dataSavePost.length;
-    });
-
-  }
-
-  handleSearch() {
-    this.searchModel.pageIndex = 1;
-    if (this.p != null) {
-      this.searchModel.pageIndex = this.p;
+        this.handleSearch();
+        this.savePostsUserId = JSON.parse(localStorage.getItem('user')).id;
     }
-    this.searchModel.pageSize = 4;
-    this.formSearch = this.fb.group({
-      status: 1,
-    });
-    this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
-    this.handleUpdate(this.searchModel, true);
-  }
 
-  PostsDetail(item: any) {
-    this.PostsId = item.id;
-    localStorage.setItem('postsId', item.id);
-    localStorage.setItem('postsCategory', item.category);
+    ngOnInit(): void {
+    }
 
-    // setTimeout(() => {
-    this.router.navigate([`/home/detail/posts/${item.category}/${item.id}`]);
-  }
+    handleUpdate(searchModel: SearchModelEntity, reset = false) {
+        let a = [];
+        this.api.getListSavePosts(this.searchModel).toPromise().then((data: any) => {
+            this.dataDetailPost = data.data;
+            this.total = data.optional
+            // for (const i of data.data) {
+            //   if (i.userId == this.savePostsUserId) {
+            //     this.dataSavePost.push(i.postId);
+            //   }
+            // }
+            // console.log('data.data: ', data);
+            // this.total = data.optional;
+        });
+        // this.searchModel.pageSize = 200;
+        // this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
+        // this.api.getListPosts(this.searchModel).toPromise().then((data: any) => {
+        //   a = [];
+        //   this.dataDetailPost = [];
+        //   for (const i of data.data) {
+        //     for (const item of this.dataSavePost) {
+        //       if (i.id == item) {
+        //         a.push(i);
+        //       }
+        //     }
+        //   }
+        //   console.log('a: ', a);
+        //   this.dataDetailPost = a;
+        //   // this.dataDetailPost = data.data;
+        //   // this.total = this.dataSavePost.length;
+        // });
+
+    }
+
+    handleSearch() {
+        this.searchModel.pageIndex = 1;
+        if (this.p != null) {
+            this.searchModel.pageIndex = this.p;
+        }
+        this.searchModel.pageSize = 4;
+        this.formSearch = this.fb.group({
+            status: 1,
+        });
+        this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
+        this.handleUpdate(this.searchModel, true);
+    }
+
+    PostsDetail(item: any) {
+        this.PostsId = item.id;
+        localStorage.setItem('postsId', item.id);
+        localStorage.setItem('postsCategory', item.category);
+
+        // setTimeout(() => {
+        this.router.navigate([`/home/detail/posts/${item.category}/${item.id}`]);
+    }
 
 }

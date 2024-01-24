@@ -10,9 +10,9 @@
           <!--               *ngIf="item1.userId == savePostsUserId">-->
           <div style="cursor: pointer">
             <a>
-              <img *ngIf="item.imagePath" style="max-width: 252px; width: 217px; height: 145px; object-fit: cover" [src]="item.imagePath"/>
+              <img *ngIf="item.image" style="max-width: 252px; width: 217px; height: 145px; object-fit: cover" [src]="item.image"/>
 
-              <img *ngIf="!item.imagePath" style="max-width: 252px; width: 217px; height: 145px; object-fit: cover"
+              <img *ngIf="!item.image" style="max-width: 252px; width: 217px; height: 145px; object-fit: cover"
                    src="https://cdnphoto.dantri.com.vn/7Ay2bMHqImHAgbQN5gvn_3JJp-Q=/zoom/378_252/2023/10/23/rocketphongtugazaveisraelreuters-crop-1698024802873.jpeg"/>
             </a>
           </div>
@@ -21,7 +21,7 @@
 
               <a style="font-size: 19px; font-weight: 600">{{item.title}}</a>
             </div>
-            <div class="mb-2">{{item.createdAt | dateFormat: 'dd/MM/yyyy'}}</div>
+            <div class="mb-2">{{item.createAt | dateFormat: 'dd/MM/yyyy'}}</div>
             <div class="mb-1 d-flex align-items-center">
               <i *ngIf="item.category" class="mr-1 mb-1" nz-icon nzType="menu" nzTheme="outline"></i>
               {{item.category}}</div>

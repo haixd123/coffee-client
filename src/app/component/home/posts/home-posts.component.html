@@ -53,7 +53,7 @@
           <div class="editPost"
                style="border: 1px solid #c3c3c3; position: absolute; top: 32px; right: 7px; background-color: #fff; z-index: 100; width: 110px;">
             <div *ngIf="userLocalstorage?.role != 'ADMIN'" style="padding: 6px 10px 6px 10px"
-                 class="hoverEditPosts d-flex justify-content-center" (click)="editPosts(item)">Báo xấu
+                 class="hoverEditPosts d-flex justify-content-center" (click)="reportPosts(item)">Báo xấu
             </div>
             <div *ngIf="userLocalstorage?.id == item.userId" style="padding: 6px 40px 6px 40px"
                  class="hoverEditPosts d-flex justify-content-center" (click)="editPosts(item)">Sửa

@@ -186,4 +186,8 @@ export class HomePostsComponent implements OnInit, OnChanges {
     this.idPostsLocalstorage = item.id;
     this.router.navigate([`/home/detail/posts/${item.category}/${item.id}`]);
   }
+
+  reportPosts(value: any) {
+
+  }
 }
