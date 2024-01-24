@@ -37,36 +37,10 @@ export class TableCommentComponent implements OnInit {
     isSort1 = true;
     displayedData: any[] = [];
 
-<<<<<<< Updated upstream
-  isRefuse = false;
-  inputValue = '';
-  placeholderValue: string="cụm từ bình luận";
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
-    public validateService: ValidateService,
-    private notificationService: NotificationService,
-    private api: Api,
-  ) {
-    this.formSearch = this.fb.group({
-      pageIndex: 1,
-      pageSize: 10,
-      typeSearch: "3",
-      value: ""
-      // title: null,
-      // sortLikeDown: null,
-      // sortLikeUp: null,
-      // sortCommentDown: null,
-      // sortCommentUp: null,
-      // status: null,
-    });
-    this.handleSearch();
-    this.changePage();
-=======
+// <<<<<<< Updated upstream
     isRefuse = false;
     inputValue = '';
-    placeholderValue: string = "id của người dùng";
->>>>>>> Stashed changes
+    placeholderValue: string = "cụm từ bình luận";
 
     constructor(
         private fb: FormBuilder,

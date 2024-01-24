@@ -92,7 +92,15 @@
         <td>{{ item.createdAt | dateFormat: 'dd/MM/yyyy' }}</td>
         <td>{{ item.updatedAt | dateFormat: 'dd/MM/yyyy' }}</td>
         <td>{{item.category}}</td>
-        <td>{{item.status == 0 ? "Chờ duyệt" : item.status == 1 ? "Đã đăng" : item.status == -1 ? "Bị ẩn" : item.status == -2 ? "Từ chối" : "Nháp"}}</td>
+        <td class="{{item.status == -2 ? 'deline' : item.status == -1 ? 'hide' : item.status == -1 ? 'success' : ''}}">{{item.status == 0 ? "Chờ duyệt" : item.status == 1 ? "Đã đăng" : item.status == -1 ? "Bị ẩn" : item.status == -2 ? "Từ chối" : "Nháp"}}</td>
+
+        <!--        [ngClass]="{-->
+        <!--        'deline': item.status === -2,-->
+        <!--        'hide': item.status === -1,-->
+        <!--        'waiting': item.status === 0,-->
+        <!--        'success': item.status === 1,-->
+        <!--        'draft': item.status === 2,-->
+        <!--        }"-->
 
         <td>
             <div class="d-flex justify-content-center">
