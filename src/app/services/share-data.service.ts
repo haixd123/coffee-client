@@ -7,7 +7,7 @@ import {BehaviorSubject} from 'rxjs';
 export class ShareDataService {
   private dataSubjectSearch = new BehaviorSubject<any>('');
   private dataSubjectCategory = new BehaviorSubject<any>('');
-  private dataSubjectEditPosts = new BehaviorSubject<any>('');
+  private dataSubjectEditPosts = new BehaviorSubject<any>(null);
   private dataSubjectIdPost = new BehaviorSubject<any>('');
   private isResetFormCreatePost = new BehaviorSubject<any>('');
 

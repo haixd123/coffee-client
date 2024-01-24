@@ -55,7 +55,7 @@ export class VietBaiComponent implements OnInit {
             userId: null,
             createdAt: null,
             category: null,
-            categoryCur: [null],
+            categoryCur: [],
             like1: null,
             comment: null,
             status: null,
@@ -63,10 +63,10 @@ export class VietBaiComponent implements OnInit {
         });
 
         this.subscription = this.shareDataService.dataEditPosts$.subscribe(data => {
+            if(data == null){
+                return;
+            }
             this.dataEdit = data;
-        });
-        console.log('this.dataEdit: ', this.dataEdit);
-        if (this.dataEdit != null) {
             this.formAdd.patchValue({
                 id: this.dataEdit.id,
                 title: this.dataEdit.title,
@@ -84,7 +84,27 @@ export class VietBaiComponent implements OnInit {
             this.formAdd.get('userId').setValue(this.dataEdit.userId);
             this.formAdd.get('like1').setValue(this.dataEdit.like1);
             this.formAdd.get('comment').setValue(this.dataEdit.comment);
-        }
+        });
+        // console.log('this.dataEdit: ', this.dataEdit != null);
+        // if (this.dataEdit != null) {
+        //     this.formAdd.patchValue({
+        //         id: this.dataEdit.id,
+        //         title: this.dataEdit.title,
+        //         status: this.dataEdit.status,
+        //         contentPost: this.dataEdit.contentPost,
+        //         contentDetail: this.dataEdit.contentDetail,
+        //         imagePath: this.dataEdit.imagePath,
+        //         userId: this.dataEdit.userId,
+        //         createdAt: this.dataEdit.createdAt,
+        //         categoryCur: [this.dataEdit.category],
+        //         like1: this.dataEdit.like1,
+        //         comment: this.dataEdit.comment,
+        //     });
+
+        //     this.formAdd.get('userId').setValue(this.dataEdit.userId);
+        //     this.formAdd.get('like1').setValue(this.dataEdit.like1);
+        //     this.formAdd.get('comment').setValue(this.dataEdit.comment);
+        // }
 
     }
 
