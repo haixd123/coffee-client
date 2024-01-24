@@ -92,7 +92,7 @@
         <td>{{ item.createdAt | dateFormat: 'dd/MM/yyyy' }}</td>
         <td>{{ item.updatedAt | dateFormat: 'dd/MM/yyyy' }}</td>
         <td>{{item.category}}</td>
-        <td>{{item.status == 0 ? "Chờ duyệt" : "Đã đăng"}}</td>
+        <td>{{item.status == 0 ? "Chờ duyệt" : item.status == 1 ? "Đã đăng" : item.status == -1 ? "Bị ẩn" : item.status == -2 ? "Từ chối" : "Nháp"}}</td>
 
         <td>
             <div class="d-flex justify-content-center">
@@ -103,7 +103,8 @@
                 </a>
                 <a style="font-size: 21px" class="mr-3" (click)="handleEdit(item)"><i nz-icon nzType="edit"
                                                                                       nzTheme="outline"></i></a>
-                <a *ngIf="item.status != 0 && item.status != -1 && item.status != 2" style="font-size: 21px" nz-popconfirm
+                <a *ngIf="item.status != 0 && item.status != -1 && item.status != 2" style="font-size: 21px"
+                   nz-popconfirm
                    nzPopconfirmTitle="Bạn chắc chắn muốn xóa bài đăng này?"
                    (nzOnConfirm)="handleDelete(item)"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
                 <!--        <a *ngIf="item.status == 0" style="font-size: 21px" nz-popconfirm nzPopconfirmTitle="Bạn chắc chắn muốn xóa bài đăng này?"-->
@@ -129,4 +130,5 @@
 
 
 <app-add-posts *ngIf="isAdd" [isAdd]="isAdd" (closePopup)=handleClosePopup($event)></app-add-posts>
-<app-edit-posts *ngIf="isEdit" [isEdit]="isEdit" [dataEdit]="dataEdit" (closePopup)=handleClosePopup($event) (updatedData)="handleUpdatedData($event)"></app-edit-posts>
+<app-edit-posts *ngIf="isEdit" [isEdit]="isEdit" [dataEdit]="dataEdit" (closePopup)=handleClosePopup($event)
+                (updatedData)="handleUpdatedData($event)"></app-edit-posts>

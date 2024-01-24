@@ -354,7 +354,9 @@ export class PostsDetailComponent implements OnInit {
 
     editComment(item?: any) {
         this.isReplyComment = true;
-        this.textareaReply.nativeElement.focus();
+        setTimeout(() => {
+            this.textareaReply.nativeElement.focus();
+        }, 100)
         this.formAdd.patchValue({
             commentReplyText: item.commentText
         });
@@ -395,9 +397,9 @@ export class PostsDetailComponent implements OnInit {
         // this.formLikeComment.get('updateAt').setValue(item.updateAt);
         this.formLikeComment.get('likeComment').setValue(1);
         this.formLikeComment.get('status').setValue(1);
-        this.api.updateComment(this.formLikeComment.value).toPromise().then(data => {
-
-        });
+        // this.api.updateComment(this.formLikeComment.value).toPromise().then(data => {
+        //
+        // });
         this.websocketService.sendComment('1', '2');
 
     }
@@ -412,9 +414,9 @@ export class PostsDetailComponent implements OnInit {
         this.formLikeComment.get('updateAt').setValue(this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss'));
         this.formLikeComment.get('likeComment').setValue(0);
         this.formLikeComment.get('status').setValue(1);
-        this.api.updateComment(this.formLikeComment.value).toPromise().then(data => {
-
-        });
+        // this.api.updateComment(this.formLikeComment.value).toPromise().then(data => {
+        //
+        // });
         this.websocketService.sendComment('1', '2');
     }
 

@@ -1,128 +1,131 @@
 <form nz-form [formGroup]="formSearch">
-  <div class="d-flex align-items-center justify-content-between mb-4">
-    <div class="d-flex">
-      <button
-        style="border-radius: 5px"
-        class="d-flex align-items-center ml-3"
-        nz-button
-        nzType="primary"
-        (click)="handleSearch()"
-      >
-        <i nz-icon nzType="search" nzTheme="outline"></i> Tìm kiếm
-      </button>
-      <!--      <button disabled style="border-radius: 5px" class="d-flex align-items-center ml-3" nz-button nzType="primary"-->
-      <!--              (click)="handleAdd()">-->
-      <!--        <i nz-icon nzType="plus" nzTheme="outline"></i> Thêm mới-->
-      <!--      </button>-->
-    </div>
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex">
+            <button
+                    style="border-radius: 5px"
+                    class="d-flex align-items-center ml-3"
+                    nz-button
+                    nzType="primary"
+                    (click)="handleSearch()"
+            >
+                <i nz-icon nzType="search" nzTheme="outline"></i> Tìm kiếm
+            </button>
+            <!--      <button disabled style="border-radius: 5px" class="d-flex align-items-center ml-3" nz-button nzType="primary"-->
+            <!--              (click)="handleAdd()">-->
+            <!--        <i nz-icon nzType="plus" nzTheme="outline"></i> Thêm mới-->
+            <!--      </button>-->
+        </div>
 
-    <div class="d-flex justify-content-end">
-      <nz-input-group [nzSuffix]="suffixIconSearch">
-        <input
-          class="px-1"
-          formControlName="reason"
-          (change)="handleSearch()"
-          type="text"
-          nz-input
-          placeholder="Tìm theo lý do"
-        />
-      </nz-input-group>
-      <ng-template #suffixIconSearch>
-        <i class="mb-2" nz-icon nzType="search"></i>
-      </ng-template>
+        <div class="d-flex justify-content-end">
+            <nz-input-group [nzSuffix]="suffixIconSearch">
+                <input
+                        class="px-1"
+                        formControlName="reason"
+                        (change)="handleSearch()"
+                        type="text"
+                        nz-input
+                        placeholder="Tìm theo lý do"
+                />
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+                <i class="mb-2" nz-icon nzType="search"></i>
+            </ng-template>
+        </div>
     </div>
-  </div>
-  <nz-table
-    #basicTable
-    [nzData]="data"
-    [nzFrontPagination]="false"
-    [(nzPageIndex)]="searchModel.pageIndex"
-    nzBordered
-    nzShowSizeChanger
-  >
-    <thead>
-      <tr>
-        <th>id</th>
-        <th>Người báo cáo</th>
-        <th>Bài viết / Bình luận bị báo cáo</th>
-        <th>Lý do</th>
-        <th>Hành động</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="
+    <nz-table
+        #basicTable
+        [nzData]="data"
+        [nzFrontPagination]="false"
+        [(nzPageIndex)]="searchModel.pageIndex"
+        nzBordered
+        nzShowSizeChanger
+    >
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>Người báo cáo</th>
+            <th>Bài viết / Bình luận bị báo cáo</th>
+            <th>Lý do</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+                *ngFor="
           let item of data
-            | filter : searchValue
-            | sort : sortValue : isSort
-            | filter : searchValue;
-          let i = index
+          ;let i = index
+
         "
-      >
-        <td class="text-nowrap">
-          {{
-            validateService.getRowIndex(
-              i,
-              basicTable.nzPageIndex,
-              basicTable.nzPageSize
-            )
-          }}
-        </td>
-        <td 
         >
-          <span class="can-click" (click)="showUserInfo(item.userReport)">{{ item.userReport.name }}</span>
-        </td>
-        <!--        <td>{{ item.passWord }}</td>-->
-        <!--      <td style=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{ item.passWord }}</td>-->
+            <!--        //   | filter : searchValue-->
+            <!--        //   | sort : sortValue : isSort-->
+            <!--        //   | filter : searchValue;-->
+            <!--        // let i = index-->
+            <td class="text-nowrap">
+                {{
+                validateService.getRowIndex(
+                    i,
+                    basicTable.nzPageIndex,
+                    basicTable.nzPageSize
+                )
+                }}
+            </td>
+            <td
+            >
+                <span class="can-click" (click)="showUserInfo(item.userReport)">{{ item.userReport.name }}</span>
+            </td>
+            <!--        <td>{{ item.passWord }}</td>-->
+            <!--      <td style=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{ item.passWord }}</td>-->
 
-        <td
-          class="p-c"
-          
-        >
-          <span class="can-click" (click)="showPostOrComment(item.reportType,item.data)">{{ item.reportType == 1 ? "Bài viết" : "Bình luận" }}</span>
+            <td
+                    class="p-c"
 
-          <a
-            [nz-tooltip]="'Gỡ ' + (item.reportType == 1 ? 'bài viết' : 'bình luận')"
-            style="font-size: 21px; color: rgb(227, 97, 97);"
-            nz-popconfirm
-            [nzPopconfirmTitle]="'Bạn chắc chắn muốn xóa '+(item.reportType == 1 ? 'bài viết' : 'bình luận')+' bài đăng này?'"
-            (nzOnConfirm)="handleRemovePostOrComment(item.reportType,item.data.id)"
-          >
-            <i nz-icon nzType="close" nzTheme="outline"></i
-          ></a>
-        </td>
+            >
+                <span class="can-click"
+                      (click)="showPostOrComment(item.reportType,item.data)">{{ item.reportType == 1 ? "Bài viết" : "Bình luận" }}</span>
 
-        <td >
-          {{ item.reason }}
-        </td>
-        <td style="min-width: 100px">
-          <!-- <a [nz-tooltip]="'Chấp nhận'"style="font-size: 21px" class="mr-3" (click)="handleApproved(item)">
-            <i nz-icon nzType="check" nzTheme="outline"></i
-          ></a>
-          <a [nz-tooltip]="'Từ chối'" style="font-size: 21px;color:rgb(241, 105, 105);" class="mr-3" (click)="handleRefused()">
-            <i nz-icon nzType="close" nzTheme="outline"></i
-          ></a> -->
-          <a
-            [nz-tooltip]="'Xoá'"
-            style="font-size: 21px"
-            nz-popconfirm
-            nzPopconfirmTitle="Bạn chắc chắn muốn xóa bài đăng này?"
-            (nzOnConfirm)="handleDelete(item.data)"
-          >
-            <i nz-icon nzType="delete" nzTheme="outline"></i
-          ></a>
-        </td>
-      </tr>
-    </tbody>
-  </nz-table>
-  <div class="d-flex justify-content-end">
-    <nz-pagination
-      class="pb-4"
-      (click)="changePage()"
-      [(nzPageIndex)]="curPage"
-      [nzTotal]="total"
-    ></nz-pagination>
-  </div>
+                <a
+                        [nz-tooltip]="'Gỡ ' + (item.reportType == 1 ? 'bài viết' : 'bình luận')"
+                        style="font-size: 21px; color: rgb(227, 97, 97);"
+                        nz-popconfirm
+                        [nzPopconfirmTitle]="'Bạn chắc chắn muốn xóa '+(item.reportType == 1 ? 'bài viết' : 'bình luận')+' bài đăng này?'"
+                        (nzOnConfirm)="handleRemovePostOrComment(item.reportType,item.data.id)"
+                >
+                    <i nz-icon nzType="close" nzTheme="outline"></i
+                    ></a>
+            </td>
+
+            <td>
+                {{ item.reason }}
+            </td>
+            <td style="min-width: 100px">
+                <!-- <a [nz-tooltip]="'Chấp nhận'"style="font-size: 21px" class="mr-3" (click)="handleApproved(item)">
+                  <i nz-icon nzType="check" nzTheme="outline"></i
+                ></a>
+                <a [nz-tooltip]="'Từ chối'" style="font-size: 21px;color:rgb(241, 105, 105);" class="mr-3" (click)="handleRefused()">
+                  <i nz-icon nzType="close" nzTheme="outline"></i
+                ></a> -->
+                <a
+                        [nz-tooltip]="'Xoá'"
+                        style="font-size: 21px"
+                        nz-popconfirm
+                        nzPopconfirmTitle="Bạn chắc chắn muốn xóa bài đăng này?"
+                        (nzOnConfirm)="handleDelete(item.data)"
+                >
+                    <i nz-icon nzType="delete" nzTheme="outline"></i
+                    ></a>
+            </td>
+        </tr>
+        </tbody>
+    </nz-table>
+    <div class="d-flex justify-content-end">
+        <nz-pagination
+                class="pb-4"
+                (click)="changePage()"
+                [(nzPageIndex)]="curPage"
+                [nzTotal]="total"
+        ></nz-pagination>
+    </div>
 </form>
 
 <!--<app-add-user [isAdd]="isAdd" (closePopup)=handleClosePopup($event)></app-add-user>-->
@@ -133,6 +136,9 @@
 ></app-edit-user> -->
 
 
-<app-info-posts *ngIf="showInfo == 'post'" (closePopup)="handleClosePopup($event)" [isInfo]="true" [data]="dataInfo"></app-info-posts>
-<app-info-comment *ngIf="showInfo == 'comment'" (closePopup)="handleClosePopup($event)"[isInfo]="true" [data]="dataInfo"></app-info-comment>
-<app-info-user *ngIf="showInfo == 'user'" (closePopup)="handleClosePopup($event)" [isInfo]="true" [data]="dataInfo"></app-info-user>
+<app-info-posts *ngIf="showInfo == 'post'" (closePopup)="handleClosePopup($event)" [isInfo]="true"
+                [data]="dataInfo"></app-info-posts>
+<app-info-comment *ngIf="showInfo == 'comment'" (closePopup)="handleClosePopup($event)" [isInfo]="true"
+                  [data]="dataInfo"></app-info-comment>
+<app-info-user *ngIf="showInfo == 'user'" (closePopup)="handleClosePopup($event)" [isInfo]="true"
+               [data]="dataInfo"></app-info-user>
