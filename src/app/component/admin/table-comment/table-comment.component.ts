@@ -39,7 +39,7 @@ export class TableCommentComponent implements OnInit {
 
   isRefuse = false;
   inputValue = '';
-  placeholderValue: string="id của người dùng";
+  placeholderValue: string="cụm từ bình luận";
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
