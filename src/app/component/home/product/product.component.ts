@@ -13,6 +13,29 @@ import {Router} from '@angular/router';
 })
 export class ProductComponent implements OnInit, OnChanges {
 
+  voucherOptions: any ={
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: true,
+    nav: false,
+    navSpeed: 700,
+    margin: 15,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 2
+      },
+      540: {
+        items: 3
+      },
+      720: {
+        items: 4
+      },
+      
+    },
+  }
   customOptions: any = {
     loop: true,
     mouseDrag: true,
@@ -21,29 +44,31 @@ export class ProductComponent implements OnInit, OnChanges {
     dots: true,
     nav: false,
     navSpeed: 700,
+    margin: 15,
     navText: ['', ''],
     responsive: {
       0: {
-        items: 1
-      },
-      400: {
         items: 2
       },
-      740: {
+      540: {
         items: 3
       },
-      940: {
+      720: {
         items: 4
-      }
+      },
+      960: {
+        items: 5
+      },
+      
     },
   };
 
   searchModel: SearchModelEntity = new SearchModelEntity();
   formUpdateQuantity: FormGroup;
 
-  data: any[];
-  datProduct50k: any[] = [];
-  dataTop5: any[] = []
+  data: any[] = [];
+  datProduct50k: any[] =[];
+  dataTop5: any[] = [];
   isOpenDrawer = false;
   demoValue = 1;
   dataCart = [];
@@ -55,6 +80,14 @@ export class ProductComponent implements OnInit, OnChanges {
   ListProductSame: any[] = []
   category: any;
   inputQuantity: any;
+  voucher: any[];
+
+  // rawData = {
+  //   image:"https://bizweb.dktcdn.net/thumb/large/100/465/740/products/ctw-t1.jpg?v=1705255416470",
+  //   name:"[Mua 2 tặng 2: Tặng túi cói Thời Trang Highlands+01 gói cà phê 200g] Combo 2 Túi Cà Phê Truyền Thống Highlands Coffee 1kg",
+  //   price: 758_000,
+  //   discount: 20,
+  // }
 
   constructor(
     private api: Api,
@@ -62,6 +95,10 @@ export class ProductComponent implements OnInit, OnChanges {
     private reducerService: ReducerService,
     private router: Router,
   ) {
+    // this.data = Array(10).fill(this.rawData);
+    // this.dataTop5= Array(10).fill(this.rawData);
+    // this.datProduct50k= Array(10).fill(this.rawData);
+    // this.voucher = Array(5).fill(1);
 
     this.api.getListProduct(this.searchModel).subscribe((data: any) => {
       this.data = data.data;
