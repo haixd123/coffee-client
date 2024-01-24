@@ -10,8 +10,8 @@
         >
           <nz-option nzValue="0" nzLabel="Id người dùng"></nz-option>
           <nz-option nzValue="1" nzLabel="Id post"></nz-option>
-          <nz-option nzValue="2" nzLabel="Trạng thái"></nz-option>
-          <nz-option nzValue="3" nzLabel="Cụm từ bình luận"></nz-option>
+          <!-- <nz-option nzValue="2" nzLabel="Trạng thái"></nz-option> -->
+          <nz-option nzValue="2" nzLabel="Cụm từ bình luận"></nz-option>
         </nz-select>
       </div>
     </div>
@@ -19,7 +19,7 @@
     <!--      <label>Bài viết đã đăng</label>-->
     <!--      <div></div>-->
     <!--    </div>-->
-    <div class="col-3">
+    <div class="col-4">
       <!--      <nz-input-group [nzSuffix]="suffixIconSearch">-->
       <label>Giá trị</label>
       <div>
@@ -31,6 +31,23 @@
           nz-input
           [placeholder]="'Nhập ' + placeholderValue"
         />
+      </div>
+      <!--      </nz-input-group>-->
+      <!--      <ng-template #suffixIconSearch>-->
+      <!--        <i class="mb-2" nz-icon nzType="search"></i>-->
+      <!--      </ng-template>-->
+    </div>
+    <div class="col-3" *ngIf="this.formSearch.get('typeSearch').value == 1 || this.formSearch.get('typeSearch').value== 0">
+      <!--      <nz-input-group [nzSuffix]="suffixIconSearch">-->
+      <label>Trạng thái</label>
+      <div>
+        <nz-select
+          style="width: 100%"
+          formControlName="status"
+        >
+          <nz-option nzValue="-1" nzLabel="Bị ẩn"></nz-option>
+          <nz-option nzValue="1" nzLabel="Được hiện"></nz-option>
+        </nz-select>
       </div>
       <!--      </nz-input-group>-->
       <!--      <ng-template #suffixIconSearch>-->
@@ -116,7 +133,7 @@
         <td>{{ item.createAt | date : "dd/MM/yyyy hh:mm a" }}</td>
         <td>{{ item.updateAt | date : "dd/MM/yyyy hh:mm a" }}</td>
         <td>{{ item.likeComment }}</td>
-        <td>{{ item.status }}</td>
+        <td>{{ item.status == "1"? "Được hiện":"Bị ẩn" }}</td>
         <!--    <td>{{ item.image }}</td>-->
 
         <td style="min-width: 100px">

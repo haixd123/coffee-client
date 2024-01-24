@@ -211,7 +211,7 @@ export class Api extends BaseService {
                 params: new HttpParams()
                     .append('page', page + '')
                     .append('size', size + '')
-                    .append('text', infix),
+                    .append('text', infix)
             }
         );
     }
@@ -219,7 +219,8 @@ export class Api extends BaseService {
     getAllCommentByUserId(
         page: number,
         size: number,
-        userId: number
+        userId: number,
+        status: number,
     ): Observable<any> {
         return this.httpClient.get<any>(
             `http://localhost:8080/api/authors/comment/by-user/${userId}`,
@@ -227,6 +228,7 @@ export class Api extends BaseService {
                 params: new HttpParams()
                     .append('page', page + '')
                     .append('size', size + '')
+                    .append('status', status + '')
             }
         );
     }
@@ -234,7 +236,8 @@ export class Api extends BaseService {
     getAllCommentByPostId(
         page: number,
         size: number,
-        postId: number
+        postId: number,
+        status: number
     ): Observable<any> {
         return this.httpClient.get<any>(
             `http://localhost:8080/api/authors/comment/by-post/${postId}`,
@@ -242,6 +245,7 @@ export class Api extends BaseService {
                 params: new HttpParams()
                     .append('page', page + '')
                     .append('size', size + '')
+                    .append('status', status + '')
             }
         );
     }
