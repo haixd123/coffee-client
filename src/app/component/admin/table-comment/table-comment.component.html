@@ -1,146 +1,161 @@
 <form nz-form [formGroup]="formSearch">
     <div class="row">
-        <div class="col-3 mb-3">
-            <label>Tìm kiếm theo</label>
-            <div>
-                <nz-select
-                        style="width: 100%"
-                        formControlName="typeSearch"
-                        (ngModelChange)="log($event)"
-                >
-                    <nz-option nzValue="0" nzLabel="Id người dùng"></nz-option>
-                    <nz-option nzValue="1" nzLabel="Id post"></nz-option>
-                    <nz-option nzValue="2" nzLabel="Trạng thái"></nz-option>
-                    <nz-option nzValue="3" nzLabel="Cụm từ bình luận"></nz-option>
-                </nz-select>
-            </div>
+      <div class="col-3 mb-3">
+        <label>Tìm kiếm theo</label>
+        <div>
+          <nz-select
+            style="width: 100%"
+            formControlName="typeSearch"
+            (ngModelChange)="log($event)"
+          >
+            <nz-option nzValue="0" nzLabel="Id người dùng"></nz-option>
+            <nz-option nzValue="1" nzLabel="Id post"></nz-option>
+            <!-- <nz-option nzValue="2" nzLabel="Trạng thái"></nz-option> -->
+            <nz-option nzValue="2" nzLabel="Cụm từ bình luận"></nz-option>
+          </nz-select>
         </div>
-        <!--    <div class="col-4">-->
-        <!--      <label>Bài viết đã đăng</label>-->
-        <!--      <div></div>-->
-        <!--    </div>-->
-        <div class="col-3">
-            <!--      <nz-input-group [nzSuffix]="suffixIconSearch">-->
-            <label>Giá trị</label>
-            <div>
-                <input
-                        class="px-2"
-                        formControlName="value"
-                        (change)="handleSearch()"
-                        type="text"
-                        nz-input
-                        [placeholder]="'Nhập ' + placeholderValue"
-                />
-            </div>
-            <!--      </nz-input-group>-->
-            <!--      <ng-template #suffixIconSearch>-->
-            <!--        <i class="mb-2" nz-icon nzType="search"></i>-->
-            <!--      </ng-template>-->
+      </div>
+      <!--    <div class="col-4">-->
+      <!--      <label>Bài viết đã đăng</label>-->
+      <!--      <div></div>-->
+      <!--    </div>-->
+      <div class="col-4">
+        <!--      <nz-input-group [nzSuffix]="suffixIconSearch">-->
+        <label>Giá trị</label>
+        <div>
+          <input
+            class="px-2"
+            formControlName="value"
+            (change)="handleSearch()"
+            type="text"
+            nz-input
+            [placeholder]="'Nhập ' + placeholderValue"
+          />
         </div>
+        <!--      </nz-input-group>-->
+        <!--      <ng-template #suffixIconSearch>-->
+        <!--        <i class="mb-2" nz-icon nzType="search"></i>-->
+        <!--      </ng-template>-->
+      </div>
+      <div class="col-3" *ngIf="this.formSearch.get('typeSearch').value == 1 || this.formSearch.get('typeSearch').value== 0">
+        <!--      <nz-input-group [nzSuffix]="suffixIconSearch">-->
+        <label>Trạng thái</label>
+        <div>
+          <nz-select
+            style="width: 100%"
+            formControlName="status"
+          >
+            <nz-option nzValue="-1" nzLabel="Bị ẩn"></nz-option>
+            <nz-option nzValue="1" nzLabel="Được hiện"></nz-option>
+          </nz-select>
+        </div>
+        <!--      </nz-input-group>-->
+        <!--      <ng-template #suffixIconSearch>-->
+        <!--        <i class="mb-2" nz-icon nzType="search"></i>-->
+        <!--      </ng-template>-->
+      </div>
     </div>
-
+  
     <div class="d-flex align-items-center justify-content-between mb-4">
-        <div class="d-flex">
-            <button
-                    style="border-radius: 5px"
-                    class="d-flex align-items-center ml-3"
-                    nz-button
-                    nzType="primary"
-                    (click)="handleSearch()"
-            >
-                <i nz-icon nzType="search" nzTheme="outline"></i> Tìm kiếm
-            </button>
-            <!--      <button disabled style="border-radius: 5px" class="d-flex align-items-center ml-3" nz-button nzType="primary"-->
-            <!--              (click)="handleAdd()">-->
-            <!--        <i nz-icon nzType="plus" nzTheme="outline"></i> Thêm mới-->
-            <!--      </button>-->
-        </div>
+      <div class="d-flex">
+        <button
+          style="border-radius: 5px"
+          class="d-flex align-items-center ml-3"
+          nz-button
+          nzType="primary"
+          (click)="handleSearch()"
+        >
+          <i nz-icon nzType="search" nzTheme="outline"></i> Tìm kiếm
+        </button>
+        <!--      <button disabled style="border-radius: 5px" class="d-flex align-items-center ml-3" nz-button nzType="primary"-->
+        <!--              (click)="handleAdd()">-->
+        <!--        <i nz-icon nzType="plus" nzTheme="outline"></i> Thêm mới-->
+        <!--      </button>-->
+      </div>
     </div>
     <nz-table
-        #basicTable
-        [nzData]="data"
-        [nzFrontPagination]="false"
-        [(nzPageIndex)]="searchModel.pageIndex"
-        nzBordered
-        nzShowSizeChanger
+      #basicTable
+      [nzData]="data"
+      [nzFrontPagination]="false"
+      [(nzPageIndex)]="searchModel.pageIndex"
+      nzBordered
+      nzShowSizeChanger
     >
-        <thead>
+      <thead>
         <tr>
-            <th>id</th>
-            <th>Id người dùng</th>
-            <th>Id bài viết</th>
-            <th>Bình luận</th>
-            <!--        <th>Password</th>-->
-            <th>Được tạo lúc</th>
-            <th>Cập nhật lúc</th>
-            <!--    <th [nzShowFilter]="true" [nzFilters]="newArray">Address-->
-            <!--      <th [nzShowFilter]="true" [nzFilters]="filterAddress">Địa chỉ-->
-
-            <!--      </th>-->
-
-            <th [nzShowSort]="true" [nzSortDirections]="['ascend', 'descend']">
-                Số lượng like
-            </th>
-            <th [nzShowSort]="true" [nzSortDirections]="['ascend', 'descend']">Trạng thái</th>
-            <th>Hành động</th>
+          <th>id</th>
+          <th>Id người dùng</th>
+          <th>Id bài viết</th>
+          <th>Bình luận</th>
+          <!--        <th>Password</th>-->
+          <th>Được tạo lúc</th>
+          <th>Cập nhật lúc</th>
+          <!--    <th [nzShowFilter]="true" [nzFilters]="newArray">Address-->
+          <!--      <th [nzShowFilter]="true" [nzFilters]="filterAddress">Địa chỉ-->
+  
+          <!--      </th>-->
+  
+          <th [nzShowSort]="true" [nzSortDirections]="['ascend', 'descend']">
+            Số lượng like
+          </th>
+          <th [nzShowSort]="true" [nzSortDirections]="['ascend', 'descend']">Trạng thái</th>
+          <th>Hành động</th>
         </tr>
-        </thead>
-        <tbody>
+      </thead>
+      <tbody>
         <tr
-                *ngFor="
-          let item of data
-          ;let i = index
-
-        "
+          *ngFor="
+            let item of data
+            | filter : searchValue
+              | sort : sortValue : isSort
+              | filter : searchValue;
+            let i = index
+          "
         >
-<!--            // | filter : searchValue-->
-<!--            //   | sort : sortValue : isSort-->
-<!--            //   | filter : searchValue;-->
-<!--            // let i = index-->
-            <td class="text-nowrap">
-                {{
-                validateService.getRowIndex(
-                    i,
-                    basicTable.nzPageIndex,
-                    basicTable.nzPageSize
-                )
-                }}
-            </td>
-            <td>{{ item.userId }}</td>
-            <!--        <td>{{ item.passWord }}</td>-->
-            <!--      <td style=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{ item.passWord }}</td>-->
-
-            <td>{{ item.postId }}</td>
-            <td>{{ item.commentText }}</td>
-            <!--      <td>{{ item.address }}</td>-->
-            <!--    <td>{{ item.age | sort: 'age' }}</td>-->
-            <!--        <td>{{ item.createAt | date : "dd/MM/yyyy hh:mm a" }}</td>-->
-            <!--        <td>{{ item.updateAt | date : "dd/MM/yyyy hh:mm a" }}</td>-->
-            <td>{{ item.createAt }}</td>
-            <td>{{ item.updateAt }}</td>
-            <td>{{ item.likeComment }}</td>
-            <td>{{ item.status }}</td>
-            <!--    <td>{{ item.image }}</td>-->
-
-            <td style="min-width: 100px">
-                <a
-                        style="font-size: 21px"
-                        nz-popconfirm
-                        nzPopconfirmTitle="Bạn chắc chắn muốn xóa bình luận này?"
-                        (nzOnConfirm)="handleDelete(item)"
-                >
-                    <i nz-icon nzType="delete" nzTheme="outline"></i
-                    ></a>
-            </td>
+        
+          <td class="text-nowrap">
+            {{
+              validateService.getRowIndex(
+                i,
+                basicTable.nzPageIndex,
+                basicTable.nzPageSize
+              )
+            }}
+          </td>
+          <td>{{ item.userId }}</td>
+          <!--        <td>{{ item.passWord }}</td>-->
+          <!--      <td style=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{ item.passWord }}</td>-->
+  
+          <td>{{ item.postId }}</td>
+          <td>{{ item.commentText }}</td>
+          <!--      <td>{{ item.address }}</td>-->
+          <!--    <td>{{ item.age | sort: 'age' }}</td>-->
+          <td>{{ item.createAt | date : "dd/MM/yyyy hh:mm a" }}</td>
+          <td>{{ item.updateAt | date : "dd/MM/yyyy hh:mm a" }}</td>
+          <td>{{ item.likeComment }}</td>
+          <td>{{ item.status == "1"? "Được hiện":"Bị ẩn" }}</td>
+          <!--    <td>{{ item.image }}</td>-->
+  
+          <td style="min-width: 100px">
+            <a
+              style="font-size: 21px"
+              nz-popconfirm
+              nzPopconfirmTitle="Bạn chắc chắn muốn xóa bình luận này?"
+              (nzOnConfirm)="handleDelete(item)"
+            >
+              <i nz-icon nzType="delete" nzTheme="outline"></i
+            ></a>
+          </td>
         </tr>
-        </tbody>
+      </tbody>
     </nz-table>
     <div class="d-flex justify-content-end">
-        <nz-pagination
-                class="pb-4"
-                (click)="changePage()"
-                [(nzPageIndex)]="curPage"
-                [nzTotal]="total"
-        ></nz-pagination>
+      <nz-pagination
+        class="pb-4"
+        (click)="changePage()"
+        [(nzPageIndex)]="curPage"
+        [nzTotal]="total"
+      ></nz-pagination>
     </div>
-</form>
+  </form>
+  
