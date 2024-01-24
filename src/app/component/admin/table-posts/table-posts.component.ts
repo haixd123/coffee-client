@@ -297,4 +297,14 @@ export class TablePostsComponent implements OnInit {
   handleCancelRefuse() {
     this.isRefuse = false;
   }
+
+  handleUpdatedData(updatedData: any){
+
+    this.data = this.data.map(item =>{
+      if(item.id == updatedData.id){
+        return updatedData;
+      }
+      return item;
+    })
+  }
 }

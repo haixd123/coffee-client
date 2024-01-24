@@ -125,5 +125,5 @@
 </nz-modal>
 
 
-<app-add-posts [isAdd]="isAdd" (closePopup)=handleClosePopup($event)></app-add-posts>
-<app-edit-posts [isEdit]="isEdit" [dataEdit]="dataEdit" (closePopup)=handleClosePopup($event)></app-edit-posts>
+<app-add-posts *ngIf="isAdd" [isAdd]="isAdd" (closePopup)=handleClosePopup($event)></app-add-posts>
+<app-edit-posts *ngIf="isEdit" [isEdit]="isEdit" [dataEdit]="dataEdit" (closePopup)=handleClosePopup($event) (updatedData)="handleUpdatedData($event)"></app-edit-posts>

@@ -71,46 +71,50 @@ export class TableCommentComponent implements OnInit {
   handleUpdate() {
     let typeS = this.formSearch.get('typeSearch').value;
     if(typeS == "0"){
-      let page = this.curPage;
-      let size = 12;
+      let page = this.curPage - 1;
+      let size = 10
+;
       let userId = this.formSearch.get('value').value;
       this.api.getAllCommentByUserId(page,size,userId).subscribe({
         next: res =>{
-          this.data = res.content;
-          this.total = res.totalPages;
+          this.data = res.data.content;
+          this.total = res.data.totalElements;
         }
       })
     }
     if(typeS == "1"){
-      let page = this.curPage;
-      let size = 12;
+      let page = this.curPage - 1;
+      let size = 10
+;
       let postId = this.formSearch.get('value').value;
       this.api.getAllCommentByPostId(page,size,postId).subscribe({
         next: res =>{
-          this.data = res.content;
-          this.total = res.totalPages;
+          this.data = res.data.content;
+          this.total = res.data.totalElements;
         }
       })
     }
     if(typeS == "2"){
-      let page = this.curPage;
-      let size = 12;
+      let page = this.curPage - 1;
+      let size = 10
+;
       let status = this.formSearch.get('value').value;
       this.api.getAllCommentByStatus(page,size,status).subscribe({
         next: res =>{
-          this.data = res.content;
-          this.total = res.totalPages;
+          this.data = res.data.content;
+          this.total = res.data.totalElements;
         }
       })
     }
     if(typeS == "3"){
-      let page = this.curPage;
-      let size = 12;
+      let page = this.curPage - 1;
+      let size = 10
+;
       let infix = this.formSearch.get('value').value;
       this.api.getAllCommentByCommentContaining(page,size,infix).subscribe({
         next: res =>{
-          this.data = res.content;
-          this.total = res.totalPages;
+          this.data = res.data.content;
+          this.total = res.data.totalElements;
         }
       })
     }
@@ -129,6 +133,7 @@ export class TableCommentComponent implements OnInit {
     if(value == "3"){
       this.placeholderValue = "cụm từ bình luận"
     }
+
   }
 
   handleSearch() {
