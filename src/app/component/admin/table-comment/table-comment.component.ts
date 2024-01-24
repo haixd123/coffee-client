@@ -39,7 +39,7 @@ export class TableCommentComponent implements OnInit {
 
   isRefuse = false;
   inputValue = '';
-  placeholderValue: string = 'Bình luận';
+  placeholderValue: string = 'bình luận';
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -68,9 +68,10 @@ export class TableCommentComponent implements OnInit {
 
   handleUpdate() {
     let typeS = this.formSearch.get('typeSearch').value;
-    if (typeS == '0') {
-      let page = this.curPage - 1;
+    let page = this.curPage - 1;
       let size = 10;
+    if (typeS == '0') {
+      
       let status = Number(this.formSearch.get('status').value);
       let userId = this.formSearch.get('value').value;
       this.api.getAllCommentByUserId(page, size, userId, status).subscribe({
@@ -81,8 +82,7 @@ export class TableCommentComponent implements OnInit {
       });
     }
     if (typeS == '1') {
-      let page = this.curPage - 1;
-      let size = 10;
+      
       let status = Number(this.formSearch.get('status').value);
       let postId = this.formSearch.get('value').value;
       this.api.getAllCommentByPostId(page, size, postId, status).subscribe({
@@ -92,20 +92,18 @@ export class TableCommentComponent implements OnInit {
         },
       });
     }
-    // if (typeS == '2') {
-    //   let page = this.curPage - 1;
-    //   let size = 10;
-    //   let status = this.formSearch.get('value').value;
-    //   this.api.getAllCommentByStatus(page, size, status).subscribe({
-    //     next: (res) => {
-    //       this.data = res.data.content;
-    //       this.total = res.data.totalElements;
-    //     },
-    //   });
-    // }
+    if (typeS == '3') {
+      
+      let status = this.formSearch.get('value').value;
+      this.api.getAllCommentByStatus(page, size, status).subscribe({
+        next: (res) => {
+          this.data = res.data.content;
+          this.total = res.data.totalElements;
+        },
+      });
+    }
     if (typeS == '2') {
-      let page = this.curPage - 1;
-      let size = 10;
+      
       let infix = this.formSearch.get('value').value;
       this.api.getAllCommentByCommentContaining(page, size, infix).subscribe({
         next: (res) => {
@@ -122,9 +120,9 @@ export class TableCommentComponent implements OnInit {
     if (value == '1') {
       this.placeholderValue = 'id của bài viết';
     }
-    // if (value == '2') {
-    //   this.placeholderValue = 'trạng thái';
-    // }
+    if (value == '3') {
+      this.placeholderValue = 'trạng thái';
+    }
     if (value == '2') {
       this.placeholderValue = 'Bình luận';
     }

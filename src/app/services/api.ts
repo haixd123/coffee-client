@@ -282,6 +282,17 @@ export class Api extends BaseService {
         })
     }
 
+    getReportByUser(page:number,size:number,username: string):Observable<any>{
+        return this.httpClient.get(`http://localhost:8080/api/authors/reports/by-user`,{
+            params: new HttpParams().append("username",username)
+        })
+    }
+    getReportByIdAndType(page:number,size:number,type:number,id:number):Observable<any>{
+        return this.httpClient.get(`http://localhost:8080/api/authors/reports/by-id-and-type`,{
+            params: new HttpParams().append("dataId",id+"").append("type",type+"")
+        })
+    }
+
     getSearchReport(page: number, size: number, reason: string): Observable<any> {
         return this.httpClient.get(`http://localhost:8080/api/authors/reports/search/${reason}`, {
             params: new HttpParams().append('page', page + '')

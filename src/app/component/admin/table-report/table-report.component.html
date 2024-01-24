@@ -1,4 +1,63 @@
 <form nz-form [formGroup]="formSearch">
+    <div class="row">
+        <div class="col-3 mb-3">
+          <label>Tìm kiếm theo</label>
+          <div>
+            <nz-select
+              style="width: 100%"
+              formControlName="typeSearch"
+              (ngModelChange)="log($event)"
+            >
+              <nz-option nzValue="0" nzLabel="Tên người báo cáo"></nz-option>
+              <nz-option nzValue="1" nzLabel="Lý do"></nz-option>
+              <!-- <nz-option nzValue="2" nzLabel="Trạng thái"></nz-option> -->
+              <nz-option nzValue="2" nzLabel="Bài viết/ Bình luận"></nz-option>
+            </nz-select>
+          </div>
+        </div>
+        <!--    <div class="col-4">-->
+        <!--      <label>Bài viết đã đăng</label>-->
+        <!--      <div></div>-->
+        <!--    </div>-->
+        <div class="col-3" *ngIf="this.formSearch.get('typeSearch').value == 2">
+            <!--      <nz-input-group [nzSuffix]="suffixIconSearch">-->
+            <label>Loại</label>
+            <div>
+              <nz-select
+                style="width: 100%"
+                formControlName="type"
+              >
+                <nz-option nzValue="1" nzLabel="Bài viết"></nz-option>
+                <nz-option nzValue="2" nzLabel="Bình luận"></nz-option>
+              </nz-select>
+            </div>
+            <!--      </nz-input-group>-->
+            <!--      <ng-template #suffixIconSearch>-->
+            <!--        <i class="mb-2" nz-icon nzType="search"></i>-->
+            <!--      </ng-template>-->
+          </div>
+        <div class="col-4">
+          <!--      <nz-input-group [nzSuffix]="suffixIconSearch">-->
+          <label>Giá trị</label>
+          <div>
+            <input
+              class="px-2"
+              formControlName="value"
+              (change)="handleSearch()"
+              type="text"
+              nz-input
+              [placeholder]="'Nhập ' + placeholderValue"
+            />
+          </div>
+          <!--      </nz-input-group>-->
+          <!--      <ng-template #suffixIconSearch>-->
+          <!--        <i class="mb-2" nz-icon nzType="search"></i>-->
+          <!--      </ng-template>-->
+        </div>
+        
+      </div>
+
+
     <div class="d-flex align-items-center justify-content-between mb-4">
         <div class="d-flex">
             <button
@@ -16,7 +75,7 @@
             <!--      </button>-->
         </div>
 
-        <div class="d-flex justify-content-end">
+        <!-- <div class="d-flex justify-content-end">
             <nz-input-group [nzSuffix]="suffixIconSearch">
                 <input
                         class="px-1"
@@ -30,7 +89,7 @@
             <ng-template #suffixIconSearch>
                 <i class="mb-2" nz-icon nzType="search"></i>
             </ng-template>
-        </div>
+        </div> -->
     </div>
     <nz-table
         #basicTable
@@ -72,7 +131,7 @@
             </td>
             <td
             >
-                <span>{{ item.userReportId }}</span>
+                <span class="can-click" (click)="showUserInfo(item.userReport)">{{ item.userReport.username }}</span>
             </td>
             <!--        <td>{{ item.passWord }}</td>-->
             <!--      <td style=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{ item.passWord }}</td>-->
@@ -142,5 +201,5 @@
                 [data]="dataInfo"></app-info-posts>
 <app-info-comment *ngIf="showInfo == 'comment'" (closePopup)="handleClosePopup($event)" [isInfo]="true"
                   [data]="dataInfo"></app-info-comment>
-<!--<app-info-user *ngIf="showInfo == 'user'" (closePopup)="handleClosePopup($event)" [isInfo]="true"-->
-<!--               [data]="dataInfo"></app-info-user>-->
+<app-info-user *ngIf="showInfo == 'user'" (closePopup)="handleClosePopup($event)" [isInfo]="true"
+              [data]="dataInfo"></app-info-user>
