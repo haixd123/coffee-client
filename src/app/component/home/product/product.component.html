@@ -1,78 +1,136 @@
-<div style="max-width: 1200px; margin: auto;">
-  <div class="d-flex justify-content-center mb-5" style="font-size: 25px; font-weight: 600; margin-top: 35px;">Tất cả
-    sản
-    phẩm
-  </div>
-  <owl-carousel-o [options]="customOptions" style="background-color: #c3c3c3">
-    <ng-template *ngFor="let item of data" carouselSlide>
-      <div class="item-product mx-2 px-3 my-3">
-        <div>
-          <div style="cursor: pointer" (click)="showModal(item)">
-            <img style="width: 268px; height: 270px; object-fit: contain;" [src]="item.image"/>
-          </div>
-          <div class="my-2" style="width: 100%;">
-            <div class="d-flex justify-content-center" style="width: 100%;">
-              <span style="font-size: 19px; font-weight: 600;">{{item.name}}</span>
-            </div>
-            <div class="d-flex justify-content-center" style="width: 100%;">
-              <span style="font-size: 14px; font-weight: 500; margin-right: 3px;">Giá: </span>
-              <span style="font-size: 16px; color: #c60505">{{item.price | currency:'VND':'symbol':'1.0-0' }}</span>
-            </div>
+<div class="container">
+  <div class="voucher">
+    <div class="voucher-title">Ưu đãi của bạn</div>
+    <owl-carousel-o [options]="voucherOptions">
+      <ng-template *ngFor="let item of voucher;" carouselSlide>
+        <div class="voucher-item">
+          <p class="name">Voucher 100k</p>
+          <p class="description">Giảm 100k cho đơn từ 2,000,000,000</p>
+          <div class="detail">
+            <span class="code">SODKEE-5</span>
+            <button class="btn-save">Lưu</button>
           </div>
         </div>
-      </div>
-    </ng-template>
-  </owl-carousel-o>
+      </ng-template>
+    </owl-carousel-o>
+  
 
-
-  <div class="d-flex justify-content-center mb-5 mt-4" style="font-size: 25px; font-weight: 600; margin-top: 35px;">
-    Sản phẩm dưới 50k
   </div>
-  <owl-carousel-o [options]="customOptions" style="background-color: #c3c3c3">
-    <ng-template *ngFor="let item of datProduct50k" carouselSlide>
-      <div class="item-product mx-2 px-3 my-3">
-        <div>
-          <div style="cursor: pointer" (click)="showModal(item)">
-            <img style="width: 268px; height: 270px; object-fit: contain;" [src]="item.image"/>
+  <div class="section">
+    <div class="section-title">Tất cả sản phẩm</div>
+    <owl-carousel-o [options]="customOptions">
+      <ng-template *ngFor="let item of data;" carouselSlide>
+        <div class="item-product" (click)="showModal(item)">
+          <div class="image" >
+            <span class="tag-discount">-{{item.discount}}%</span>
+            <img
+              [src]="item.image"
+            />
           </div>
-          <div class="my-2" style="width: 100%;">
-            <div class="d-flex justify-content-center" style="width: 100%;">
-              <span style="font-size: 19px; font-weight: 600;">{{item.name}}</span>
+          <div class="info-product">
+            <div class="name-product">
+              {{
+                item.name
+              }}
             </div>
-            <div class="d-flex justify-content-center" style="width: 100%;">
-              <span style="font-size: 14px; font-weight: 500; margin-right: 3px;">Giá: </span>
-              <span style="font-size: 16px; color: #c60505">{{item.price | currency:'VND':'symbol':'1.0-0' }}</span>
+            <div class="price">
+              
+              <span class="after-discount">{{
+                (item.price *(1-item.discount/100)) | currency : "VND" : "symbol" : "1.0-0"
+              }}</span>
+              <span class="origin">{{
+                item.price | currency : "VND" : "symbol" : "1.0-0"
+              }}</span>
             </div>
           </div>
+          <button class="btn-order">
+            <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
+              <span>Chọn mua</span>
+          </button>
         </div>
-      </div>
-    </ng-template>
-  </owl-carousel-o>
+      </ng-template>
+    </owl-carousel-o>
+  
 
-
-  <div class="d-flex justify-content-center mb-5 mt-4" style="font-size: 25px; font-weight: 600; margin-top: 35px;">
-    Sản phẩm bán cháy
   </div>
-  <owl-carousel-o [options]="customOptions" style="background-color: #c3c3c3">
-    <ng-template *ngFor="let item of dataTop5" carouselSlide>
-      <div class="item-product mx-2 px-3 my-3">
-        <div>
-          <div style="cursor: pointer" (click)="showModal(item)">
-            <img style="width: 268px; height: 270px; object-fit: contain;" [src]="item.image"/>
+  <div class="section">
+    <div class="section-title">Sản phẩm dưới 50k</div>
+    <owl-carousel-o [options]="customOptions">
+      <ng-template *ngFor="let item of datProduct50k;" carouselSlide>
+        <div class="item-product" (click)="showModal(item)">
+          <div class="image" >
+            <span class="tag-discount">-20%</span>
+            <img
+              [src]="item.image"
+            />
           </div>
-          <div class="my-2" style="width: 100%;">
-            <div class="d-flex justify-content-center" style="width: 100%;">
-              <span style="font-size: 19px; font-weight: 600;">{{item.name}}</span>
+          <div class="info-product">
+            <div class="name-product">
+              {{
+                item.name
+              }}
             </div>
-            <div class="d-flex justify-content-center" style="width: 100%;">
-              <span style="font-size: 14px; font-weight: 500; margin-right: 3px;">Giá: </span>
-              <span style="font-size: 16px; color: #c60505">{{item.price | currency:'VND':'symbol':'1.0-0' }}</span>
+            <div class="price">
+              
+              <span class="after-discount">{{
+                (item.price *(1-item.discount/100)) | currency : "VND" : "symbol" : "1.0-0"
+              }}</span>
+              <span class="origin">{{
+                item.price | currency : "VND" : "symbol" : "1.0-0"
+              }}</span>
             </div>
           </div>
+          <button class="btn-order">
+            <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
+              <span>Chọn mua</span>
+          </button>
         </div>
-      </div>
-    </ng-template>
-  </owl-carousel-o>
+      </ng-template>
+    </owl-carousel-o>
+  
+
+  </div>
+  <div class="section">
+    <div class="section-title">Sản phẩm bán chạy</div>
+    <owl-carousel-o [options]="customOptions">
+      <ng-template *ngFor="let item of dataTop5;" carouselSlide>
+        <div class="item-product" (click)="showModal(item)">
+          <div class="image" >
+            <span class="tag-discount">-20%</span>
+            <img
+              [src]="item.image"
+            />
+          </div>
+          <div class="info-product">
+            <div class="name-product">
+              {{
+                item.name
+              }}
+            </div>
+            <div class="price">
+              
+              <span class="after-discount">{{
+                (item.price *(1-item.discount/100)) | currency : "VND" : "symbol" : "1.0-0"
+              }}</span>
+              <span class="origin">{{
+                item.price | currency : "VND" : "symbol" : "1.0-0"
+              }}</span>
+            </div>
+          </div>
+          <button class="btn-order">
+            <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
+              <span>Chọn mua</span>
+          </button>
+        </div>
+      </ng-template>
+    </owl-carousel-o>
+  
+
+  </div>
+  
+  
+
+  
   <!--  <div style="display: grid; grid-template-columns: 25% 25% 25% 25%;">-->
   <!--    <div class="item-product mb-4 mx-2 px-3" *ngFor="let item of data">-->
   <!--      <div><img style="width: 268px; height: 270px; object-fit: contain;" [src]="item.image"/></div>-->
@@ -87,63 +145,114 @@
   <!--      </button>-->
   <!--    </div>-->
   <!--  </div>-->
-  <nz-modal [nzWidth]="1000" [(nzVisible)]="isVisible" nzTitle="Chi tiết sản phẩm" (nzOnCancel)="handleCancel()"
-            [nzFooter]=null
-            style="position: relative">
-    <div style="display: grid; grid-template-columns: 40% 60%;">
+  <nz-modal
+    [nzWidth]="1000"
+    [(nzVisible)]="isVisible"
+    nzTitle="Chi tiết sản phẩm"
+    (nzOnCancel)="handleCancel()"
+    [nzFooter]="null"
+    style="position: relative"
+  >
+    <div style="display: grid; grid-template-columns: 40% 60%">
       <div>
-        <img style="width: 100%;" [src]="detailProduct?.image"/>
+        <img style="width: 100%" [src]="detailProduct?.image" />
       </div>
       <div>
         <div>
-          <div style="font-size: 22px; font-weight: 600;">{{detailProduct?.name}}</div>
-          <div style="font-size: 17px; font-weight: 600;">{{detailProduct?.description}}</div>
+          <div style="font-size: 22px; font-weight: 600">
+            {{ detailProduct?.name }}
+          </div>
+          <div style="font-size: 17px; font-weight: 600">
+            {{ detailProduct?.description }}
+          </div>
         </div>
-        <div style="border-top: 1px solid #c3c3c3; padding-top: 10px; margin-top: 5px">
+        <div
+          style="
+            border-top: 1px solid #c3c3c3;
+            padding-top: 10px;
+            margin-top: 5px;
+          "
+        >
           <div>
-            <span
-              style="color: #c60505; font-size: 20px; font-weight: 600;">{{detailProduct?.price - detailProduct?.price * detailProduct?.discount / 100 | currency:'VND':'symbol':'1.0-0' }}</span>
+            <span style="color: #c60505; font-size: 20px; font-weight: 600">{{
+              detailProduct?.price -
+                (detailProduct?.price * detailProduct?.discount) / 100
+                | currency : "VND" : "symbol" : "1.0-0"
+            }}</span>
           </div>
-          <div style="font-size: 17px;">
+          <div style="font-size: 17px">
             <span>Giá thị trường: </span>
-            <span
-              style="text-decoration: line-through; margin-right: 10px">{{detailProduct?.price | currency:'VND':'symbol':'1.0-0' }}</span>
+            <span style="text-decoration: line-through; margin-right: 10px">{{
+              detailProduct?.price | currency : "VND" : "symbol" : "1.0-0"
+            }}</span>
             <span>Tiết kiệm: </span>
-            <span>{{detailProduct?.price * detailProduct?.discount / 100 | currency:'VND':'symbol':'1.0-0' }}</span>
+            <span>{{
+              (detailProduct?.price * detailProduct?.discount) / 100
+                | currency : "VND" : "symbol" : "1.0-0"
+            }}</span>
           </div>
         </div>
-        <div style="margin-top: 10px;">
-          <button class="mb-3 add-cart" nz-button style="width: 100%; font-size: 17px;padding: 2px 15px;"
-                  (click)="addItemCart(detailProduct)">
+        <div style="margin-top: 10px">
+          <button
+            class="mb-3 add-cart"
+            nz-button
+            style="width: 100%; font-size: 17px; padding: 2px 15px"
+            (click)="addItemCart(detailProduct)"
+          >
             Thêm vào giỏ hàng
           </button>
         </div>
         <div>
-          <span style="font-size: 20px; font-weight: 600;">Mô tả sản phẩm</span>
-          <div class="test" innerHTML="{{detailProduct?.detail}}"></div>
+          <span style="font-size: 20px; font-weight: 600">Mô tả sản phẩm</span>
+          <div class="test" innerHTML="{{ detailProduct?.detail }}"></div>
         </div>
       </div>
     </div>
 
-
-    <div style="position: absolute; top: 0; right: -145px; max-width: 140px; display: flex; flex-wrap: wrap">
+    <div
+      style="
+        position: absolute;
+        top: 0;
+        right: -145px;
+        max-width: 140px;
+        display: flex;
+        flex-wrap: wrap;
+      "
+    >
       <div
-        style="background-color: #fff; border-radius: 10px; border-bottom: 10px solid transparent; margin-bottom: 10px"
-        *ngFor="let item of ListProductSame" (click)="handleDetailProduct(item)">
+        style="
+          background-color: #fff;
+          border-radius: 10px;
+          border-bottom: 10px solid transparent;
+          margin-bottom: 10px;
+        "
+        *ngFor="let item of ListProductSame"
+        (click)="handleDetailProduct(item)"
+      >
         <div style="margin: 5px 0">
           <img
-            style="width: 100%;max-width: 140px; max-height: 140px;min-height: 140px;object-fit: cover; border-top-left-radius: 10px; border-top-right-radius: 10px"
-            [src]="item?.image">
+            style="
+              width: 100%;
+              max-width: 140px;
+              max-height: 140px;
+              min-height: 140px;
+              object-fit: cover;
+              border-top-left-radius: 10px;
+              border-top-right-radius: 10px;
+            "
+            [src]="item?.image"
+          />
         </div>
-        <div style="margin-left: 5px; font-size: 15px">{{item.name}}</div>
+        <div style="margin-left: 5px; font-size: 15px">{{ item.name }}</div>
         <div style="margin-left: 5px">
-            <span
-              style="color: #c60505; font-size: 20px; font-weight: 600;">{{item?.price - item?.price * item?.discount / 100 | currency:'VND':'symbol':'1.0-0' }}</span>
+          <span style="color: #c60505; font-size: 20px; font-weight: 600">{{
+            item?.price - (item?.price * item?.discount) / 100
+              | currency : "VND" : "symbol" : "1.0-0"
+          }}</span>
         </div>
       </div>
     </div>
   </nz-modal>
-
 
   <!--  <div class="d-flex justify-content-center" style="font-size: 25px; font-weight: 600; margin-top: 35px;">Sản phẩm bán-->
   <!--    chạy-->
@@ -169,72 +278,118 @@
   <!--    </ng-template>-->
   <!--  </owl-carousel-o>-->
   <nz-drawer
-    nzPlacement="right" nzTitle="Giỏ hàng"
+    nzPlacement="right"
+    nzTitle="Giỏ hàng"
     [nzClosable]="false"
     [nzVisible]="isOpenDrawer"
     [nzWidth]="400"
-    (nzOnClose)="close()">
+    (nzOnClose)="close()"
+  >
     <div *ngIf="dataCartLocalStorage ? dataCartLocalStorage : dataCart">
-
-      <div style="display: grid; grid-template-columns: 20% 80%; margin-bottom: 40px;"
-           *ngFor="let itemCart of dataCart">
+      <div
+        style="
+          display: grid;
+          grid-template-columns: 20% 80%;
+          margin-bottom: 40px;
+        "
+        *ngFor="let itemCart of dataCart"
+      >
         <div>
-          <img width="100%" [src]="itemCart.image"/>
+          <img width="100%" [src]="itemCart.image" />
         </div>
         <div>
           <div>
-            <div style="font-size: 18px; font-weight: 600;">{{itemCart.name}}</div>
+            <div style="font-size: 18px; font-weight: 600">
+              {{ itemCart.name }}
+            </div>
           </div>
           <div class="d-flex justify-content-between py-1">
             <div style="font-size: 17px">Số lượng</div>
-            <div
-              style="font-size: 17px; color: #c60505">{{inputQuantity ? inputQuantity * (itemCart.price - itemCart.price * itemCart.discount / 100) : itemCart.quantity * (itemCart.price - itemCart.price * itemCart.discount / 100) | currency:'VND':'symbol':'1.0-0' }}</div>
+            <div style="font-size: 17px; color: #c60505">
+              {{
+                inputQuantity
+                  ? inputQuantity *
+                    (itemCart.price -
+                      (itemCart.price * itemCart.discount) / 100)
+                  : (itemCart.quantity *
+                      (itemCart.price -
+                        (itemCart.price * itemCart.discount) / 100)
+                    | currency : "VND" : "symbol" : "1.0-0")
+              }}
+            </div>
             <!--            style="font-size: 17px; color: #c60505">{{itemCart.quantity * (itemCart.price - itemCart.price * itemCart.discount / 100) | currency:'VND':'symbol':'1.0-0' }}</div>-->
           </div>
           <div class="d-flex justify-content-between">
             <div class="d-flex">
               <div (click)="minusItemCart(itemCart)">
-                <i style="font-size: 24px; border: 1px solid #c3c3c3; padding: 3px" nz-icon nzType="minus"
-                   nzTheme="outline"></i>
+                <i
+                  style="
+                    font-size: 24px;
+                    border: 1px solid #c3c3c3;
+                    padding: 3px;
+                  "
+                  nz-icon
+                  nzType="minus"
+                  nzTheme="outline"
+                ></i>
               </div>
               <!--              <form nz-form [formGroup]="formUpdateQuantity">-->
-
 
               <!--                            [(ngModel)]="inputQuantity ?  inputQuantity : itemCart.quantity"-->
               <!--              [(ngModel)]="itemCart.quantity"-->
               <nz-input-number
                 style="width: 45px; font-size: 16px; text-align: center"
-                [(ngModel)]="inputQuantity ?  changeInputQuantity(itemCart, inputQuantity) : itemCart.quantity"
+                [(ngModel)]="
+                  inputQuantity
+                    ? changeInputQuantity(itemCart, inputQuantity)
+                    : itemCart.quantity
+                "
                 [nzPlaceHolder]="null"
-                [nzMin]="1" [nzMax]="1000"
-                [nzStep]="1">
+                [nzMin]="1"
+                [nzMax]="1000"
+                [nzStep]="1"
+              >
               </nz-input-number>
               <!--              </form>-->
               <!--            <i style="font-size: 34px;" nz-icon nzType="minus-square" nzTheme="outline"></i>-->
               <div (click)="plusItemCart(itemCart)">
-                <i style="font-size: 24px; border: 1px solid #c3c3c3; padding: 3px" nz-icon nzType="plus"
-                   nzTheme="outline"></i>
+                <i
+                  style="
+                    font-size: 24px;
+                    border: 1px solid #c3c3c3;
+                    padding: 3px;
+                  "
+                  nz-icon
+                  nzType="plus"
+                  nzTheme="outline"
+                ></i>
               </div>
             </div>
-            <div class="d-flex align-items-end" style="font-size: 17px; color: #c60505; cursor: pointer"
-                 (click)="removeItemCart(itemCart)">bỏ sản phẩm
+            <div
+              class="d-flex align-items-end"
+              style="font-size: 17px; color: #c60505; cursor: pointer"
+              (click)="removeItemCart(itemCart)"
+            >
+              bỏ sản phẩm
             </div>
           </div>
         </div>
       </div>
-      <div class="mb-3 mt-5" style="border-top: 1px solid #c3c3c3; padding-top: 25px;">
+      <div
+        class="mb-3 mt-5"
+        style="border-top: 1px solid #c3c3c3; padding-top: 25px"
+      >
         <div class="d-flex justify-content-between align-items-center mb-2">
-          <span style="font-size: 16px;">Tổng tiền: </span>
-          <span
-            style="font-size: 17px; font-weight: 600; color: #c60505">{{totalMoneyCart | currency:'VND':'symbol':'1.0-0' }}</span>
+          <span style="font-size: 16px">Tổng tiền: </span>
+          <span style="font-size: 17px; font-weight: 600; color: #c60505">{{
+            totalMoneyCart | currency : "VND" : "symbol" : "1.0-0"
+          }}</span>
         </div>
 
-        <button class="buy-btn" nz-button
-                style=""
-                (click)="open()">Thanh toán
+        <button class="buy-btn" nz-button style="" (click)="open()">
+          Thanh toán
         </button>
       </div>
     </div>
   </nz-drawer>
 </div>
-
