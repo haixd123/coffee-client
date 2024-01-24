@@ -81,21 +81,21 @@
         <th [nzShowSort]="true" [nzSortDirections]="['ascend', 'descend']">
           Số lượng like
         </th>
-        <th>Trạng thái</th>
+        <th [nzShowSort]="true" [nzSortDirections]="['ascend', 'descend']">Trạng thái</th>
         <th>Hành động</th>
       </tr>
     </thead>
     <tbody>
       <tr
         *ngFor="
-          let item of data;
-            
+          let item of data
+          | filter : searchValue
+            | sort : sortValue : isSort
+            | filter : searchValue;
           let i = index
         "
       >
-      <!-- | filter : searchValue
-            | sort : sortValue : isSort
-            | filter : searchValue; -->
+      
         <td class="text-nowrap">
           {{
             validateService.getRowIndex(

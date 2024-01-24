@@ -1,23 +1,31 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {HttpClient} from '@angular/common/http';
-import {NotificationService} from '../../../../services/notification.service';
-import {NzUploadChangeParam} from 'ng-zorro-antd';
-import {finalize} from 'rxjs/operators';
-import {AngularFireStorage} from '@angular/fire/storage';
-import {DatePipe} from '@angular/common';
-import {Api} from '../../../../services/api';
+import { HttpClient } from '@angular/common/http';
+import { NotificationService } from '../../../../services/notification.service';
+import { NzUploadChangeParam } from 'ng-zorro-antd';
+import { finalize } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { DatePipe } from '@angular/common';
+import { Api } from '../../../../services/api';
 
 @Component({
   selector: 'app-edit-posts',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss']
+  styleUrls: ['./edit.component.scss'],
 })
 export class EditPostsComponent implements OnInit, OnChanges {
   @Input() isEdit: boolean;
   @Input() dataEdit: any;
   @Input() disable: boolean;
+  @Output() updatedData = new EventEmitter<any>();
   @Output() closePopup: EventEmitter<any> = new EventEmitter();
 
   public Editor = ClassicEditor;
@@ -38,7 +46,7 @@ export class EditPostsComponent implements OnInit, OnChanges {
     private notificationService: NotificationService,
     private storage: AngularFireStorage,
     public datePipe: DatePipe,
-    private api: Api,
+    private api: Api
   ) {
     this.formEdit = this.fb.group({
       id: null,
@@ -83,11 +91,14 @@ export class EditPostsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.http.get('http://localhost:8080/api/authors/posts/search-list-category').toPromise().then((data: any) => {
-      this.dataCategory = data.data;
-      // this.total = data.optional;
-      console.log('dataCategory: ', data.data);
-    });
+    this.http
+      .get('http://localhost:8080/api/authors/posts/search-list-category')
+      .toPromise()
+      .then((data: any) => {
+        this.dataCategory = data.data;
+        // this.total = data.optional;
+        console.log('dataCategory: ', data.data);
+      });
   }
 
   get f() {
@@ -111,16 +122,22 @@ export class EditPostsComponent implements OnInit, OnChanges {
     this.selectedFile = info.file.originFileObj;
     const uploadImageData = new FormData();
     uploadImageData.append('files', this.selectedFile, this.selectedFile.name);
-    const filePath = `'/image' + '/' + ${Math.random()} + '/' + ${this.selectedFile.name}`;
+    const filePath = `'/image' + '/' + ${Math.random()} + '/' + ${
+      this.selectedFile.name
+    }`;
     const fileRef = this.storage.ref(filePath);
-    this.storage.upload(filePath, this.selectedFile).snapshotChanges().pipe(
-      finalize(() => {
-        fileRef.getDownloadURL().subscribe((url) => {
-          this.isLoading = false;
-          this.urlImage = url;
-        });
-      })
-    ).subscribe();
+    this.storage
+      .upload(filePath, this.selectedFile)
+      .snapshotChanges()
+      .pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe((url) => {
+            this.isLoading = false;
+            this.urlImage = url;
+          });
+        })
+      )
+      .subscribe();
     // .subscribe((res) => {
     //     if (res.status === 200) {
     //       console.log('success | res : ', res);
@@ -133,26 +150,48 @@ export class EditPostsComponent implements OnInit, OnChanges {
 
   handleOk(): void {
     this.formEdit.get('imagePath').setValue(this.dataEdit.imagePath);
-    this.formEdit.get('createdAt').setValue(this.datePipe.transform(this.dataEdit.createdAt, 'dd/MM/yyyy'));
-    this.formEdit.get('category').setValue(this.formEdit.get('categoryCur').value.toString());
-    this.api.updatePosts(this.formEdit.value).toPromise().then((data: any) => {
-      if (data.errorCode == '00') {
-        this.notificationService.showMessage('success', 'Sửa bài đăng thành công');
-        this.isEdit = false;
-        this.handleCancel(true);
-        this.formEdit.reset();
-      } else {
-        this.notificationService.showMessage('error', 'Bài đăng đã tồn tại');
-        // this.isEdit = false;
-        // this.handleCancel(true);
-        // this.formEdit.reset();
-      }
-    });
+    this.formEdit
+      .get('createdAt')
+      .setValue(this.datePipe.transform(this.dataEdit.createdAt, 'dd/MM/yyyy'));
+    this.formEdit
+      .get('category')
+      .setValue(this.formEdit.get('categoryCur').value.toString());
+    this.api
+      .updatePosts(this.formEdit.value)
+      .toPromise()
+      .then((data: any) => {
+        if (data.errorCode == '00') {
+          this.notificationService.showMessage(
+            'success',
+            'Sửa bài đăng thành công'
+          );
+          this.isEdit = false;
+          this.handleCancel(true);
+          this.updatedData.emit({
+            id: this.getFromFormEdit('id'),
+            title: this.getFromFormEdit('title'),
+            status: this.getFromFormEdit('status'),
+            imagePath: this.getFromFormEdit('imagePath'),
+            contentPost: this.getFromFormEdit('contentPost'),
+            contentDetail: this.getFromFormEdit('contentDetail'),
+            userId: this.getFromFormEdit('userId'),
+            createdAt: this.getFromFormEdit('createdAt'),
+            category: this.getFromFormEdit('category'),
+            like1: this.getFromFormEdit('lik1'),
+            comment: this.getFromFormEdit('comment'),
+          });
+          this.formEdit.reset();
+        } else {
+          this.notificationService.showMessage('error', 'Bài đăng đã tồn tại');
+          // this.isEdit = false;
+          // this.handleCancel(true);
+          // this.formEdit.reset();
+        }
+      });
 
     // this.handleCancel(true);
 
     // this.isEdit = false;
-
   }
 
   handleCancel(value: any): void {
@@ -161,7 +200,9 @@ export class EditPostsComponent implements OnInit, OnChanges {
     // this.formEdit.get('categoryCur').setValue([null]);
     // console.log('success');
     this.isEdit = false;
-
   }
 
+  getFromFormEdit(field: string): any {
+    return this.formEdit.get(field).value;
+  }
 }
