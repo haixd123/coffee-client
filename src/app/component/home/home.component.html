@@ -147,39 +147,43 @@
                 <i class="mr-3" nz-icon nzType="audit" nzTheme="outline"></i>
                 Thông tin tài khoản</a>
               <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"
-                 [routerLink]="['/home/user/draftPosts']">
-<!--                <i class="mr-3" nz-icon nzType="user" nzTheme="outline"></i>-->
+                 [routerLink]="['/home/user/myPosts']">
+                <!--                <i class="mr-3" nz-icon nzType="user" nzTheme="outline"></i>-->
                 <i class="mr-3" nz-icon nzType="file-ppt" nzTheme="outline"></i>
+                Bài viết cá nhân</a>
+<!--              <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"-->
+<!--                 [routerLink]="['/home/user/draftPosts']">-->
+<!--&lt;!&ndash;                <i class="mr-3" nz-icon nzType="user" nzTheme="outline"></i>&ndash;&gt;-->
+<!--                <i class="mr-3" nz-icon nzType="file-ppt" nzTheme="outline"></i>-->
+<!--                Bài viết nháp</a>-->
+<!--              <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"-->
+<!--                 [routerLink]="['/home/user/refusePosts']">-->
+<!--&lt;!&ndash;                <i class="mr-3" nz-icon nzType="user" nzTheme="outline"></i>&ndash;&gt;-->
+<!--                <i class="mr-3" nz-icon nzType="file-excel" nzTheme="outline"></i>-->
 
-                Bài viết nháp</a>
-              <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"
-                 [routerLink]="['/home/user/refusePosts']">
-<!--                <i class="mr-3" nz-icon nzType="user" nzTheme="outline"></i>-->
-                <i class="mr-3" nz-icon nzType="file-excel" nzTheme="outline"></i>
+<!--                Bài viết bị từ chối</a>-->
+<!--              <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"-->
+<!--                 [routerLink]="['/home/user/myPosts']" (click)="noBody()">-->
+<!--&lt;!&ndash;                <i class="mr-3" nz-icon nzType="user" nzTheme="outline"></i>&ndash;&gt;-->
+<!--                <i class="mr-3" nz-icon nzType="file-done" nzTheme="outline"></i>-->
 
-                Bài viết bị từ chối</a>
-              <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"
-                 [routerLink]="['/home/user/myPosts']" (click)="noBody()">
-<!--                <i class="mr-3" nz-icon nzType="user" nzTheme="outline"></i>-->
-                <i class="mr-3" nz-icon nzType="file-done" nzTheme="outline"></i>
+<!--                Bài viết đã đăng</a>-->
+<!--              <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"-->
+<!--                 [routerLink]="['/home/user/waittingPosts']">-->
+<!--&lt;!&ndash;                <i class="mr-3" nz-icon nzType="star" nzTheme="outline"></i>&ndash;&gt;-->
+<!--                <i class="mr-3" nz-icon nzType="file-sync" nzTheme="outline"></i>-->
 
-                Bài viết đã đăng</a>
-              <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"
-                 [routerLink]="['/home/user/waittingPosts']">
+<!--                Bài viết chờ duyệt</a>-->
+<!--              <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"-->
+<!--                 [routerLink]="['/home/user/savePosts']" (click)="noBody()">-->
+<!--&lt;!&ndash;                <i class="mr-3" nz-icon nzType="star" nzTheme="outline"></i>&ndash;&gt;-->
 <!--                <i class="mr-3" nz-icon nzType="star" nzTheme="outline"></i>-->
-                <i class="mr-3" nz-icon nzType="file-sync" nzTheme="outline"></i>
-
-                Bài viết chờ duyệt</a>
-              <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"
-                 [routerLink]="['/home/user/savePosts']" (click)="noBody()">
-<!--                <i class="mr-3" nz-icon nzType="star" nzTheme="outline"></i>-->
-                <i class="mr-3" nz-icon nzType="star" nzTheme="outline"></i>
-                Bài viết đã lưu</a>
+<!--                Bài viết đã lưu</a>-->
               <!--              <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"-->
               <!--                 (click)="noBody()">-->
               <!--                <i class="mr-3" nz-icon nzType="info-circle" nzTheme="outline"></i>-->
               <!--                Đóng góp ý kiến</a>-->
-              <a style="font-size: 17px; height: 32px; color: #000"
+              <a style="font-size: 17px; height: 32px; color: #000; margin-right: 2px;"
                  class="d-flex align-items-center  my-3 mt-1 pb-2 user-hover"
                  (click)="logOut()">
                 <i class="mr-3" nz-icon nzType="logout" nzTheme="outline"></i>

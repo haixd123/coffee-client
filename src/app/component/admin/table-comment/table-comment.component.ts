@@ -71,7 +71,7 @@ export class TableCommentComponent implements OnInit {
     let page = this.curPage - 1;
       let size = 10;
     if (typeS == '0') {
-      
+
       let status = Number(this.formSearch.get('status').value);
       let userId = this.formSearch.get('value').value;
       if(userId != null && (userId + '').trim().length > 0){
@@ -86,7 +86,7 @@ export class TableCommentComponent implements OnInit {
       }
     }
     if (typeS == '1') {
-      
+
       let status = Number(this.formSearch.get('status').value);
       let postId = this.formSearch.get('value').value;
       if(postId != null && (postId + '').trim().length > 0){
@@ -99,11 +99,11 @@ export class TableCommentComponent implements OnInit {
       }else{
         this.getDataCommentByCommentContaining(page,size);
       }
-      
+
     }
     if (typeS == '3') {
-      
-      let status = this.formSearch.get('value').value;
+
+      let status = this.formSearch.get('status').value;
       this.api.getAllCommentByStatus(page, size, status).subscribe({
         next: (res) => {
           this.data = res.data.content;
@@ -112,7 +112,7 @@ export class TableCommentComponent implements OnInit {
       });
     }
     if (typeS == '2' || typeS == '-1') {
-      
+
       this.getDataCommentByCommentContaining(page,size);
     }
   }
@@ -129,7 +129,7 @@ export class TableCommentComponent implements OnInit {
 
 
   resetDefaultValueOfForm(){
-    this.formSearch.get('value').setValue(null);
+    this.formSearch.get('value').setValue('');
   }
   log(value: string) {
 

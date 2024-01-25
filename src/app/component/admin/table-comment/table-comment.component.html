@@ -20,7 +20,7 @@
       <!--      <label>Bài viết đã đăng</label>-->
       <!--      <div></div>-->
       <!--    </div>-->
-      <div class="col-4" *ngIf="this.formSearch.get('typeSearch').value != '-1'">
+      <div class="col-4" *ngIf="this.formSearch.get('typeSearch').value == '0' || this.formSearch.get('typeSearch').value == '1'  || this.formSearch.get('typeSearch').value== '2'">
         <!--      <nz-input-group [nzSuffix]="suffixIconSearch">-->
         <label>Giá trị</label>
         <div>
@@ -38,7 +38,7 @@
         <!--        <i class="mb-2" nz-icon nzType="search"></i>-->
         <!--      </ng-template>-->
       </div>
-      <div class="col-3" *ngIf="this.formSearch.get('typeSearch').value == 1 || this.formSearch.get('typeSearch').value== 0">
+      <div class="col-3" *ngIf="this.formSearch.get('typeSearch').value == '1' || this.formSearch.get('typeSearch').value== '0' || this.formSearch.get('typeSearch').value== '3'">
         <!--      <nz-input-group [nzSuffix]="suffixIconSearch">-->
         <label>Trạng thái</label>
         <div>

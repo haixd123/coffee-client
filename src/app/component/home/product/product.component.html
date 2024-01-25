@@ -13,7 +13,7 @@
         </div>
       </ng-template>
     </owl-carousel-o>
-  
+
 
   </div>
   <div class="section">
@@ -34,7 +34,7 @@
               }}
             </div>
             <div class="price">
-              
+
               <span class="after-discount">{{
                 (item.price *(1-item.discount/100)) | currency : "VND" : "symbol" : "1.0-0"
               }}</span>
@@ -50,7 +50,7 @@
         </div>
       </ng-template>
     </owl-carousel-o>
-  
+
 
   </div>
   <div class="section">
@@ -71,7 +71,7 @@
               }}
             </div>
             <div class="price">
-              
+
               <span class="after-discount">{{
                 (item.price *(1-item.discount/100)) | currency : "VND" : "symbol" : "1.0-0"
               }}</span>
@@ -87,7 +87,7 @@
         </div>
       </ng-template>
     </owl-carousel-o>
-  
+
 
   </div>
   <div class="section">
@@ -108,7 +108,7 @@
               }}
             </div>
             <div class="price">
-              
+
               <span class="after-discount">{{
                 (item.price *(1-item.discount/100)) | currency : "VND" : "symbol" : "1.0-0"
               }}</span>
@@ -124,13 +124,13 @@
         </div>
       </ng-template>
     </owl-carousel-o>
-  
+
 
   </div>
-  
-  
 
-  
+
+
+
   <!--  <div style="display: grid; grid-template-columns: 25% 25% 25% 25%;">-->
   <!--    <div class="item-product mb-4 mx-2 px-3" *ngFor="let item of data">-->
   <!--      <div><img style="width: 268px; height: 270px; object-fit: contain;" [src]="item.image"/></div>-->
@@ -209,49 +209,49 @@
       </div>
     </div>
 
-    <div
-      style="
-        position: absolute;
-        top: 0;
-        right: -145px;
-        max-width: 140px;
-        display: flex;
-        flex-wrap: wrap;
-      "
-    >
-      <div
-        style="
-          background-color: #fff;
-          border-radius: 10px;
-          border-bottom: 10px solid transparent;
-          margin-bottom: 10px;
-        "
-        *ngFor="let item of ListProductSame"
-        (click)="handleDetailProduct(item)"
-      >
-        <div style="margin: 5px 0">
-          <img
-            style="
-              width: 100%;
-              max-width: 140px;
-              max-height: 140px;
-              min-height: 140px;
-              object-fit: cover;
-              border-top-left-radius: 10px;
-              border-top-right-radius: 10px;
-            "
-            [src]="item?.image"
-          />
-        </div>
-        <div style="margin-left: 5px; font-size: 15px">{{ item.name }}</div>
-        <div style="margin-left: 5px">
-          <span style="color: #c60505; font-size: 20px; font-weight: 600">{{
-            item?.price - (item?.price * item?.discount) / 100
-              | currency : "VND" : "symbol" : "1.0-0"
-          }}</span>
-        </div>
-      </div>
-    </div>
+<!--    <div-->
+<!--      style="-->
+<!--        position: absolute;-->
+<!--        top: 0;-->
+<!--        right: -145px;-->
+<!--        max-width: 140px;-->
+<!--        display: flex;-->
+<!--        flex-wrap: wrap;-->
+<!--      "-->
+<!--    >-->
+<!--      <div-->
+<!--        style="-->
+<!--          background-color: #fff;-->
+<!--          border-radius: 10px;-->
+<!--          border-bottom: 10px solid transparent;-->
+<!--          margin-bottom: 10px;-->
+<!--        "-->
+<!--        *ngFor="let item of ListProductSame"-->
+<!--        (click)="handleDetailProduct(item)"-->
+<!--      >-->
+<!--        <div style="margin: 5px 0">-->
+<!--          <img-->
+<!--            style="-->
+<!--              width: 100%;-->
+<!--              max-width: 140px;-->
+<!--              max-height: 140px;-->
+<!--              min-height: 140px;-->
+<!--              object-fit: cover;-->
+<!--              border-top-left-radius: 10px;-->
+<!--              border-top-right-radius: 10px;-->
+<!--            "-->
+<!--            [src]="item?.image"-->
+<!--          />-->
+<!--        </div>-->
+<!--        <div style="margin-left: 5px; font-size: 15px">{{ item.name }}</div>-->
+<!--        <div style="margin-left: 5px">-->
+<!--          <span style="color: #c60505; font-size: 20px; font-weight: 600">{{-->
+<!--            item?.price - (item?.price * item?.discount) / 100-->
+<!--              | currency : "VND" : "symbol" : "1.0-0"-->
+<!--          }}</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
   </nz-modal>
 
   <!--  <div class="d-flex justify-content-center" style="font-size: 25px; font-weight: 600; margin-top: 35px;">Sản phẩm bán-->

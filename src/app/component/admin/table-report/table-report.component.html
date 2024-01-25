@@ -55,7 +55,7 @@
           <!--        <i class="mb-2" nz-icon nzType="search"></i>-->
           <!--      </ng-template>-->
         </div>
-        
+
       </div>
 
 
@@ -105,6 +105,8 @@
             <th>id</th>
             <th>Người báo cáo</th>
             <th>Bài viết / Bình luận bị báo cáo</th>
+            <th>Id bài viết</th>
+            <th>Id bình luận</th>
             <th>Lý do</th>
             <th>Hành động</th>
         </tr>
@@ -132,7 +134,7 @@
             </td>
             <td
             >
-                <span class="can-click" (click)="showUserInfo(item.userReport)">{{ item.userReport.username }}</span>
+                <span class="can-click" (click)="showUserInfo(item.userReport)">{{ item?.userReport?.username }}</span>
             </td>
             <!--        <td>{{ item.passWord }}</td>-->
             <!--      <td style=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{ item.passWord }}</td>-->
@@ -156,6 +158,12 @@
             </td>
 
             <td>
+                {{ item.reportType == 1 ? item.dataReportId : "" }}
+            </td>
+          <td>
+                {{ item.reportType == 1 ? "" : item.dataReportId}}
+            </td>
+          <td>
                 {{ item.reason }}
             </td>
             <!--            <td style="min-width: 100px">-->

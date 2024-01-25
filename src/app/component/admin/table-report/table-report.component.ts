@@ -166,22 +166,22 @@ export class TableReportComponent implements OnInit {
           },
         });
       } else {
-        this.api.getAllReport(page, size).subscribe({
-          next: (res) => {
-            this.data = res.data.content;
-            this.total = res.data.totalElements;
-          },
-        });
+        this.getAllReportFromServer(page,size)
       }
     }
     if (typeS == '2') {
       let type = this.formSearch.get('type').value;
-      this.api.getReportByIdAndType(page,size,Number(type),Number(value)).subscribe({
-        next: (res) => {
-          this.data = res.data.content;
-          this.total = res.data.totalElements;
-        },
-      })
+      if(value != null && (value + '').trim().length > 0){
+        this.api.getReportByIdAndType(page,size,Number(type),Number(value)).subscribe({
+          next: (res) => {
+            this.data = res.data.content;
+            this.total = res.data.totalElements;
+          },
+        })
+      }else{
+        this.getAllReportFromServer(page,size);
+      }
+
     }
 
     // this.http.post('http://localhost:8080/api/authors/user/search', this.searchModel).toPromise().then((data: any) => {
@@ -198,6 +198,15 @@ export class TableReportComponent implements OnInit {
     //   //   };
     //   // });
     // });
+  }
+
+  getAllReportFromServer(page:number,size:number){
+    this.api.getAllReport(page, size).subscribe({
+      next: (res) => {
+        this.data = res.data.content;
+        this.total = res.data.totalElements;
+      },
+    });
   }
 
   handleSearch() {
@@ -217,6 +226,9 @@ export class TableReportComponent implements OnInit {
   }
 
   log(value: any) {
+    if (value == '-1') {
+      this.formSearch.get('value').setValue('');
+    }
     if (value == '0') {
       this.placeholderValue = 'tên người báo cáo';
     }
