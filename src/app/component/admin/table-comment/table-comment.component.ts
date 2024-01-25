@@ -50,7 +50,7 @@ export class TableCommentComponent implements OnInit {
     this.formSearch = this.fb.group({
       pageIndex: 1,
       pageSize: 10,
-      typeSearch: '2',
+      typeSearch: '-1',
       value: '',
       status: '1',
       // title: null,
@@ -74,23 +74,32 @@ export class TableCommentComponent implements OnInit {
       
       let status = Number(this.formSearch.get('status').value);
       let userId = this.formSearch.get('value').value;
-      this.api.getAllCommentByUserId(page, size, userId, status).subscribe({
-        next: (res) => {
-          this.data = res.data.content;
-          this.total = res.data.totalElements;
-        },
-      });
+      if(userId != null && (userId + '').trim().length > 0){
+        this.api.getAllCommentByUserId(page, size, userId, status).subscribe({
+          next: (res) => {
+            this.data = res.data.content;
+            this.total = res.data.totalElements;
+          },
+        });
+      }else{
+        this.getDataCommentByCommentContaining(page,size);
+      }
     }
     if (typeS == '1') {
       
       let status = Number(this.formSearch.get('status').value);
       let postId = this.formSearch.get('value').value;
-      this.api.getAllCommentByPostId(page, size, postId, status).subscribe({
-        next: (res) => {
-          this.data = res.data.content;
-          this.total = res.data.totalElements;
-        },
-      });
+      if(postId != null && (postId + '').trim().length > 0){
+        this.api.getAllCommentByPostId(page, size, postId, status).subscribe({
+          next: (res) => {
+            this.data = res.data.content;
+            this.total = res.data.totalElements;
+          },
+        });
+      }else{
+        this.getDataCommentByCommentContaining(page,size);
+      }
+      
     }
     if (typeS == '3') {
       
@@ -102,18 +111,32 @@ export class TableCommentComponent implements OnInit {
         },
       });
     }
-    if (typeS == '2') {
+    if (typeS == '2' || typeS == '-1') {
       
-      let infix = this.formSearch.get('value').value;
+      this.getDataCommentByCommentContaining(page,size);
+    }
+  }
+
+  getDataCommentByCommentContaining(page:number,size:number){
+    let infix = this.formSearch.get('value').value;
       this.api.getAllCommentByCommentContaining(page, size, infix).subscribe({
         next: (res) => {
           this.data = res.data.content;
           this.total = res.data.totalElements;
         },
       });
-    }
+  }
+
+
+  resetDefaultValueOfForm(){
+    this.formSearch.get('value').setValue(null);
   }
   log(value: string) {
+
+    if (value == '-1') {
+      this.placeholderValue = 'id của người dùng';
+      this.resetDefaultValueOfForm();
+    }
     if (value == '0') {
       this.placeholderValue = 'id của người dùng';
     }
@@ -124,7 +147,7 @@ export class TableCommentComponent implements OnInit {
       this.placeholderValue = 'trạng thái';
     }
     if (value == '2') {
-      this.placeholderValue = 'Bình luận';
+      this.placeholderValue = 'bình luận';
     }
   }
 

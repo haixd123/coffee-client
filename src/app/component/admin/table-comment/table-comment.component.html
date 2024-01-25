@@ -8,9 +8,10 @@
             formControlName="typeSearch"
             (ngModelChange)="log($event)"
           >
+            <nz-option nzValue="-1" nzLabel="Tất cả"></nz-option>
             <nz-option nzValue="0" nzLabel="Id người dùng"></nz-option>
             <nz-option nzValue="1" nzLabel="Id post"></nz-option>
-            <nz-option nzValue="2" nzLabel="Trạng thái"></nz-option>
+            <nz-option nzValue="3" nzLabel="Trạng thái"></nz-option>
             <nz-option nzValue="2" nzLabel="Bình luận"></nz-option>
           </nz-select>
         </div>
@@ -19,7 +20,7 @@
       <!--      <label>Bài viết đã đăng</label>-->
       <!--      <div></div>-->
       <!--    </div>-->
-      <div class="col-4">
+      <div class="col-4" *ngIf="this.formSearch.get('typeSearch').value != '-1'">
         <!--      <nz-input-group [nzSuffix]="suffixIconSearch">-->
         <label>Giá trị</label>
         <div>
