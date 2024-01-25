@@ -23,6 +23,9 @@ export class RefusePostComponent implements OnInit {
   myPostsUserId: any;
   data: any[];
 
+  isRefuse = false;
+  inputValue = '';
+
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -60,6 +63,14 @@ export class RefusePostComponent implements OnInit {
     });
     this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
     this.handleUpdate(this.searchModel, true);
+  }
+
+  handleCancelRefuse() {
+
+  }
+
+  handleOkRefuse() {
+
   }
 
   // PostsDetail(item: any) {

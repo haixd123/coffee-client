@@ -105,16 +105,25 @@
         <td>
             <div class="d-flex justify-content-center">
                 <a *ngIf="item.status == 0" style="font-size: 21px" class="mr-3" nz-popconfirm
-                   nzPopconfirmTitle="Bạn chắc chắn muốn duyệt đăng này?"
+                   nzPopconfirmTitle="Bạn chắc chắn muốn duyệt bài đăng này?"
                    (nzOnConfirm)="handleCheck(item)">
                     <i nz-icon nzType="check" nzTheme="outline"></i>
                 </a>
+              <a *ngIf="item.status == -1 || item.status == -2" style="font-size: 21px" class="mr-3" nz-popconfirm
+                 nzPopconfirmTitle="Bạn chắc chắn muốn đăng lại bài đăng này?"
+                 (nzOnConfirm)="handleReup(item)">
+                <i nz-icon nzType="upload" nzTheme="outline"></i>
+              </a>
                 <a style="font-size: 21px" class="mr-3" (click)="handleEdit(item)"><i nz-icon nzType="edit"
                                                                                       nzTheme="outline"></i></a>
-                <a *ngIf="item.status != 0 && item.status != -1 && item.status != 2" style="font-size: 21px"
+                <a *ngIf="item.status == 0 || item.status == 1 || item.status == 2" style="font-size: 21px"
                    nz-popconfirm
-                   nzPopconfirmTitle="Bạn chắc chắn muốn xóa bài đăng này?"
-                   (nzOnConfirm)="handleDelete(item)"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
+                   nzPopconfirmTitle="Bạn chắc chắn muốn ẩn bài đăng này?"
+                   (nzOnConfirm)="handleHide(item)"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
+              <a *ngIf=" item.status == -1 || item.status == -2" style="font-size: 21px"
+                 nz-popconfirm
+                 nzPopconfirmTitle="Bạn chắc chắn muốn xóa bài đăng này?"
+                 (nzOnConfirm)="handleDelete(item)"><i nz-icon nzType="delete" nzTheme="outline"></i></a>
                 <!--        <a *ngIf="item.status == 0" style="font-size: 21px" nz-popconfirm nzPopconfirmTitle="Bạn chắc chắn muốn xóa bài đăng này?"-->
                 <!--           (nzOnConfirm)="handleRefuse(item)"><i nz-icon nzType="delete" nzTheme="outline"></i></a>-->
                 <a *ngIf="item.status == 0" style="font-size: 21px" (click)="handleRefuse(item)">

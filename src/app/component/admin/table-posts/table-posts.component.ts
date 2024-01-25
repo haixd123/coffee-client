@@ -161,7 +161,7 @@ export class TablePostsComponent implements OnInit {
     }
   }
 
-  handleDelete(item: any) {
+  handleHide(item: any) {
     const a = item;
     a.status = -1;
     a.reasonDeline = this.inputValue;
@@ -180,7 +180,31 @@ export class TablePostsComponent implements OnInit {
         this.notificationReceiver = res;
       });
     });
-    this.changePage(a.status);
+    // this.changePage(a.status);
+    this.changePage();
+  }
+
+  handleDelete(item: any) {
+    const a = item;
+    // a.status = -1;
+    a.reasonDeline = this.inputValue;
+    this.api.deletePosts(a).subscribe((data: any) => {
+      if (data.errorCode == '00') {
+        this.isRefuse = false;
+        this.notificationService.showMessage('success', 'Xóa bài đăng thành công');
+        this.isEdit = false;
+      } else {
+        this.notificationService.showMessage('error', 'Xóa bài đăng thất bại');
+        this.isEdit = false;
+        this.isRefuse = false;
+      }
+      // this.changePage();
+      this.http.get('http://localhost:8080/api/authors/notifications/' + a.userId).subscribe((res: any) => {
+        this.notificationReceiver = res;
+      });
+    });
+    // this.changePage(a.status);
+    this.changePage();
   }
 
   handleRefuse(item: any) {
@@ -278,11 +302,6 @@ export class TablePostsComponent implements OnInit {
     // const a = value;
     this.dataRefuse.status = -2;
     this.dataRefuse.reasonDeline = this.inputValue;
-    // this.formSearch = value;
-    // console.log('this.formSearch: ', this.formSearch);
-    // this.formSearch.status = 1;
-    // console.log('this.formSearch: ', this.formSearch);
-    // this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
     this.api.updatePosts(this.dataRefuse).subscribe((res: any) => {
       this.notificationService.showMessage('success', 'Từ chối bài viết thành công');
       this.inputValue = '';
@@ -303,6 +322,20 @@ export class TablePostsComponent implements OnInit {
     console.log('this.dataRefuse: ', this.dataRefuse)
     this.isRefuse = false;
     this.inputValue = ''
+  }
+
+  handleReup(value: any) {
+    value.status = 1;
+    this.api.updatePosts(value).subscribe((res: any) => {
+      this.notificationService.showMessage('success', 'Từ chối bài viết thành công');
+      this.inputValue = '';
+    }, error => this.notificationService.showMessage('error', 'Từ chối bài viết thất bại'));
+
+    this.http.get('http://localhost:8080/api/authors/notifications/' + this.dataRefuse.userId).subscribe((res: any) => {
+      this.notificationReceiver = res;
+    });
+    this.isRefuse = false;
+    this.changePage(this.dataRefuse.status);
   }
 
   handleUpdatedData(updatedData: any) {

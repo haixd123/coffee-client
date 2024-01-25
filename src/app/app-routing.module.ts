@@ -27,15 +27,26 @@ import {TableProductComponent} from './component/admin/table-product/table-produ
 import {ProductComponent} from './component/home/product/product.component';
 import {CheckoutComponent} from './component/home/checkout/checkout.component';
 import {BillComponent} from './component/admin/table-bill/bill.component';
-import { PaymentResultComponent } from './component/home/payment-result/paymen-result.component';
+import {PaymentResultComponent} from './component/home/payment-result/paymen-result.component';
 import {WaittingPostComponent} from './component/home/user/waitting-post/waitting-post.component';
 import {DraftPostComponent} from './component/home/user/draft-post/draft-post.component';
 import {RefusePostComponent} from './component/home/user/refuse-post/refuse-post.component';
+<<<<<<< Updated upstream
 import { TableCommentComponent } from './component/admin/table-comment/table-comment.component';
 import { TableReportComponent } from './component/admin/table-report/table-report.component';
 import { MyVoucherComponent } from './component/home/user/my-voucher/my-voucher.component';
 import { TableVoucherComponent } from './component/admin/table-voucher/table-voucher.component';
 import {OrderComponent} from "./component/home/user/order/order.component";
+=======
+import {TableCommentComponent} from './component/admin/table-comment/table-comment.component';
+import {TableReportComponent} from './component/admin/table-report/table-report.component';
+// <<<<<<< Updated upstream
+import {MyVoucherComponent} from './component/home/user/my-voucher/my-voucher.component';
+import {TableVoucherComponent} from './component/admin/table-voucher/table-voucher.component';
+// =======
+import {OrderComponent} from "./component/home/user/order/order.component";
+// >>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 
 const routes: Routes = [
@@ -179,9 +190,16 @@ const routes: Routes = [
             component: RefusePostComponent,
           },
           {
+<<<<<<< Updated upstream
             path:'my-voucher',
             component: MyVoucherComponent
           },{
+=======
+            path: 'my-voucher',
+            component: MyVoucherComponent,
+          },
+          {
+>>>>>>> Stashed changes
             path: 'order',
             component: OrderComponent,
           }

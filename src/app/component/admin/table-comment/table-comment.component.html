@@ -49,7 +49,7 @@
           formControlName="status"
         >
           <nz-option nzValue="-1" nzLabel="Bị ẩn"></nz-option>
-          <nz-option nzValue="1" nzLabel="Được hiện"></nz-option>
+          <nz-option nzValue="1" nzLabel="Hoạt động"></nz-option>
         </nz-select>
       </div>
       <!--      </nz-input-group>-->
@@ -138,10 +138,19 @@
       <td>{{ item.createAt }}</td>
       <td>{{ item.updateAt }}</td>
       <td>{{ item.likeComment }}</td>
-      <td>{{ item.status == "1" ? "Được hiện" : "Bị ẩn" }}</td>
+      <td>{{ item.status == "1" ? "Hoạt động" : "Bị ẩn" }}</td>
       <!--    <td>{{ item.image }}</td>-->
 
       <td style="min-width: 100px">
+        <a
+          class="mr-3"
+          *ngIf="item.status == -1"
+          style="font-size: 21px"
+          nz-popconfirm
+          nzPopconfirmTitle="Bạn chắc chắn muốn đăng lại bình luận này?"
+          (nzOnConfirm)="handleReupComment(item)"
+        >
+          <i style="color: #1890ff;" nz-icon nzType="upload" nzTheme="outline"></i></a>
         <a
           style="font-size: 21px"
           nz-popconfirm

@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { SearchModelEntity } from '../search-model-entiry';
-import { HttpClient } from '@angular/common/http';
-import { ValidateService } from '../../../services/validate-service';
-import { NotificationService } from '../../../services/notification.service';
-import { FilterPipe } from '../../../shared/pipe/filter.pipe';
-import { faSort } from '@fortawesome/free-solid-svg-icons/faSort';
-import { Comment } from '../table-report/interface/comment';
-import { Api } from 'src/app/services/api';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {SearchModelEntity} from '../search-model-entiry';
+import {HttpClient} from '@angular/common/http';
+import {ValidateService} from '../../../services/validate-service';
+import {NotificationService} from '../../../services/notification.service';
+import {FilterPipe} from '../../../shared/pipe/filter.pipe';
+import {faSort} from '@fortawesome/free-solid-svg-icons/faSort';
+import {Comment} from '../table-report/interface/comment';
+import {Api} from 'src/app/services/api';
 
 interface Person {
   key: string;
@@ -40,6 +40,7 @@ export class TableCommentComponent implements OnInit {
   isRefuse = false;
   inputValue = '';
   placeholderValue: string = 'bình luận';
+
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -64,45 +65,42 @@ export class TableCommentComponent implements OnInit {
     this.changePage();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   handleUpdate() {
     let typeS = this.formSearch.get('typeSearch').value;
     let page = this.curPage - 1;
-      let size = 10;
+    let size = 10;
     if (typeS == '0') {
-
       let status = Number(this.formSearch.get('status').value);
       let userId = this.formSearch.get('value').value;
-      if(userId != null && (userId + '').trim().length > 0){
+      if (userId != null && (userId + '').trim().length > 0) {
         this.api.getAllCommentByUserId(page, size, userId, status).subscribe({
           next: (res) => {
             this.data = res.data.content;
             this.total = res.data.totalElements;
           },
         });
-      }else{
-        this.getDataCommentByCommentContaining(page,size);
+      } else {
+        this.getDataCommentByCommentContaining(page, size);
       }
     }
     if (typeS == '1') {
-
       let status = Number(this.formSearch.get('status').value);
       let postId = this.formSearch.get('value').value;
-      if(postId != null && (postId + '').trim().length > 0){
+      if (postId != null && (postId + '').trim().length > 0) {
         this.api.getAllCommentByPostId(page, size, postId, status).subscribe({
           next: (res) => {
             this.data = res.data.content;
             this.total = res.data.totalElements;
           },
         });
-      }else{
-        this.getDataCommentByCommentContaining(page,size);
+      } else {
+        this.getDataCommentByCommentContaining(page, size);
       }
-
     }
     if (typeS == '3') {
-
       let status = this.formSearch.get('status').value;
       this.api.getAllCommentByStatus(page, size, status).subscribe({
         next: (res) => {
@@ -112,25 +110,38 @@ export class TableCommentComponent implements OnInit {
       });
     }
     if (typeS == '2' || typeS == '-1') {
-
-      this.getDataCommentByCommentContaining(page,size);
+      this.getDataCommentByCommentContaining(page, size);
+    }
+    if (typeS == '-1') {
+      this.formSearch.patchValue({
+        pageIndex: this.curPage,
+        pageSize: 10,
+        status: null,
+        typeSearch: '-1',
+        value: '',
+      });
+      this.api.getListComment(this.formSearch.value).subscribe((res: any) => {
+        this.data = res.data;
+        this.total = res.optional;
+      })
     }
   }
 
-  getDataCommentByCommentContaining(page:number,size:number){
+  getDataCommentByCommentContaining(page: number, size: number) {
     let infix = this.formSearch.get('value').value;
-      this.api.getAllCommentByCommentContaining(page, size, infix).subscribe({
-        next: (res) => {
-          this.data = res.data.content;
-          this.total = res.data.totalElements;
-        },
-      });
+    this.api.getAllCommentByCommentContaining(page, size, infix).subscribe({
+      next: (res) => {
+        this.data = res.data.content;
+        this.total = res.data.totalElements;
+      },
+    });
   }
 
 
-  resetDefaultValueOfForm(){
+  resetDefaultValueOfForm() {
     this.formSearch.get('value').setValue('');
   }
+
   log(value: string) {
 
     if (value == '-1') {
@@ -171,7 +182,7 @@ export class TableCommentComponent implements OnInit {
 
   changePage() {
     this.searchModel.pageIndex = this.curPage;
-    this.searchModel.pageSize = 12;
+    this.searchModel.pageSize = 10;
     // this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
     this.handleUpdate();
     //
@@ -335,5 +346,17 @@ export class TableCommentComponent implements OnInit {
 
   handleCancelRefuse() {
     this.isRefuse = false;
+  }
+
+  handleReupComment(item) {
+    item.status = 1
+    this.api.updateComment(item).subscribe((res: any) => {
+      this.notificationService.showMessage(
+        'success',
+        'Duyệt bài viết thành công'
+      );
+      console.log('res comment: ', res)
+    }, (error) =>
+      this.notificationService.showMessage('error', 'Duyệt bài viết thất bại'))
   }
 }

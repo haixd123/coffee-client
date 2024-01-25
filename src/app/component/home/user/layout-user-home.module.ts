@@ -10,10 +10,10 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { WaittingPostComponent } from './waitting-post/waitting-post.component';
 import { DraftPostComponent } from './draft-post/draft-post.component';
 import { RefusePostComponent } from './refuse-post/refuse-post.component';
-import { OrderComponent } from './order/order.component';
+// import { OrderComponent } from './order/order.component';
 
 @NgModule({
-  declarations: [InfoComponent, MyPostsComponent, SavePostsComponent, WaittingPostComponent, DraftPostComponent, RefusePostComponent, OrderComponent],
+  declarations: [InfoComponent, MyPostsComponent, SavePostsComponent, WaittingPostComponent, DraftPostComponent, RefusePostComponent],
     imports: [NzFormModule, NgZorroAntdModule, SharedModule,
         RouterModule.forChild([]), NgxPaginationModule],
   providers: []

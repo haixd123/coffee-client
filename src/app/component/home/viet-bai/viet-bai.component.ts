@@ -54,8 +54,8 @@ export class VietBaiComponent implements OnInit {
       imagePath: null,
       userId: null,
       createdAt: null,
-      category: null,
-      categoryCur: [],
+      category: [null, [Validators.required]],
+      categoryCur: [null, [Validators.required]],
       like1: null,
       comment: null,
       status: null,
@@ -198,7 +198,7 @@ export class VietBaiComponent implements OnInit {
           });
         } else {
           this.formAdd.get('status').setValue(0);
-          this.formAdd.get('category').setValue(this.formAdd.get('categoryCur').value);
+          this.formAdd.get('category').setValue(this.formAdd.get('categoryCur').value.toString());
           this.api.createPosts(this.formAdd.value).toPromise().then((data: any) => {
             if (data.errorCode == '00') {
               this.notificationService.showMessage('success', 'Đăng bài thành công, chờ quản trị viên duyệt');
