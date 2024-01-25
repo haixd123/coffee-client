@@ -67,6 +67,7 @@ export class VietBaiComponent implements OnInit {
                 return;
             }
             this.dataEdit = data;
+          console.log('new data: ', data)
             this.formAdd.patchValue({
                 id: this.dataEdit.id,
                 title: this.dataEdit.title,

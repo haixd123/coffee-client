@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   searchModel: SearchModelEntity = new SearchModelEntity();
   formSearch: FormGroup;
   formSearchNotify: FormGroup;
+  formDetailPost: FormGroup;
 
   isReset: boolean;
 
@@ -87,7 +88,7 @@ export class HomeComponent implements OnInit {
       this.total = data.optional;
     });
     this.http.get('http://localhost:8080/api/authors/notifications/' + this.userLocalstorage?.id).subscribe((res: any) => {
-      console.log(res);
+      console.log('res-noty: ', res);
       this.notificationReceiver = res;
     });
     // console.log('this.userReceiveNotifyFromReplyComment: ', this.userReceiveNotifyFromReplyComment);
@@ -152,14 +153,14 @@ export class HomeComponent implements OnInit {
     this.searchModel.pageIndex = 1;
     this.searchModel.pageSize = 150;
     // await this.api.getListPosts(this.searchModel).toPromise().then((data: any) => {
-      // for (const item of data.data) {
-      //   for (const item2 of this.dataNotify) {
-      //     if (item.id == item2.postId) {
-      //       this.dataPost.push(item);
-      //       this.dataNotify2.push(item2);
-      //     }
-      //   }
-      // }
+    // for (const item of data.data) {
+    //   for (const item2 of this.dataNotify) {
+    //     if (item.id == item2.postId) {
+    //       this.dataPost.push(item);
+    //       this.dataNotify2.push(item2);
+    //     }
+    //   }
+    // }
     // });
 
   }
@@ -235,6 +236,18 @@ export class HomeComponent implements OnInit {
   }
 
   linkToPostDetail(item: any) {
+    console.log('item: ', item)
+    if (item.content == 'Bài viết của bạn đã bị gỡ.' || item.content == 'Bài viết của bạn đã bị từ chối.') {
+      this.formDetailPost = this.fb.group({
+        id: item.postId,
+      })
+      this.api.getDetailPost(this.formDetailPost.value).subscribe((res: any) => {
+        console.log('res detail post: ', res)
+        this.shareDataService.sendDataEditPosts(res.data);
+        this.router.navigate(['/home/write']);
+      })
+
+    }
     localStorage.setItem('postsCategory', item?.postCategory);
     this.shareDataService.sendDataCategory(item?.postCategory);
     this.router.navigate([`/home/detail/posts/${item?.postCategory}/${item.postId}`]);

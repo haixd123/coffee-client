@@ -49,6 +49,7 @@ export class HomePostsComponent implements OnInit, OnChanges {
 
   dataReportPost: any;
   listOfPosition: NzPlacementType[] = ['bottomLeft'];
+  notificationReceiver: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -175,14 +176,25 @@ export class HomePostsComponent implements OnInit, OnChanges {
   }
 
   deletePosts(item: any) {
-    this.api.deletePosts(item).subscribe((data: any) => {
-      if (data.errorCode == '00') {
-        this.notificationService.showMessage('success', 'Xóa đăng thành công');
-        this.changePage();
-      } else {
-        this.notificationService.showMessage('error', 'Xóa đăng thất bại');
-      }
-    });
+    if (this.userLocalstorage.role == 'ADMIN') {
+      item.status = -1;
+      this.api.updatePosts(item).subscribe((res: any) => {
+        this.notificationService.showMessage('success', 'Ẩn bài viết thành công');
+      }, error => this.notificationService.showMessage('error', 'Ẩn bài viết thất bại'));
+
+      this.http.get('http://localhost:8080/api/authors/notifications/' + item.userId).subscribe((res: any) => {
+        this.notificationReceiver = res;
+      });
+    } else {
+      this.api.deletePosts(item).subscribe((data: any) => {
+        if (data.errorCode == '00') {
+          this.notificationService.showMessage('success', 'Xóa đăng thành công');
+          this.changePage();
+        } else {
+          this.notificationService.showMessage('error', 'Xóa đăng thất bại');
+        }
+      });
+    }
   }
 
   changeToDetailPosts(item) {
