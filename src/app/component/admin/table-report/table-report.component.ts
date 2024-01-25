@@ -108,6 +108,8 @@ export class TableReportComponent implements OnInit {
 
   filterAddress: any[];
 
+  placeholderValue: string = 'lý do';
+
   showInfo: string = '';
   newArray = [
     // {
@@ -132,6 +134,9 @@ export class TableReportComponent implements OnInit {
   ) {
     this.formSearch = this.fb.group({
       reason: null,
+      typeSearch: '1',
+      type: '1',
+      value: '',
     });
     this.handleSearch();
     this.changePage();
@@ -140,24 +145,45 @@ export class TableReportComponent implements OnInit {
   ngOnInit(): void {}
 
   handleUpdate() {
-    let page = this.curPage -1;
+    let typeS = this.formSearch.get('typeSearch').value;
+    let page = this.curPage - 1;
     let size = 10;
-    let reason = this.formSearch.get('reason').value;
-    if (reason != null && (reason + '').trim().length > 0) {
-      this.api.getSearchReport(page, size, reason).subscribe({
+    let value = this.formSearch.get('value').value;
+    if (typeS == '0') {
+      this.api.getReportByUser(page,size,value).subscribe({
         next: (res) => {
           this.data = res.data.content;
           this.total = res.data.totalElements;
         },
-      });
-    } else {
-      this.api.getAllReport(page, size).subscribe({
-        next: (res) => {
-          this.data = res.data.content;
-          this.total = res.data.totalElements;
-        },
-      });
+      })
     }
+    if (typeS == '1') {
+      if (value != null && (value + '').trim().length > 0) {
+        this.api.getSearchReport(page, size, value).subscribe({
+          next: (res) => {
+            this.data = res.data.content;
+            this.total = res.data.totalElements;
+          },
+        });
+      } else {
+        this.api.getAllReport(page, size).subscribe({
+          next: (res) => {
+            this.data = res.data.content;
+            this.total = res.data.totalElements;
+          },
+        });
+      }
+    }
+    if (typeS == '2') {
+      let type = this.formSearch.get('type').value;
+      this.api.getReportByIdAndType(page,size,Number(type),Number(value)).subscribe({
+        next: (res) => {
+          this.data = res.data.content;
+          this.total = res.data.totalElements;
+        },
+      })
+    }
+
     // this.http.post('http://localhost:8080/api/authors/user/search', this.searchModel).toPromise().then((data: any) => {
     //   this.data = data.data;
     //   this.total = data.optional;
@@ -188,6 +214,21 @@ export class TableReportComponent implements OnInit {
     //   this.formSearch.get('name').setValue(null);
     // }
     this.handleUpdate();
+  }
+
+  log(value: any) {
+    if (value == '0') {
+      this.placeholderValue = 'tên người báo cáo';
+    }
+    if (value == '1') {
+      this.placeholderValue = 'lý do';
+    }
+    // if (value == '3') {
+    //   this.placeholderValue = 'trạng thái';
+    // }
+    if (value == '2') {
+      this.placeholderValue = 'id';
+    }
   }
 
   changePage() {
