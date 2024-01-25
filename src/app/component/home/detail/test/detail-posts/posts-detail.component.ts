@@ -475,11 +475,13 @@ export class PostsDetailComponent implements OnInit {
         this.api.createReport(this.formSearchPost.value).subscribe((res: any) => {
             this.notificationService.showMessage('success', res.message);
             this.isRefuse = false;
+            this.inputValue = '';
         })
     }
 
     handleCancelRefuse() {
         this.isRefuse = false;
+        this.inputValue = ''
     }
 
     rating() {

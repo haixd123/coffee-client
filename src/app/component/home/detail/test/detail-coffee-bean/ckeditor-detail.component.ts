@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {FormGroup} from '@angular/forms';
 import {SearchModelEntity} from '../../../../admin/search-model-entiry';
 import {Api} from '../../../../../services/api';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-ckeditor-detail',
@@ -19,9 +20,12 @@ export class CkeditorDetailComponent implements OnInit, OnChanges {
   dataCoffeeBean: any[];
 
   slugCoffeeBeanDetail: any;
+  testData: any;
+
   constructor(
     private http: HttpClient,
-  private api: Api,
+    private api: Api,
+    private activatedRoute: ActivatedRoute,
   ) {
     this.searchModel.pageIndex = 1;
     this.searchModel.pageSize = 30;
@@ -46,6 +50,17 @@ export class CkeditorDetailComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.activatedRoute.paramMap.subscribe(params => {
+      // console.log('params: ', params);
+      this.testData = params.get('id');
+      console.log('this.testData: ', params)
+      // localStorage.setItem('postsCategory', params.get('category'));
+      // localStorage.setItem('postsId', params.get('id'));
+      // this.shareDataService.sendDataCategory(params.get('category'));
+      // this.shareDataService.sendDataIdPost(params.get('id'));
+
+
+    });
   }
 
   // myCode1() {
