@@ -10,13 +10,18 @@ export class ShareDataService {
   private dataSubjectEditPosts = new BehaviorSubject<any>(null);
   private dataSubjectIdPost = new BehaviorSubject<any>('');
   private isResetFormCreatePost = new BehaviorSubject<any>('');
+  private activedNav = new BehaviorSubject<string>('');
 
   dataSearch$ = this.dataSubjectSearch.asObservable();
   dataCategory$ = this.dataSubjectCategory.asObservable();
   dataEditPosts$ = this.dataSubjectEditPosts.asObservable();
   dataIdPost$ = this.dataSubjectIdPost.asObservable();
   isResetFormCreatePost$ = this.isResetFormCreatePost.asObservable();
+  activedNav$ = this.activedNav.asObservable();
 
+  setActivedNav(navName:string){
+    this.activedNav.next(navName);
+  }
   sendDataSearch(data: string) {
     this.dataSubjectSearch.next(data);
   }

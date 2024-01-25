@@ -31,6 +31,7 @@ import { TableReportComponent } from './table-report/table-report.component';
 import { InfoPostsComponent } from './table-report/InfoPost/info.component';
 import { InfoCommentComponent } from './table-report/InfoComment/info.component';
 import { InfoUserComponent } from './table-report/InfoUser/info.component';
+import { TableVoucherComponent } from './table-voucher/table-voucher.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { InfoUserComponent } from './table-report/InfoUser/info.component';
     InfoPostsComponent,
     InfoCommentComponent,
     InfoUserComponent,
+    TableVoucherComponent,
   ],
   imports: [
     NzFormModule,

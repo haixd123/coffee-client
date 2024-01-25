@@ -17,7 +17,7 @@
     </div>
     <div class="info-group">
       <div class="field">Chi tiết</div>
-      <div class="value">{{ data.contentDetail }}</div>
+      <div class="value" [innerHTML]="safeHtml(data.contentDetail)"></div>
     </div>
     <div class="info-group">
       <div class="field">Loại</div>

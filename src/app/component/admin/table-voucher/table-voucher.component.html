@@ -1,0 +1,93 @@
+<form nz-form [formGroup]="formSearch">
+
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <div class="d-flex">
+      <button style="border-radius: 5px" class="d-flex align-items-center ml-3" nz-button nzType="primary"
+              (click)="handleSearch()">
+        <i nz-icon nzType="search" nzTheme="outline"></i> Tìm kiếm
+      </button>
+<!--      <button disabled style="border-radius: 5px" class="d-flex align-items-center ml-3" nz-button nzType="primary"-->
+<!--              (click)="handleAdd()">-->
+<!--        <i nz-icon nzType="plus" nzTheme="outline"></i> Thêm mới-->
+<!--      </button>-->
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <nz-input-group [nzSuffix]="suffixIconSearch">
+        <input class="px-1" formControlName="name" (change)="handleSearch()" type="text" nz-input
+               placeholder="Tìm theo tên người dùng"/>
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i class="mb-2" nz-icon nzType="search"></i>
+      </ng-template>
+    </div>
+  </div>
+  <nz-table #basicTable
+            [nzData]="data"
+            [nzFrontPagination]="false"
+            [(nzPageIndex)]="searchModel.pageIndex"
+            nzBordered
+            nzShowSizeChanger
+  >
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Tên đăng nhập</th>
+      <!--        <th>Password</th>-->
+      <th>Email</th>
+      <th>Tên</th>
+      <!--    <th [nzShowFilter]="true" [nzFilters]="newArray">Address-->
+      <!--      <th [nzShowFilter]="true" [nzFilters]="filterAddress">Địa chỉ-->
+
+      <!--      </th>-->
+
+      <th [nzShowSort]="true" [nzSortDirections]="['ascend', 'descend']" (click)="handleSort('role')">
+        Cấp phân quyền
+      </th>
+      <th>
+        Số điện thoại
+      </th>
+      <th><i class="fas fa-user"></i> <!-- Sử dụng icon User -->
+        Ngày sinh
+      </th>
+      <th>Giới tính</th>
+      <th>Ngày tạo</th>
+      <th>Ảnh</th>
+      <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of data | filter:searchValue | sort:sortValue:isSort | filter:searchValue, let i = index">
+      <td class="text-nowrap">{{validateService.getRowIndex(i, basicTable.nzPageIndex, basicTable.nzPageSize)}}</td>
+      <td>{{ item.userName }}</td>
+      <!--        <td>{{ item.passWord }}</td>-->
+      <!--      <td style=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{ item.passWord }}</td>-->
+
+      <td>{{ item.email }}</td>
+      <td>{{ item.name }}</td>
+      <!--      <td>{{ item.address }}</td>-->
+      <!--    <td>{{ item.age | sort: 'age' }}</td>-->
+      <td>{{ item.role }}</td>
+      <td>{{ item.phoneNumber }}</td>
+      <td>{{ item.dateOfBirth }}</td>
+      <td>{{ item.sex }}</td>
+      <td>{{ item.createDate | dateFormat: 'dd/MM/yyyy'  }}</td>
+      <!--    <td>{{ item.image }}</td>-->
+      <td><img style="width: 100%; max-width: 150px; max-height: 150px" [src]="item.image"/></td>
+
+      <td style="min-width: 100px">
+        <a style="font-size: 21px" class="mr-3" (click)="handleEdit(item)">
+          <i nz-icon nzType="edit" nzTheme="outline"></i></a>
+        <a style="font-size: 21px" nz-popconfirm nzPopconfirmTitle="Bạn chắc chắn muốn xóa bài đăng này?" (nzOnConfirm)="handleDelete(item)">
+          <i nz-icon nzType="delete" nzTheme="outline"></i></a>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+  <div class="d-flex justify-content-end">
+    <nz-pagination class="pb-4" (click)="changePage()" [(nzPageIndex)]="curPage" [nzTotal]="total"></nz-pagination>
+  </div>
+</form>
+
+<!--<app-add-user [isAdd]="isAdd" (closePopup)=handleClosePopup($event)></app-add-user>-->
+<app-edit-user [isEdit]="isEdit" [dataEdit]="dataEdit" (closePopup)=handleClosePopup($event)></app-edit-user>
