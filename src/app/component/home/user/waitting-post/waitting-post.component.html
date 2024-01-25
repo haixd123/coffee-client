@@ -1,4 +1,4 @@
-<div style="max-width: 1200px; margin: auto" class="mt-4">
+<!-- <div style="max-width: 1200px; margin: auto" class="mt-4">
   <div style="font-size: 22px; font-weight: 600; padding-left: 15px; color: #000">Bài viết chờ duyệt</div>
   <div *ngFor="let item of data"
        style="cursor: pointer">
@@ -37,4 +37,34 @@
                  (click)="handleSearch()"></nz-pagination>
 
   <!--  <pagination-controls [(ngModel)]="p" [itemsPerPage]="1" [maxSize]="1" directionLinks="true" autoHide="false"></pagination-controls>-->
+<!-- </div> --> -->
+
+
+<div class="container">
+  <div class="title-section">Bài viết đã đăng</div>
+  <div class="content">
+    <div class="nonData" *ngIf="!data || data.length == 0">
+      <i class="mr-3" nz-icon nzType="file" nzTheme="outline"></i>
+      <span>Không có bài viết nào đang chờ duyệt.</span>
+    </div>
+    <div class="post-item" *ngFor="let item of data">
+      <div class="post-image">
+        <img [src]="item.imagePath" [alt]="item.imagePath">
+      </div>
+      <div class="description">
+        <div class="post-title">{{item.title}}</div>
+        <div class="post-create">{{item.createdAt | date: "dd/MM/yyyy"}}</div>
+        <div class="post-category">{{item.category}}</div>
+        <div class="post-content">{{item.contentPost}}</div>
+      </div>
+    </div>
+  </div>
+  <nz-pagination
+    style="text-align: end"
+    class="pb-4"
+    [(nzPageIndex)]="p"
+    [nzTotal]="total"
+    [nzPageSize]="4"
+    (click)="handleSearch()"
+  ></nz-pagination>
 </div>

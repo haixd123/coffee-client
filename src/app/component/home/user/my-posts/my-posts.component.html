@@ -1,7 +1,7 @@
 <div class="container">
   <div class="title-section">Bài viết đã đăng</div>
   <div class="content">
-    <div class="nonData" *ngIf="!data">
+    <div class="nonData" *ngIf="!data || data.length == 0">
       <i class="mr-3" nz-icon nzType="file" nzTheme="outline"></i>
       <span>Bạn chưa đăng bài viết nào.</span>
     </div>
