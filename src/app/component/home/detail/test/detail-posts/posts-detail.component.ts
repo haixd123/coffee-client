@@ -69,6 +69,7 @@ export class PostsDetailComponent implements OnInit {
     dataReportComment: any;
     abc: any[];
     inputRating: number;
+    dataRating: number;
 
     constructor(
         private fb: FormBuilder,
@@ -136,10 +137,25 @@ export class PostsDetailComponent implements OnInit {
         this.api.getListComment(this.searchModel).toPromise().then((data: any) => {
             this.dataComment = data.data;
         });
+
+        this.formRating = this.fb.group({
+            userId: this.idUserLocalstorage,
+        })
+        this.api.getListRating(this.formRating.value).toPromise().then((data: any) => {
+            console.log('data: ', data);
+            this.dataRating = data.data;
+            for (const item of data.data) {
+                if (item.postId == localStorage.getItem('postsId')) {
+                    this.inputRating = item.rating;
+                }
+            }
+        })
+        console.log('call again')
     }
 
 
     ngOnInit(): void {
+
         this.activatedRoute.paramMap.subscribe(params => {
             // console.log('params: ', params);
             this.idPostsLocalstorage = params.get('id');
@@ -147,7 +163,29 @@ export class PostsDetailComponent implements OnInit {
             localStorage.setItem('postsId', params.get('id'));
             this.shareDataService.sendDataCategory(params.get('category'));
             this.shareDataService.sendDataIdPost(params.get('id'));
+
+            this.isLike = false;
+            this.isSave = false;
+
+            this.api.getListLikePosts(this.searchModel).toPromise().then((data: any) => {
+                this.dataLikePosts = data.data;
+                for (const item of data.data) {
+                    if (item.userId == this.idUserLocalstorage && item.postId == this.idPostsLocalstorage) {
+                        this.isLike = true;
+                    }
+                }
+            });
+
+            this.api.getListSavePosts(this.searchModel).toPromise().then((data: any) => {
+                this.dataSavePosts = data.data;
+                for (const item of data.data) {
+                    if (item.userId == this.idUserLocalstorage && item.postId == this.idPostsLocalstorage) {
+                        this.isSave = true;
+                    }
+                }
+            });
         });
+
 
     }
 
@@ -447,9 +485,9 @@ export class PostsDetailComponent implements OnInit {
     rating() {
         console.log('inputRating: ', this.inputRating)
         this.formRating = this.fb.group({
-            postId: null,
-            userId: null,
-            rating: null,
+            postId: Number(localStorage.getItem('postsId')),
+            userId: Number(this.idUserLocalstorage),
+            rating: this.inputRating,
         })
         this.api.updateRating(this.formRating.value).subscribe((res: any) => {
             console.log('res: ', res)

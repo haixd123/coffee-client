@@ -79,6 +79,10 @@ export class Api extends BaseService {
         return this.httpClient.post(`http://localhost:8080/api/posts/${postId}/change-status/${status}`, null);
     }
 
+    getListRating(value: any) {
+        return this.post('/authors/post-rating/getListRating', value);
+    }
+
     updateRating(value: any) {
         return this.post('/authors/post-rating', value);
     }
