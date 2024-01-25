@@ -8,23 +8,28 @@
 >
   <div class="layout">
     <div class="info-group">
-      <div class="field">Tiêu đề</div>
+      <div class="field" >Tiêu đề</div>
       <div class="value">{{ data.title }}</div>
     </div>
     <div class="info-group">
-      <div class="field">Nội dung</div>
+      <div class="field" >Nội dung</div>
       <div class="value">{{ data.contentPost }}</div>
     </div>
     <div class="info-group">
+<<<<<<< Updated upstream
       <div class="field">Chi tiết</div>
       <div class="value" [innerHTML]="safeHtml(data.contentDetail)"></div>
+=======
+      <div class="field" >Chi tiết</div>
+      <div class="value">{{ data.contentDetail }}</div>
+>>>>>>> Stashed changes
     </div>
     <div class="info-group">
-      <div class="field">Loại</div>
+      <div class="field" >Loại</div>
       <div class="value">{{ data.category }}</div>
     </div>
     <div class="info-group">
-      <div class="field">Được tạo lúc</div>
+      <div class="field" >Được tạo lúc</div>
       <div class="value">{{ data.createdAt | date: 'dd/MM/yyyy hh:mm a' }}</div>
     </div>
 <!--    <div class="info-group">-->

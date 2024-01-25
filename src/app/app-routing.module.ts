@@ -33,8 +33,12 @@ import {DraftPostComponent} from './component/home/user/draft-post/draft-post.co
 import {RefusePostComponent} from './component/home/user/refuse-post/refuse-post.component';
 import { TableCommentComponent } from './component/admin/table-comment/table-comment.component';
 import { TableReportComponent } from './component/admin/table-report/table-report.component';
+<<<<<<< Updated upstream
 import { MyVoucherComponent } from './component/home/user/my-voucher/my-voucher.component';
 import { TableVoucherComponent } from './component/admin/table-voucher/table-voucher.component';
+=======
+import {OrderComponent} from "./component/home/user/order/order.component";
+>>>>>>> Stashed changes
 
 
 const routes: Routes = [
@@ -178,8 +182,13 @@ const routes: Routes = [
             component: RefusePostComponent,
           },
           {
+<<<<<<< Updated upstream
             path:'my-voucher',
             component: MyVoucherComponent
+=======
+            path: 'order',
+            component: OrderComponent,
+>>>>>>> Stashed changes
           }
         ],
         data: {

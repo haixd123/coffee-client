@@ -51,6 +51,11 @@ export class HomePostsComponent implements OnInit, OnChanges {
   listOfPosition: NzPlacementType[] = ['bottomLeft'];
   notificationReceiver: any[] = [];
 
+
+  dataMostLike: any;
+  dataMostComment: any;
+  dataMostRate: any;
+
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -85,6 +90,26 @@ export class HomePostsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.idPostsLocalstorage = localStorage.getItem('postsId');
+
+
+    this.api.getAllPostByTypeAndTime('like', 'month', 0, 10).subscribe({
+      next: (res) => {
+        this.dataMostLike = res.data.content
+      }
+    })
+
+    this.api.getAllPostByTypeAndTime('comment', 'month', 0, 10).subscribe({
+      next: (res) => {
+        this.dataMostComment = res.data.content
+      }
+    })
+
+    this.api.getAllPostByTypeAndTime('rating', 'month', 0, 10).subscribe({
+      next: (res) => {
+        this.dataMostRate = res.data.content
+      }
+    })
+
 
     //???
     this.activatedRoute.paramMap.subscribe(params => {
@@ -130,6 +155,7 @@ export class HomePostsComponent implements OnInit, OnChanges {
 
   update(searchModel: SearchModelEntity, reset = false) {
     this.api.getListPosts(this.searchModel).toPromise().then((data: any) => {
+      console.log('data1: ', data)
       this.data = data.data;
       this.total = data.optional;
       for (const item of data.data) {
@@ -138,6 +164,8 @@ export class HomePostsComponent implements OnInit, OnChanges {
         }
       }
     });
+
+
   }
 
   search(value?) {
@@ -180,6 +208,7 @@ export class HomePostsComponent implements OnInit, OnChanges {
       item.status = -1;
       this.api.updatePosts(item).subscribe((res: any) => {
         this.notificationService.showMessage('success', 'Ẩn bài viết thành công');
+        this.changePage();
       }, error => this.notificationService.showMessage('error', 'Ẩn bài viết thất bại'));
 
       this.http.get('http://localhost:8080/api/authors/notifications/' + item.userId).subscribe((res: any) => {
@@ -218,14 +247,36 @@ export class HomePostsComponent implements OnInit, OnChanges {
     this.api.createReport(this.formSearchPost.value).subscribe((res: any) => {
       this.notificationService.showMessage('success', res.message);
       this.isRefuse = false;
+      this.inputValue = ''
     })
   }
 
   handleCancelRefuse() {
     this.isRefuse = false;
+    this.inputValue = '';
   }
 
-  SearchForDate() {
+  SearchLikeForDate(value?: any) {
+    this.api.getAllPostByTypeAndTime('like', value, 0, 10).subscribe({
+      next: (res) => {
+        this.dataMostLike = res.data.content
+      }
+    })
+  }
 
+  SearchCommentForDate(value?: any) {
+    this.api.getAllPostByTypeAndTime('comment', value, 0, 10).subscribe({
+      next: (res) => {
+        this.dataMostComment = res.data.content
+      }
+    })
+  }
+
+  SearchRateForDate(value?: any) {
+    this.api.getAllPostByTypeAndTime('rating', value, 0, 10).subscribe({
+      next: (res) => {
+        this.dataMostRate = res.data.content
+      }
+    })
   }
 }

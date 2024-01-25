@@ -51,6 +51,11 @@ export class Api extends BaseService {
   }
 
   //Posts
+
+  getListPostsAdmin(value: any) {
+    return this.post('/authors/posts/searchAdmin', value);
+  }
+
   getListPosts(searchModel: SearchModelEntity) {
     return this.post('/authors/posts/search', searchModel);
   }
@@ -210,6 +215,28 @@ export class Api extends BaseService {
 
   changeStatusComment(commentId: number, status: number) {
     return this.httpClient.post(`http://localhost:8080/api/authors/comment/${commentId}/change-status/${status}`, null);
+  }
+
+  getAllPostByTypeAndTime(
+    type: string,
+    time: string,
+    // infix: string
+    // pageable: null,
+    page: number,
+    size: number,
+  ): Observable<any> {
+    return this.httpClient.get<any>(
+      'http://localhost:8080/api/authors/posts/by-favor',
+      {
+        params: new HttpParams()
+          .append('type', type + '')
+          .append('time', time + '')
+          .append('page', page + '')
+          .append('size', size + '')
+          // .append('pageable', null + '')
+          // .append('text', infix),
+      }
+    );
   }
 
   getAllCommentByCommentContaining(

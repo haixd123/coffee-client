@@ -69,6 +69,7 @@ export class HomeCoffeeBeanComponent implements OnInit {
   }
 
   updatecofeeBeanId(item: any) {
+
     localStorage.setItem('cofeeBeanId', item.id);
     localStorage.setItem('postsCategory', 'Cà phê');
 
