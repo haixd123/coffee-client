@@ -10,3 +10,54 @@ display: block;
   font-size: 16px;
   color: #000
 }
+.container{
+  --color-primary:84,84,84;
+  .nav{
+    position: fixed;
+    top: 15%;
+    display: flex;
+    flex-flow: column nowrap;
+    border: 2px solid rgba(var(--color-primary),.5);
+    border-radius: 5px;
+    .nav-item{
+      padding: 15px 35px;
+      a{
+        color: #000;
+      }
+      &:hover{
+        background-color: rgba(var(--color-primary),.25);
+      }
+      &.active{
+        background-color: rgba(var(--color-primary),.25);
+      }
+    }
+  }
+  
+  .info{
+    position: fixed;
+    top: 15%;
+    display: flex;
+    flex-flow: column nowrap;
+    border: 2px solid rgba(var(--color-primary),.5);
+    border-radius: 5px;
+    padding: 10px;
+  
+    .title{
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    .info-item{
+      padding: 10px 0;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      &:not(:last-of-type){
+        border-bottom: 1px solid rgba(var(--color-primary),.5);
+      }
+    }
+  }
+  
+}

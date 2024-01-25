@@ -212,6 +212,11 @@ export class HomeComponent implements OnInit {
 
   noBody() {
     this.isCoffee = 5;
+    this.shareDataService.setActivedNav("info");
+  }
+
+  changeNav(tabName: string){
+    this.shareDataService.setActivedNav(tabName);
   }
 
 

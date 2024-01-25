@@ -208,6 +208,7 @@
 
 <app-info-posts *ngIf="showInfo == 'post'" (closePopup)="handleClosePopup($event)" [isInfo]="true"
                 [data]="dataInfo"></app-info-posts>
+<!-- <app-info-posts></app-info-posts> -->
 <app-info-comment *ngIf="showInfo == 'comment'" (closePopup)="handleClosePopup($event)" [isInfo]="true"
                   [data]="dataInfo"></app-info-comment>
 <app-info-user *ngIf="showInfo == 'user'" (closePopup)="handleClosePopup($event)" [isInfo]="true"

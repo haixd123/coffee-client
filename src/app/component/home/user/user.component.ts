@@ -3,6 +3,7 @@ import {SearchModelEntity} from '../../admin/search-model-entiry';
 import {HttpClient} from '@angular/common/http';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Api} from '../../../services/api';
+import { ShareDataService } from 'src/app/services/share-data.service';
 
 @Component({
   selector: 'app-user',
@@ -23,12 +24,15 @@ export class UserComponent implements OnInit {
   totalComment: number;
   totalPosts: number;
 
+  tabActive :string = "";
+
   postIdToCountLike: any[];
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private api: Api,
+    private sharedDataService:ShareDataService
   ) {
     this.idUserLocalstorage = JSON.parse(localStorage.getItem('user')).id;
     this.handleSearch();
@@ -36,9 +40,20 @@ export class UserComponent implements OnInit {
       userId: null,
       postId: null,
     });
+    sharedDataService.activedNav$.subscribe({
+      next: tabName =>{
+        if(tabName != null && tabName != ''){
+          this.tabActive = tabName;
+        }
+      }
+    })
   }
 
   ngOnInit(): void {
+  }
+
+  changeTab(tabName: string){
+    this.sharedDataService.setActivedNav(tabName);
   }
 
   async handleUpdate(searchModel: SearchModelEntity, reset = false) {

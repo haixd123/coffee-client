@@ -1,23 +1,23 @@
-<div style="max-width: 1200px; margin: auto" class="row">
+<div style="max-width: 90vw; margin: auto" class="row container" *ngIf="tabActive != 'voucher'">
   <div class="col-2 mt-4">
-    <div style="position: fixed; top: 73px">
-      <div style="font-size: 18px; font-weight: 500; cursor: pointer; color: #000" class="py-3">
-        <a [routerLink]="['/home/user/info']">Thông tin tài khoản</a>
+    <div class="nav">
+      <div class="nav-item" [class.active]="tabActive =='info'">
+        <a [routerLink]="['/home/user/info']" (click)="changeTab('info')">Thông tin tài khoản</a>
       </div>
-      <div style="font-size: 18px; font-weight: 500; cursor: pointer; color: #000" class="py-3">
-        <a [routerLink]="['/home/user/draftPosts']">Bài viết nháp</a>
+      <div class="nav-item" [class.active]="tabActive =='draftPost'">
+        <a [routerLink]="['/home/user/draftPosts']" (click)="changeTab('draftPost')">Bài viết nháp</a>
       </div>
-      <div style="font-size: 18px; font-weight: 500; cursor: pointer; color: #000" class="py-3">
-        <a [routerLink]="['/home/user/refusePosts']">Bài viết bị từ chối</a>
+      <div class="nav-item" [class.active]="tabActive =='refusePosts'">
+        <a [routerLink]="['/home/user/refusePosts']" (click)="changeTab('refusePosts')">Bài viết bị từ chối</a>
       </div>
-      <div style="font-size: 18px; font-weight: 500; cursor: pointer; color: #000" class="py-3">
-        <a [routerLink]="['/home/user/myPosts']">Bài viết đã đăng</a>
+      <div class="nav-item" [class.active]="tabActive =='myPosts'">
+        <a [routerLink]="['/home/user/myPosts']" (click)="changeTab('myPosts')">Bài viết đã đăng</a>
       </div>
-      <div style="font-size: 18px; font-weight: 500; cursor: pointer; color: #000" class="py-3">
-        <a [routerLink]="['/home/user/waittingPosts']">Bài viết chờ duyệt</a>
+      <div class="nav-item" [class.active]="tabActive =='waitingPosts'">
+        <a [routerLink]="['/home/user/waittingPosts']" (click)="changeTab('waitingPosts')">Bài viết chờ duyệt</a>
       </div>
-      <div style="font-size: 18px; font-weight: 500; cursor: pointer; color: #000" class="py-3">
-        <a [routerLink]="['/home/user/savePosts']">Bài viết đã lưu</a>
+      <div class="nav-item" [class.active]="tabActive =='savePosts'">
+        <a [routerLink]="['/home/user/savePosts']" (click)="changeTab('savePosts')">Bài viết đã lưu</a>
       </div>
 
     </div>
@@ -26,19 +26,19 @@
     <router-outlet></router-outlet>
   </div>
   <div class="col-2 my-4">
-    <div style="font-size: 16px; position: fixed; top: 73px">
-      <div class="mb-4 pt-3">
-        <span style="font-size: 18px; font-weight: 600">Mức độ yêu thích</span><br/>
+    <div class="info">
+      <div class="title">
+        Mức độ yêu thích
       </div>
-      <div class="py-2" style="border-bottom: 1px solid #c3c3c3; border-top: 1px solid #c3c3c3">
+      <div class="info-item">
         <span>Tổng số bài viết đã đăng</span><br/>
         <span>{{totalPosts ? totalPosts : 0}}</span>
       </div>
-      <div class="py-2" style="border-bottom: 1px solid #c3c3c3">
+      <div class="info-item">
         <span>Tổng số like</span><br/>
         <span>{{totalLike ? totalLike : 0}}</span>
       </div>
-      <div class="py-2" style="border-bottom: 1px solid #c3c3c3">
+      <div class="info-item">
         <span>Tổng số comment</span><br/>
         <span>{{totalComment ? totalComment : 0}}</span>
       </div>
@@ -52,4 +52,7 @@
       <!--      </div>-->
     </div>
   </div>
+</div>
+<div class="non-container" *ngIf="tabActive == 'voucher'">
+  <router-outlet></router-outlet>
 </div>

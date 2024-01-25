@@ -22,6 +22,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { PaymentResultComponent } from './payment-result/paymen-result.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
+import { MyVoucherComponent } from './user/my-voucher/my-voucher.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
     // ContactComponent,
     ProductComponent,
     CheckoutComponent,
-    PaymentResultComponent
+    PaymentResultComponent,
+    MyVoucherComponent
   ],
   imports: [
     NzFormModule,
