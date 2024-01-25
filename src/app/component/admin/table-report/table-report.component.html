@@ -8,6 +8,7 @@
               formControlName="typeSearch"
               (ngModelChange)="log($event)"
             >
+              <nz-option nzValue="-1" nzLabel="Tất cả"></nz-option>
               <nz-option nzValue="0" nzLabel="Tên người báo cáo"></nz-option>
               <nz-option nzValue="1" nzLabel="Lý do"></nz-option>
               <!-- <nz-option nzValue="2" nzLabel="Trạng thái"></nz-option> -->
@@ -19,7 +20,7 @@
         <!--      <label>Bài viết đã đăng</label>-->
         <!--      <div></div>-->
         <!--    </div>-->
-        <div class="col-3" *ngIf="this.formSearch.get('typeSearch').value == 2">
+        <div class="col-3" *ngIf="this.formSearch.get('typeSearch').value == '2'">
             <!--      <nz-input-group [nzSuffix]="suffixIconSearch">-->
             <label>Loại</label>
             <div>
@@ -36,7 +37,7 @@
             <!--        <i class="mb-2" nz-icon nzType="search"></i>-->
             <!--      </ng-template>-->
           </div>
-        <div class="col-4">
+        <div class="col-4" *ngIf="this.formSearch.get('typeSearch').value != '-1'">
           <!--      <nz-input-group [nzSuffix]="suffixIconSearch">-->
           <label>Giá trị</label>
           <div>

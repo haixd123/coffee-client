@@ -134,7 +134,7 @@ export class TableReportComponent implements OnInit {
   ) {
     this.formSearch = this.fb.group({
       reason: null,
-      typeSearch: '1',
+      typeSearch: '-1',
       type: '1',
       value: '',
     });
@@ -157,7 +157,7 @@ export class TableReportComponent implements OnInit {
         },
       })
     }
-    if (typeS == '1') {
+    if (typeS == '1' || typeS == '-1') {
       if (value != null && (value + '').trim().length > 0) {
         this.api.getSearchReport(page, size, value).subscribe({
           next: (res) => {
