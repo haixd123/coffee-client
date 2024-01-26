@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SearchModelEntity} from '../../../admin/search-model-entiry';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Api} from '../../../../services/api';
+import {NotificationService} from "../../../../services/notification.service";
+import {ShareDataService} from "../../../../services/share-data.service";
 
 @Component({
   selector: 'app-refuse-post',
@@ -26,11 +28,15 @@ export class RefusePostComponent implements OnInit {
   isRefuse = false;
   inputValue = '';
 
+  dataRefuse: any;
+
   constructor(
     private http: HttpClient,
     private router: Router,
     private api: Api,
     private fb: FormBuilder,
+    private notificationService: NotificationService,
+    private shareDataService: ShareDataService,
   ) {
     this.formSearch = this.fb.group({
       status: -2,
@@ -65,12 +71,26 @@ export class RefusePostComponent implements OnInit {
     this.handleUpdate(this.searchModel, true);
   }
 
+  // handleOpenModal(value: any) {
+  //   this.dataRefuse = value;
+  //   this.isRefuse = true
+  // }
+
   handleCancelRefuse() {
 
   }
 
-  handleOkRefuse() {
+  handleEdit(item: any) {
+    this.shareDataService.sendDataEditPosts(item);
+    this.router.navigate(['/home/write']);
+  }
 
+  handleOkRefuse(value?: any) {
+    value.status = -1;
+    this.api.deletePosts(value).subscribe((res: any) => {
+      this.notificationService.showMessage('success', 'Xóa bài viết thành công');
+      this.handleSearch()
+    })
   }
 
   // PostsDetail(item: any) {
