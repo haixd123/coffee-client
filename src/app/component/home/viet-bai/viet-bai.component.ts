@@ -55,7 +55,7 @@ export class VietBaiComponent implements OnInit {
       userId: null,
       createdAt: null,
       category: [null, [Validators.required]],
-      categoryCur: [null, [Validators.required]],
+      categoryCur: [this.dataEdit?.category ? this.dataEdit.category : null, [Validators.required]],
       like1: null,
       comment: null,
       status: null,
@@ -68,6 +68,7 @@ export class VietBaiComponent implements OnInit {
       }
       this.dataEdit = data;
       console.log('new data: ', data)
+      this.urlImage = this.dataEdit.imagePath;
       this.formAdd.patchValue({
         id: this.dataEdit.id,
         title: this.dataEdit.title,
@@ -81,7 +82,7 @@ export class VietBaiComponent implements OnInit {
         like1: this.dataEdit.like1,
         comment: this.dataEdit.comment,
       });
-
+      this.formAdd.get('imagePath').setValue(this.dataEdit.imagePath);
       this.formAdd.get('userId').setValue(this.dataEdit.userId);
       this.formAdd.get('like1').setValue(this.dataEdit.like1);
       this.formAdd.get('comment').setValue(this.dataEdit.comment);
@@ -218,6 +219,7 @@ export class VietBaiComponent implements OnInit {
       }
 
       if (this.dataEdit != null) {
+        console.log('this.dataEdit: ', this.dataEdit)
         this.formAdd.get('imagePath').setValue(this.urlImage ? this.urlImage : this.dataEdit.imagePath);
         if (this.userLocalstorage.role == 'ADMIN') {
           this.formAdd.get('status').setValue(1);
@@ -236,6 +238,7 @@ export class VietBaiComponent implements OnInit {
         } else {
           this.formAdd.get('status').setValue(0);
           this.formAdd.get('category').setValue(this.formAdd.get('categoryCur').value);
+          this.formAdd.get('imagePath').setValue(this.urlImage ? this.urlImage : this.dataEdit.imagePath);
           this.api.updatePosts(this.formAdd.value).toPromise().then((data: any) => {
             if (data.errorCode == '00') {
               this.notificationService.showMessage('success', 'Sửa bài đăng thành công, chờ quản trị viên duyệt');

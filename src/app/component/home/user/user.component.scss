@@ -21,10 +21,11 @@ display: block;
     flex-flow: column nowrap;
     border: 2px solid rgba(var(--color-primary),.5);
     border-radius: 5px;
+    background-color: #000;
     .nav-item{
       padding: 15px 35px;
       a{
-        color: #000;
+        color: #fff;
       }
       &:hover{
         background-color: rgba(var(--color-primary),.25);
@@ -34,7 +35,7 @@ display: block;
       }
     }
   }
-  
+
   .info{
     position: fixed;
     top: 15%;
@@ -43,7 +44,7 @@ display: block;
     border: 2px solid rgba(var(--color-primary),.5);
     border-radius: 5px;
     padding: 10px;
-  
+
     .title{
       font-size: 18px;
       font-weight: 700;
@@ -61,5 +62,5 @@ display: block;
       }
     }
   }
-  
+
 }

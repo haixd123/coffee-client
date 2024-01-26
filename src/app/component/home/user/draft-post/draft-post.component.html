@@ -52,10 +52,24 @@
         <img *ngIf="!item.imagePath" src="https://cdnphoto.dantri.com.vn/7Ay2bMHqImHAgbQN5gvn_3JJp-Q=/zoom/378_252/2023/10/23/rocketphongtugazaveisraelreuters-crop-1698024802873.jpeg" />
       </div>
       <div class="description">
+<!--        <div class="description" style="width: 7517px;">-->
         <div class="post-title">{{item.title}}</div>
         <div class="post-create">{{item.createdAt | date: "dd/MM/yyyy"}}</div>
         <div class="post-category">{{item.category}}</div>
         <div class="post-content">{{item.contentPost}}</div>
+      </div>
+      <div class="d-flex justify-content-end" style="width: 100%; flex-direction: column">
+        <div class="d-flex align-items-center  mr-2 px-4 post-button"
+             style="width: 75px;height: 50%; border: 1px solid #ccc; border-top-right-radius: 6px; border-top-left-radius: 6px">
+          <a style="font-size: 21px" class="mr-3" (click)="handleEdit(item)">
+            <i nz-icon nzType="edit" nzTheme="outline"></i></a></div>
+        <div class="d-flex align-items-center  mr-2 px-4 post-button"
+             style="width: 75px;height: 50%; border: 1px solid #ccc; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px">
+          <a style="font-size: 21px" class="mr-3" nz-popconfirm
+             nzPopconfirmTitle="Bạn chắc chắn muốn xóa bài đăng này?"
+             (nzOnConfirm)="handleOkRefuse(item)">
+            <i style="color: red" nz-icon nzType="close" nzTheme="outline"></i>
+          </a></div>
       </div>
     </div>
   </div>

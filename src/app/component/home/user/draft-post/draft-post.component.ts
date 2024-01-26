@@ -4,6 +4,8 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Api} from '../../../../services/api';
+import {ShareDataService} from "../../../../services/share-data.service";
+import {NotificationService} from "../../../../services/notification.service";
 
 @Component({
   selector: 'app-draft-post',
@@ -28,6 +30,8 @@ export class DraftPostComponent implements OnInit {
     private router: Router,
     private api: Api,
     private fb: FormBuilder,
+    private shareDataService: ShareDataService,
+    private notificationService: NotificationService,
   ) {
     this.formSearch = this.fb.group({
       status: 2,
@@ -69,5 +73,17 @@ export class DraftPostComponent implements OnInit {
   //   // setTimeout(() => {
   //   this.router.navigate([`/home/detail/posts/${item.category}/${item.id}`]);
   // }
+  handleEdit(item: any) {
+    this.shareDataService.sendDataEditPosts(item);
+    this.router.navigate(['/home/write']);
+  }
+
+  handleOkRefuse(value?: any) {
+    value.status = -1;
+    this.api.deletePosts(value).subscribe((res: any) => {
+      this.notificationService.showMessage('success', 'Xóa bài viết thành công');
+      this.handleSearch()
+    })
+  }
 
 }
