@@ -45,7 +45,7 @@ export class AddVoucherComponent implements OnInit {
           Validators.pattern(/^\d+$/),
         ],
       ],
-      voucherType: ['0', Validators.required],
+      voucherType: ['1', Validators.required],
       maxDiscount: [
         0,
         [
@@ -54,7 +54,7 @@ export class AddVoucherComponent implements OnInit {
           Validators.pattern(/^\d+$/),
         ],
       ],
-      createdAt: [null],
+      createdAt: [new Date()],
       expiredAt: [new Date(), Validators.required],
     });
   }
