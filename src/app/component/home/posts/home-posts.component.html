@@ -23,6 +23,10 @@
         <!--           class="d-flex my-4 pb-5 col-8">-->
         <div class="image" (click)="PostsDetail(item)">
           <img *ngIf="item.imagePath" [src]="item.imagePath" />
+          <img
+            *ngIf="!item.imagePath"
+            src="https://cdnphoto.dantri.com.vn/7Ay2bMHqImHAgbQN5gvn_3JJp-Q=/zoom/378_252/2023/10/23/rocketphongtugazaveisraelreuters-crop-1698024802873.jpeg"
+          />
           <!-- <a>
             </a> -->
 
@@ -139,17 +143,11 @@
     <div class="col-4">
       <div class="col-12 list-top">
         <div class="top-section">
-            <span class="top-title"
-            >Bài viết được yêu thích nhất</span
-          >
+          <span class="top-title">Bài viết được yêu thích nhất</span>
           <div class="top-sort">
-            <label
-                >Sắp xếp theo:
-              </label>
+            <label>Sắp xếp theo: </label>
             <div>
-              <ng-container
-                *ngFor="let position of listOfPosition"
-              >
+              <ng-container *ngFor="let position of listOfPosition">
                 <button
                   nz-button
                   nz-dropdown
@@ -161,45 +159,35 @@
                 </button>
                 <nz-dropdown-menu #menu="nzDropdownMenu">
                   <ul nz-menu>
-                    <li nz-menu-item (click)="SearchLikeForDate('week')">Tuần</li>
-                    <li nz-menu-item (click)="SearchLikeForDate('month')">Tháng</li>
-                    <li nz-menu-item (click)="SearchLikeForDate('year')">Năm</li>
+                    <li nz-menu-item (click)="SearchLikeForDate('week')">
+                      Tuần
+                    </li>
+                    <li nz-menu-item (click)="SearchLikeForDate('month')">
+                      Tháng
+                    </li>
+                    <li nz-menu-item (click)="SearchLikeForDate('year')">
+                      Năm
+                    </li>
                   </ul>
                 </nz-dropdown-menu>
               </ng-container>
             </div>
           </div>
-          <div
-            class="showed-top-list"
-          >
+          <div class="showed-top-list">
             <div *ngFor="let item of dataMostLike">
               <!--          <div *ngIf="category == item.category && idPostsLocalstorage != item.id">-->
-              <div
-                class="post-item"
-                (click)="changeToDetailPosts(item)"
-              >
+              <div class="post-item" (click)="changeToDetailPosts(item)">
                 <div class="image">
-                    <img
-                    *ngIf="item.imagePath"
-                    [src]="item.imagePath"
-                  />
+                  <img *ngIf="item.imagePath" [src]="item.imagePath" />
+                  <img *ngIf="!item.imagePath" src="https://cdnphoto.dantri.com.vn/7Ay2bMHqImHAgbQN5gvn_3JJp-Q=/zoom/378_252/2023/10/23/rocketphongtugazaveisraelreuters-crop-1698024802873.jpeg" />
                 </div>
-                <div
-                  class="description"
-                >
-                  <span class="post-title"
-                    >{{ item.title }}</span
-                  >
+                <div class="description">
+                  <span class="post-title">{{ item.title }}</span>
                   <div class="post-category">
-                    
                     {{ item.category }}
                   </div>
 
-                  <span
-                  class="post-content"
-                    
-                    >{{ item.contentPost }}</span
-                  >
+                  <span class="post-content">{{ item.contentPost }}</span>
                 </div>
               </div>
               <!--          </div>-->
@@ -207,17 +195,11 @@
           </div>
         </div>
         <div class="top-section">
-            <span class="top-title"
-            >Bài viết được bình luận nhiều nhất</span
-          >
+          <span class="top-title">Bài viết được bình luận nhiều nhất</span>
           <div class="top-sort">
-            <label 
-                >Sắp xếp theo:
-              </label>
+            <label>Sắp xếp theo: </label>
             <div>
-              <ng-container
-                *ngFor="let position of listOfPosition"
-              >
+              <ng-container *ngFor="let position of listOfPosition">
                 <button
                   nz-button
                   nz-dropdown
@@ -229,36 +211,30 @@
                 </button>
                 <nz-dropdown-menu #menu="nzDropdownMenu">
                   <ul nz-menu>
-                    <li nz-menu-item (click)="SearchCommentForDate('week')">Tuần</li>
-                    <li nz-menu-item (click)="SearchCommentForDate('month')">Tháng</li>
-                    <li nz-menu-item (click)="SearchCommentForDate('year')">Năm</li>
+                    <li nz-menu-item (click)="SearchCommentForDate('week')">
+                      Tuần
+                    </li>
+                    <li nz-menu-item (click)="SearchCommentForDate('month')">
+                      Tháng
+                    </li>
+                    <li nz-menu-item (click)="SearchCommentForDate('year')">
+                      Năm
+                    </li>
                   </ul>
                 </nz-dropdown-menu>
               </ng-container>
             </div>
           </div>
-          <div
-          class="showed-top-list"
-          >
+          <div class="showed-top-list">
             <div *ngFor="let item of dataMostComment">
               <!--          <div *ngIf="category == item.category && idPostsLocalstorage != item.id">-->
-              <div
-                class="post-item"
-                (click)="changeToDetailPosts(item)"
-              >
+              <div class="post-item" (click)="changeToDetailPosts(item)">
                 <div class="image">
-                    <img
-                    *ngIf="item.imagePath"
-                    [src]="item.imagePath"
-                  />
+                  <img *ngIf="item.imagePath" [src]="item.imagePath" />
+                  <img *ngIf="!item.imagePath" src="https://cdnphoto.dantri.com.vn/7Ay2bMHqImHAgbQN5gvn_3JJp-Q=/zoom/378_252/2023/10/23/rocketphongtugazaveisraelreuters-crop-1698024802873.jpeg" />
                 </div>
-                <div
-                  class="description"
-                >
-                  <span
-                  class="post-title"
-                    >{{ item.title }}</span
-                  >
+                <div class="description">
+                  <span class="post-title">{{ item.title }}</span>
                   <div class="post-category">
                     <!-- <i
                       *ngIf="item.category"
@@ -269,10 +245,7 @@
                     ></i> -->
                     {{ item.category }}
                   </div>
-                  <span
-                  class="post-content"
-                    >{{ item.contentPost }}</span
-                  >
+                  <span class="post-content">{{ item.contentPost }}</span>
                 </div>
               </div>
               <!--          </div>-->
@@ -280,17 +253,11 @@
           </div>
         </div>
         <div class="top-section">
-            <span class="top-title"
-            >Bài viết được đánh giá cao nhất</span
-          >
+          <span class="top-title">Bài viết được đánh giá cao nhất</span>
           <div class="top-sort">
-            <label 
-                >Sắp xếp theo:
-              </label>
+            <label>Sắp xếp theo: </label>
             <div>
-              <ng-container
-                *ngFor="let position of listOfPosition"
-              >
+              <ng-container *ngFor="let position of listOfPosition">
                 <button
                   nz-button
                   nz-dropdown
@@ -302,36 +269,30 @@
                 </button>
                 <nz-dropdown-menu #menu="nzDropdownMenu">
                   <ul nz-menu>
-                    <li nz-menu-item (click)="SearchRateForDate('week')">Tuần</li>
-                    <li nz-menu-item (click)="SearchRateForDate('month')">Tháng</li>
-                    <li nz-menu-item (click)="SearchRateForDate('year')">Năm</li>
+                    <li nz-menu-item (click)="SearchRateForDate('week')">
+                      Tuần
+                    </li>
+                    <li nz-menu-item (click)="SearchRateForDate('month')">
+                      Tháng
+                    </li>
+                    <li nz-menu-item (click)="SearchRateForDate('year')">
+                      Năm
+                    </li>
                   </ul>
                 </nz-dropdown-menu>
               </ng-container>
             </div>
           </div>
-          <div
-          class="showed-top-list"
-          >
+          <div class="showed-top-list">
             <div *ngFor="let item of dataMostRate">
               <!--          <div *ngIf="category == item.category && idPostsLocalstorage != item.id">-->
-              <div
-                class="post-item"
-                (click)="changeToDetailPosts(item)"
-              >
+              <div class="post-item" (click)="changeToDetailPosts(item)">
                 <div class="image">
-                    <img
-                    *ngIf="item.imagePath"
-                    [src]="item.imagePath"
-                  />
+                  <img *ngIf="item.imagePath" [src]="item.imagePath" />
+                  <img *ngIf="!item.imagePath" src="https://cdnphoto.dantri.com.vn/7Ay2bMHqImHAgbQN5gvn_3JJp-Q=/zoom/378_252/2023/10/23/rocketphongtugazaveisraelreuters-crop-1698024802873.jpeg" />
                 </div>
-                <div
-                  class="description"
-                >
-                  <span
-                  class="post-title"
-                    >{{ item.title }}</span
-                  >
+                <div class="description">
+                  <span class="post-title">{{ item.title }}</span>
                   <div class="post-category">
                     <!-- <i
                       *ngIf="item.category"
@@ -342,10 +303,7 @@
                     ></i> -->
                     {{ item.category }}
                   </div>
-                  <span
-                  class="post-content"
-                    >{{ item.contentPost }}</span
-                  >
+                  <span class="post-content">{{ item.contentPost }}</span>
                 </div>
               </div>
               <!--          </div>-->

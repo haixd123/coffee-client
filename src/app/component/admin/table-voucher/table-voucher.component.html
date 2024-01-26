@@ -2,24 +2,26 @@
 
   <div class="d-flex align-items-center justify-content-between mb-4">
     <div class="d-flex">
+     <button style="border-radius: 5px" class="d-flex align-items-center ml-3" nz-button nzType="primary"
+             (click)="handleAdd()">
+       <i nz-icon nzType="plus" nzTheme="outline"></i> Thêm mới
+     </button>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <div class="d-flex">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input class="px-1" formControlName="name" (change)="handleSearch()" type="text" nz-input
+                 placeholder="Tìm theo tên người dùng"/>
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i class="mb-2" nz-icon nzType="search"></i>
+        </ng-template>
+      </div>
       <button style="border-radius: 5px" class="d-flex align-items-center ml-3" nz-button nzType="primary"
               (click)="handleSearch()">
         <i nz-icon nzType="search" nzTheme="outline"></i> Tìm kiếm
       </button>
-<!--      <button disabled style="border-radius: 5px" class="d-flex align-items-center ml-3" nz-button nzType="primary"-->
-<!--              (click)="handleAdd()">-->
-<!--        <i nz-icon nzType="plus" nzTheme="outline"></i> Thêm mới-->
-<!--      </button>-->
-    </div>
-
-    <div class="d-flex justify-content-end">
-      <nz-input-group [nzSuffix]="suffixIconSearch">
-        <input class="px-1" formControlName="name" (change)="handleSearch()" type="text" nz-input
-               placeholder="Tìm theo tên người dùng"/>
-      </nz-input-group>
-      <ng-template #suffixIconSearch>
-        <i class="mb-2" nz-icon nzType="search"></i>
-      </ng-template>
     </div>
   </div>
   <nz-table #basicTable
@@ -89,5 +91,5 @@
   </div>
 </form>
 
-<!--<app-add-user [isAdd]="isAdd" (closePopup)=handleClosePopup($event)></app-add-user>-->
-<app-edit-user [isEdit]="isEdit" [dataEdit]="dataEdit" (closePopup)=handleClosePopup($event)></app-edit-user>
+<app-add-voucher [isAdd]="isAdd" (closePopup)="handleClosePopup($event)"></app-add-voucher>
+<app-edit-voucher [isEdit]="isEdit" [dataEdit]="dataEdit" (closePopup)="handleClosePopup($event)"></app-edit-voucher>

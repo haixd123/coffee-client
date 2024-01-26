@@ -7,7 +7,8 @@
     </div>
     <div class="post-item" *ngFor="let item of data"  (click)="PostsDetail(item)">
       <div class="post-image">
-        <img [src]="item.imagePath" [alt]="item.imagePath">
+        <img *ngIf="item.imagePath" [src]="item.imagePath" [alt]="item.imagePath">
+        <img *ngIf="!item.imagePath" src="https://cdnphoto.dantri.com.vn/7Ay2bMHqImHAgbQN5gvn_3JJp-Q=/zoom/378_252/2023/10/23/rocketphongtugazaveisraelreuters-crop-1698024802873.jpeg" />
       </div>
       <div class="description">
         <div class="post-title">{{item.title}}</div>
