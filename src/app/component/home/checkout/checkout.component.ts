@@ -46,10 +46,11 @@ export class CheckoutComponent implements OnInit {
       email: [null, [Validators.required]],
       phone: [null, [Validators.required]],
       address: [null, [Validators.required]],
-      detail: null,
+      billDetails: [],
       payments: 1,
       createDate: null,
       total: null,
+      // voucherIds: ['3S5D5F']
     });
   }
 
@@ -105,20 +106,27 @@ export class CheckoutComponent implements OnInit {
       const dataCart: any[] = [];
       let itemCart: any;
       for (const item of this.cartItem) {
-        itemCart =
-          'name: ' +
-          item.name +
-          ',quantity: ' +
-          item.quantity +
-          ',price: ' +
-          item.price +
-          ',discount: ' +
-          item.discount +
-          '% ';
-        dataCart.push(itemCart);
+        const billDetail = { productId:item.id,quantity:item.quantity}
+        // itemCart =
+        //   {'productId: ' : item.id +
+        //   ',quantity: ' + item.quantity}
+        dataCart.push(billDetail);
       }
+      // for (const item of this.cartItem) {
+      //   itemCart =
+      //     'productId: ' +
+      //     item.name +
+      //     ',quantity: ' +
+      //     item.quantity +
+      //     ',price: ' +
+      //     item.price +
+      //     ',discount: ' +
+      //     item.discount +
+      //     '% ';
+      //   dataCart.push(itemCart);
+      // }
 
-      this.formAdd.get('detail').setValue(dataCart?.toString());
+      this.formAdd.get('billDetails').setValue(dataCart);
       this.formAdd
         .get('createDate')
         .setValue(this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss'));
