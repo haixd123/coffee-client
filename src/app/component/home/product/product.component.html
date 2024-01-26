@@ -4,11 +4,11 @@
     <owl-carousel-o [options]="voucherOptions">
       <ng-template *ngFor="let item of voucher;" carouselSlide>
         <div class="voucher-item">
-          <p class="name">Voucher 100k</p>
-          <p class="description">Giảm 100k cho đơn từ 2,000,000,000</p>
+          <p class="name">{{item.description}}</p>
+          <p class="description">{{item.voucherType == 1 ? 'Giảm tối đa '+item.maxDiscount:'Miễn phí vận chuyển'}}</p>
           <div class="detail">
-            <span class="code">SODKEE-5</span>
-            <button class="btn-save">Lưu</button>
+            <span class="code">{{item.id}}</span>
+            <button *ngIf="exist(item.id)" class="btn-save" (click)="saveVoucher(item.id)">Lưu</button>
           </div>
         </div>
       </ng-template>

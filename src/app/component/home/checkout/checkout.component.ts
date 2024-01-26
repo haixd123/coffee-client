@@ -1,8 +1,10 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Api} from '../../../services/api';
-import {Router} from '@angular/router';
-import {DatePipe} from '@angular/common';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Api } from '../../../services/api';
+import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { Voucher } from '../../admin/table-voucher/interface/voucher';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-checkout',
@@ -10,18 +12,25 @@ import {DatePipe} from '@angular/common';
   styleUrls: ['./checkout.component.scss'],
 })
 export class CheckoutComponent implements OnInit {
+  openTableVoucher = false;
+  currPage = 1;
+  totalEle = 0;
   cartItem: any;
   totalQuantity = 0;
   totalPrice = 0;
   formAdd: FormGroup;
   radioValue = 1;
 
+  myVoucher: Voucher[] = [];
+  selectedVoucher: Voucher;
+
   constructor(
     private fb: FormBuilder,
     private api: Api,
     private router: Router,
     public datePipe: DatePipe,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private storage: TokenStorageService
   ) {
     this.formAdd = this.fb.group({
       name: [null, [Validators.required]],
@@ -43,6 +52,22 @@ export class CheckoutComponent implements OnInit {
       this.totalPrice +=
         (item.price - (item.price * item.discount) / 100) * item.quantity;
     }
+    this.getMyVoucher();
+  }
+
+  getMyVoucher() {
+    this.api
+      .getMyVoucher(this.currPage - 1, 12, this.storage.getUser().id)
+      .subscribe({
+        next: (res) => {
+          this.myVoucher = res.data.content;
+          this.totalEle = res.data.totalElements;
+        },
+      });
+  }
+  handleSelectedVoucher(voucher: Voucher) {
+    this.selectedVoucher = voucher;
+    // TODO: HANDLE WHEN VOUCHER APPLY
   }
 
   submitForm(): void {
@@ -54,18 +79,28 @@ export class CheckoutComponent implements OnInit {
   }
 
   handleCheckout() {
-
     if (this.formAdd.valid) {
       //handle checkout
       const dataCart: any[] = [];
       let itemCart: any;
       for (const item of this.cartItem) {
-        itemCart = 'name: ' + item.name + ',quantity: ' + item.quantity + ',price: ' + item.price + ',discount: ' + item.discount + '% ';
+        itemCart =
+          'name: ' +
+          item.name +
+          ',quantity: ' +
+          item.quantity +
+          ',price: ' +
+          item.price +
+          ',discount: ' +
+          item.discount +
+          '% ';
         dataCart.push(itemCart);
       }
 
       this.formAdd.get('detail').setValue(dataCart?.toString());
-      this.formAdd.get('createDate').setValue(this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss'));
+      this.formAdd
+        .get('createDate')
+        .setValue(this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss'));
       this.formAdd.get('total').setValue(this.totalPrice);
 
       if (this.radioValue == 1) {
@@ -78,7 +113,9 @@ export class CheckoutComponent implements OnInit {
         const total = {
           total: this.totalPrice,
         };
-        this.formAdd.get('createDate').setValue(this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss'));
+        this.formAdd
+          .get('createDate')
+          .setValue(this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss'));
         this.formAdd.patchValue(total);
         this.api.createPaymentWithVnPay(this.formAdd.value).subscribe({
           next: (res) => {
@@ -92,8 +129,7 @@ export class CheckoutComponent implements OnInit {
             this.renderer.removeChild(body, newTab);
             localStorage.removeItem('cartItems');
           },
-          error: (err) => {
-          },
+          error: (err) => {},
         });
       }
     }

@@ -3,24 +3,32 @@
     <div class="voucher-title">Voucher của bạn</div>
     <div class="voucher-list">
       <div class="voucher-item" *ngFor="let item of vouchers">
-        <p class="name">Voucher 100k</p>
-        <p class="description">Giảm 100k cho đơn từ 2,000,000,000</p>
+        <p class="name">{{item.description}}</p>
+        <p class="description">{{item.voucherType == 1 ? 'Giảm tối đa '+item.maxDiscount:'Miễn phí vận chuyển'}}</p>
         <div class="detail">
-          <span class="code">SODKEE-5</span>
-          <!-- <button class="btn-save">Lưu</button> -->
+          <span class="code">{{item.id}}</span>
+          <!-- <button *ngIf="exist(item.id)" class="btn-save" (click)="saveVoucher(item.id)">Lưu</button> -->
         </div>
       </div>
     </div>
+    <div class="d-flex justify-content-end">
+      <nz-pagination
+              class="pb-4"
+              (click)="getMyVoucher()"
+              [(nzPageIndex)]="currPage"
+              [nzTotal]="totalEle"
+      ></nz-pagination>
+  </div>
   </div>
   <div class="voucher">
     <div class="voucher-title">Đừng bỏ lỡ</div>
     <div class="voucher-list">
       <div class="voucher-item" *ngFor="let item of suggestedVoucher">
-        <p class="name">Voucher 10k</p>
-        <p class="description">Giảm 10k cho đơn từ 2,000</p>
+        <p class="name">{{item.description}}</p>
+        <p class="description">{{item.voucherType == 1 ? 'Giảm tối đa '+item.maxDiscount:'Miễn phí vận chuyển'}}</p>
         <div class="detail">
-          <span class="code">CIEKS-5</span>
-          <button class="btn-save">Lưu</button>
+          <span class="code">{{item.id}}</span>
+          <button *ngIf="exist(item.id)" class="btn-save" (click)="saveVoucher(item.id)">Lưu</button>
         </div>
       </div>
     </div>

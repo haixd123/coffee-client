@@ -249,9 +249,9 @@ export class Api extends BaseService {
       'http://localhost:8080/api/authors/comment/by-content',
       {
         params: new HttpParams()
-          .append('page', page + '')
-          .append('size', size + '')
-          .append('text', infix),
+        .append('text', infix)
+        .append('page', page + '')
+        .append('size', size + '')
       }
     );
   }
@@ -266,9 +266,9 @@ export class Api extends BaseService {
       `http://localhost:8080/api/authors/comment/by-user/${userId}`,
       {
         params: new HttpParams()
+        .append('status', status + '')
           .append('page', page + '')
           .append('size', size + '')
-          .append('status', status + '')
       }
     );
   }
@@ -283,9 +283,9 @@ export class Api extends BaseService {
       `http://localhost:8080/api/authors/comment/by-post/${postId}`,
       {
         params: new HttpParams()
+        .append('status', status + '')
           .append('page', page + '')
           .append('size', size + '')
-          .append('status', status + '')
       }
     );
   }
@@ -320,20 +320,28 @@ export class Api extends BaseService {
 
   getReportByUser(page: number, size: number, username: string): Observable<any> {
     return this.httpClient.get(`http://localhost:8080/api/authors/reports/by-user`, {
-      params: new HttpParams().append("username", username)
+      params: new HttpParams()
+      .append("username", username)
+      .append("page", page+"")
+      .append("size", size+'')
     })
   }
 
   getReportByIdAndType(page: number, size: number, type: number, id: number): Observable<any> {
     return this.httpClient.get(`http://localhost:8080/api/authors/reports/by-id-and-type`, {
-      params: new HttpParams().append("dataId", id + "").append("type", type + "")
+      params: new HttpParams()
+      .append("dataId", id + "")
+      .append("type", type + "")
+      .append("page", page + "")
+      .append("size", size + "")
     })
   }
 
   getSearchReport(page: number, size: number, reason: string): Observable<any> {
     return this.httpClient.get(`http://localhost:8080/api/authors/reports/search/${reason}`, {
-      params: new HttpParams().append('page', page + '')
+      params: new HttpParams()
         .append('size', size + '')
+        .append('page', page + '')
     })
   }
 
@@ -349,12 +357,35 @@ export class Api extends BaseService {
       .append("size",size+"")
     });
   }
-  getAllAndSortVoucher(page:number,size:number,type:string):Observable<any>{
-    return this.httpClient.get(`http://localhost:8080/api/authors/voucher/sort-by-type`,{
+  getMyVoucher(page:number,size:number,userId:any):Observable<any>{
+    return this.httpClient.get(`http://localhost:8080/api/authors/voucher/by-user/${userId}`,{
       params: new HttpParams()
       .append("page",page+"")
       .append("size",size+"")
+    });
+  }
+  
+  getAllVoucherExpectUserOwn(page:number,size:number,userId:any):Observable<any>{
+    return this.httpClient.get(`http://localhost:8080/api/authors/voucher/by-not-user/${userId}`,{
+      params: new HttpParams()
+      .append("page",page+"")
+      .append("size",size+"")
+    });
+  }
+
+  addVoucherToUse(voucherId:any,userId:any):Observable<any>{
+    return this.httpClient.post(`http://localhost:8080/api/authors/voucher/add-for-user`,{
+      userId: userId,
+      voucherId:voucherId
+    })
+  }
+  getAllAndSortVoucher(page:number,size:number,type:string):Observable<any>{
+    return this.httpClient.get(`http://localhost:8080/api/authors/voucher/sort-by-type`,{
+      params: new HttpParams()
       .append("type",type)
+      .append("page",page+"")
+      .append("size",size+"")
+      
     })
   }
   createVoucher(voucher: Voucher):Observable<any>{

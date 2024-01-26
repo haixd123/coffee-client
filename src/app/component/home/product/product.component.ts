@@ -5,6 +5,8 @@ import {ReducerService} from '../../../services/reducer.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {CurrencyPipe} from '@angular/common';
 import {Router} from '@angular/router';
+import { Voucher } from '../../admin/table-voucher/interface/voucher';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-product',
@@ -80,8 +82,9 @@ export class ProductComponent implements OnInit, OnChanges {
   ListProductSame: any[] = []
   category: any;
   inputQuantity: any;
-  voucher: any[];
-
+  voucher: Voucher[];
+  savedVoucher: string[] = [];
+  userId : any;
   // rawData = {
   //   image:"https://bizweb.dktcdn.net/thumb/large/100/465/740/products/ctw-t1.jpg?v=1705255416470",
   //   name:"[Mua 2 tặng 2: Tặng túi cói Thời Trang Highlands+01 gói cà phê 200g] Combo 2 Túi Cà Phê Truyền Thống Highlands Coffee 1kg",
@@ -94,12 +97,13 @@ export class ProductComponent implements OnInit, OnChanges {
     private fb: FormBuilder,
     private reducerService: ReducerService,
     private router: Router,
+    private tokenStorageService: TokenStorageService
   ) {
     // this.data = Array(10).fill(this.rawData);
     // this.dataTop5= Array(10).fill(this.rawData);
     // this.datProduct50k= Array(10).fill(this.rawData);
-    this.voucher = Array(5).fill(1);
-
+    // this.voucher = Array(5).fill(1);
+    this.userId = tokenStorageService.getUser().id;
     this.api.getListProduct(this.searchModel).subscribe((data: any) => {
       this.data = data.data;
       for (const item1 of this.data) {
@@ -124,6 +128,11 @@ export class ProductComponent implements OnInit, OnChanges {
     this.formUpdateQuantity.patchValue({
       quantity: JSON.parse(localStorage.getItem('cartItems'))?.quantity,
     });
+    this.api.getAllVoucherExpectUserOwn(0,5,tokenStorageService.getUser().id).subscribe({
+      next: res =>{
+        this.voucher = res.data.content;
+      }
+    })
   }
 
   ngOnChanges() {
@@ -165,6 +174,25 @@ export class ProductComponent implements OnInit, OnChanges {
     this.totalMoneyCart = this.reducerService.reduceArray(this.dataCart, this.demoValue);
     this.isOpenDrawer = true;
 
+  }
+
+  saveVoucher(voucherId:string){
+    this.api.addVoucherToUse(voucherId,this.userId).subscribe({
+      next: res =>{
+        this.savedVoucher = [...this.savedVoucher,voucherId];
+        if(this.savedVoucher.length == 5){
+          this.api.getAllVoucherExpectUserOwn(0,5,this.tokenStorageService.getUser().id).subscribe({
+            next: res =>{
+              this.voucher = res.data.content;
+              this.savedVoucher =[];
+            }
+          })
+        }
+      }
+    })
+  }
+  exist(voucherId:any):boolean{
+    return this.savedVoucher.filter(v => v == voucherId).length > 0;
   }
 
   minusItemCart(value: any) {

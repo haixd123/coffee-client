@@ -1,21 +1,23 @@
 <form nz-form [formGroup]="formAdd" (ngSubmit)="submitForm()">
-
-  <div style="max-width: 1200px; margin: auto;">
-    <div style="display: grid; grid-template-columns: 55% 45%; margin-bottom: 40px ">
-      <div style="margin-right: 20px;">
-        <div class="d-flex justify-content-center" style="width: 100%; margin-bottom: 50px; margin-top: 25px;"><img
-          style="width: 50%;" src="assets/coffee-logo-png-7521.png"></div>
-        <div class="mt-3 mb-3" style="font-size: 19px; font-weight: 600;">Thông tin nhận hàng</div>
+  <div style="max-width: 90vw; margin: auto">
+    <div style="display: grid; grid-template-columns: 55% 45%; margin-bottom: 40px">
+      <div style="margin-right: 20px">
+        <div class="d-flex justify-content-center" style="width: 100%; margin-bottom: 50px; margin-top: 25px">
+          <img style="width: 50%" src="assets/coffee-logo-png-7521.png" />
+        </div>
+        <div class="mt-3 mb-3" style="font-size: 19px; font-weight: 600">
+          Thông tin nhận hàng
+        </div>
         <div class="mb-3">
           <!--        Name-->
           <!--        <input class="mt-1 p-2" style="border-radius: 5px; font-size: 16px;" nz-input placeholder="Nguyễn Văn A"/>-->
           <nz-form-item>
-            <div style="width: 100%;">
+            <div style="width: 100%">
               <nz-form-label style="height: 30px" nzRequired>Tên người nhận</nz-form-label>
             </div>
             <nz-form-control style="width: 100%" [nzSpan]="24" nzErrorTip="Tên người nhận không được để trống!">
-              <input class="mt-1 p-2" formControlName="name" style="width: 100%;" nz-input name="required" required
-                     placeholder="Nguyễn Văn A"/>
+              <input class="mt-1 p-2" formControlName="name" style="width: 100%" nz-input name="required" required
+                placeholder="Nguyễn Văn A" />
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -24,12 +26,12 @@
           <!--        <input class="mt-1 p-2" style="border-radius: 5px; font-size: 16px;" nz-input-->
           <!--               placeholder="nguyenvana@gmail.com"/>-->
           <nz-form-item>
-            <div style="width: 100%;">
+            <div style="width: 100%">
               <nz-form-label style="height: 30px" nzRequired>Email</nz-form-label>
             </div>
             <nz-form-control style="width: 100%" [nzSpan]="24" nzErrorTip="Email không được để trống!">
-              <input class="mt-1 p-2" formControlName="email" style="width: 100%;" nz-input name="required" required
-                     placeholder="nguyenvana@gmail.com"/>
+              <input class="mt-1 p-2" formControlName="email" style="width: 100%" nz-input name="required" required
+                placeholder="nguyenvana@gmail.com" />
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -37,12 +39,12 @@
           <!--        Số điện thoại-->
           <!--        <input class="mt-1 p-2" style="border-radius: 5px; font-size: 16px;" nz-input placeholder="0334565848"/>-->
           <nz-form-item>
-            <div style="width: 100%;">
+            <div style="width: 100%">
               <nz-form-label style="height: 30px" nzRequired>Số điện thoại</nz-form-label>
             </div>
             <nz-form-control style="width: 100%" [nzSpan]="24" nzErrorTip="Số điện thoại không được để trống!">
-              <input class="mt-1 p-2" formControlName="phone" style="width: 100%;" nz-input name="required" required
-                     placeholder="0334565848"/>
+              <input class="mt-1 p-2" formControlName="phone" style="width: 100%" nz-input name="required" required
+                placeholder="0334565848" />
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -51,17 +53,17 @@
           <!--        <input class="mt-1 p-2" style="border-radius: 5px; font-size: 16px;" nz-input-->
           <!--               placeholder="số nhà 34 ngách 15/20 Yên Thường - Gia Lâm"/>-->
           <nz-form-item>
-            <div style="width: 100%;">
+            <div style="width: 100%">
               <nz-form-label style="height: 30px" nzRequired>Địa chỉ</nz-form-label>
             </div>
             <nz-form-control style="width: 100%" [nzSpan]="24" nzErrorTip="Địa chỉ không được để trống!">
-              <input class="mt-1 p-2" formControlName="address" style="width: 100%;" nz-input name="required" required
-                     placeholder="số nhà 34 ngách 15/20 Yên Thường - Gia Lâm"/>
+              <input class="mt-1 p-2" formControlName="address" style="width: 100%" nz-input name="required" required
+                placeholder="số nhà 34 ngách 15/20 Yên Thường - Gia Lâm" />
             </nz-form-control>
           </nz-form-item>
         </div>
         <div class="mb-3">
-          <span>Phương thức thanh toán</span><br/>
+          <span>Phương thức thanh toán</span><br />
           <nz-radio-group formControlName="payments" [(ngModel)]="radioValue">
             <label nz-radio [nzValue]="1">Thanh toán khi nhận được hàng(COD)</label>
             <label nz-radio [nzValue]="2">Thanh toán online</label>
@@ -69,39 +71,113 @@
         </div>
         <div class="mb-3">
           Ghi chú
-          <input class="mt-1 p-2" style="border-radius: 5px; font-size: 16px;" nz-input
-                 placeholder="Ship trong giờ hành chính"/>
+          <input class="mt-1 p-2" style="border-radius: 5px; font-size: 16px" nz-input
+            placeholder="Ship trong giờ hành chính" />
         </div>
       </div>
-      <div style="background-color: #f7f7f7; padding-left: 20px; padding-right: 20px;">
-        <div
-          style="border-bottom: 1px solid #c3c3c3; padding-bottom: 10px; font-size: 20px; font-weight: 600; margin-top: 15px;">
-          Đơn hàng ( {{totalQuantity}} sản phẩm)
+      <div style="
+          background-color: #f7f7f7;
+          padding-left: 20px;
+          padding-right: 20px;
+        ">
+        <div style="
+            border-bottom: 1px solid #c3c3c3;
+            padding-bottom: 10px;
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 15px;
+          ">
+          Đơn hàng ( {{ totalQuantity }} sản phẩm)
         </div>
-        <div
-          style="display: grid; grid-template-columns: 20% 60% 20%; font-size: 17px; margin-top: 13px; margin-bottom: 15px;"
-          *ngFor="let item of cartItem">
-          <div style="position: relative;">
-            <img style=" width: 70%;" [src]="item.image"/>
-            <div
-              class="d-flex align-items-center"
-              style="position: absolute; background-color: #000; top: -3px; right: 20px; border-radius: 50%; color: #fff; width: 24px; height: 24px">
-              <span style="text-align: center; width: 100%;">{{item.quantity}}</span>
+        <div style="
+            display: grid;
+            grid-template-columns: 20% 60% 20%;
+            font-size: 17px;
+            margin-top: 13px;
+            margin-bottom: 15px;
+          " *ngFor="let item of cartItem">
+          <div style="position: relative">
+            <img style="width: 70%" [src]="item.image" />
+            <div class="d-flex align-items-center" style="
+                position: absolute;
+                background-color: #000;
+                top: -3px;
+                right: 20px;
+                border-radius: 50%;
+                color: #fff;
+                width: 24px;
+                height: 24px;
+              ">
+              <span style="text-align: center; width: 100%">{{
+                item.quantity
+                }}</span>
             </div>
           </div>
-          <div><span>{{item.name}}</span></div>
-          <div>{{item?.price - item?.price * item?.discount / 100 | currency:'VND':'symbol':'1.0-0' }}</div>
+          <div>
+            <span>{{ item.name }}</span>
+          </div>
+          <div>
+            {{
+            item?.price - (item?.price * item?.discount) / 100
+            | currency : "VND" : "symbol" : "1.0-0"
+            }}
+          </div>
         </div>
-        <div class="d-flex justify-content-between"
-             style="font-size: 17px; border-top: 1px solid #c3c3c3; padding-top: 13px; margin-top: 17px; margin-bottom: 15px;">
+        <div class="voucher">
+          <div class="title">Voucher</div>
+          <div class="selected-button" (click)="openTableVoucher =!openTableVoucher">Chọn voucher</div>
+          <div *ngIf="selectedVoucher && selectedVoucher.voucherType == 1" class="voucher-value">{{selectedVoucher.id}} - Giảm {{selectedVoucher.percentDiscount}}% - Tối đa {{selectedVoucher.maxDiscount | currency : "VND" : "symbol" : "1.0-0"}}</div>
+          <div *ngIf="selectedVoucher && selectedVoucher.voucherType == 2" class="voucher-value">{{selectedVoucher.id}} - Giảm phí ship {{selectedVoucher.percentDiscount}}% - Tối đa {{selectedVoucher.maxDiscount | currency : "VND" : "symbol" : "1.0-0"}}</div>
+          <div *ngIf="selectedVoucher" class="clear-button" (click)="selectedVoucher = null">X</div>
+          <!-- <div class="voucher-value">SDIFKF - Giảm 20% - Tối đa {{ 20000 | currency : "VND" : "symbol" : "1.0-0"}}</div> -->
+          <div class="overlay" *ngIf="openTableVoucher"></div>
+          <div class="table-voucher" *ngIf="openTableVoucher">
+            <div class="title-table">Mã giảm giá của tôi</div>
+            <span *ngIf="!myVoucher || myVoucher.length == 0" class="empty">Bạn chưa có voucher nào.</span>
+            <div class="content" *ngIf="myVoucher && myVoucher.length > 0">
+              <div class="voucher-item" *ngFor="let item of myVoucher" (click)="handleSelectedVoucher(item)">
+                <p class="name">{{ item.description }}</p>
+                <p class="description">
+                  {{
+                  item.voucherType == 1
+                  ? "Giảm tối đa " + item.maxDiscount
+                  : "Miễn phí vận chuyển"
+                  }}
+                </p>
+                <div class="detail">
+                  <span class="code">{{ item.id }}</span>
+                  <!-- <button *ngIf="exist(item.id)" class="btn-save" (click)="saveVoucher(item.id)">Lưu</button> -->
+                </div>
+              </div>
+            </div>
+            <div class="bottom">
+              <div class="btn-close" (click)="openTableVoucher = !openTableVoucher">Đóng</div>
+              <nz-pagination (click)="getMyVoucher()" [(nzPageIndex)]="currPage" [nzTotal]="totalEle"></nz-pagination>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between" style="
+            font-size: 17px;
+            border-top: 1px solid #c3c3c3;
+            padding-top: 13px;
+            margin-top: 17px;
+            margin-bottom: 15px;
+          ">
           <span style="font-size: 18px">Tổng cộng</span>
-          <span style="font-size: 20px">{{totalPrice | currency:'VND':'symbol':'1.0-0' }}</span></div>
+          <span style="font-size: 20px">{{
+            totalPrice | currency : "VND" : "symbol" : "1.0-0"
+            }}</span>
+        </div>
         <div class="d-flex justify-content-end">
           <div>
-            <button nz-button class="py-2 px-4"
-                    style="background-color: #b5313a; color: #fff; border-radius: 5px; width: 100%; height: auto"
-            (click)="handleCheckout()">Đặt
-              hàng
+            <button nz-button class="py-2 px-4" style="
+                background-color: #b5313a;
+                color: #fff;
+                border-radius: 5px;
+                width: 100%;
+                height: auto;
+              " (click)="handleCheckout()">
+              Đặt hàng
             </button>
           </div>
         </div>
