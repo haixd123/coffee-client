@@ -1,28 +1,34 @@
 <form nz-form [formGroup]="formSearch">
 
   <div class="d-flex align-items-center justify-content-between mb-4">
-    <div class="d-flex">
-     <button style="border-radius: 5px" class="d-flex align-items-center ml-3" nz-button nzType="primary"
-             (click)="handleAdd()">
-       <i nz-icon nzType="plus" nzTheme="outline"></i> Thêm mới
-     </button>
+    <div class="d-flex flex-column">
+      <div class="d-flex align-items-center">
+        
+      </div>
+      <div class="d-flex justify-content-end align-items-center">
+        <div class="d-flex">
+          <nz-input-group [nzSuffix]="suffixIconSearch">
+            <input class="px-1" formControlName="name" (change)="handleSearch()" type="text" nz-input
+                   placeholder="Tìm theo tên người dùng"/>
+          </nz-input-group>
+          <ng-template #suffixIconSearch>
+            <i class="mb-2" nz-icon nzType="search"></i>
+          </ng-template>
+        </div>
+        <button style="border-radius: 5px" class="d-flex align-items-center ml-3" nz-button nzType="primary"
+                (click)="handleSearch()">
+          <i nz-icon nzType="search" nzTheme="outline"></i> Tìm kiếm
+        </button>
+      </div>
     </div>
 
-    <div class="d-flex justify-content-end">
-      <div class="d-flex">
-        <nz-input-group [nzSuffix]="suffixIconSearch">
-          <input class="px-1" formControlName="name" (change)="handleSearch()" type="text" nz-input
-                 placeholder="Tìm theo tên người dùng"/>
-        </nz-input-group>
-        <ng-template #suffixIconSearch>
-          <i class="mb-2" nz-icon nzType="search"></i>
-        </ng-template>
-      </div>
+    
+    <div class="d-flex">
       <button style="border-radius: 5px" class="d-flex align-items-center ml-3" nz-button nzType="primary"
-              (click)="handleSearch()">
-        <i nz-icon nzType="search" nzTheme="outline"></i> Tìm kiếm
+              (click)="handleAdd()">
+        <i nz-icon nzType="plus" nzTheme="outline"></i> Thêm mới
       </button>
-    </div>
+     </div>
   </div>
   <nz-table #basicTable
             [nzData]="data"
@@ -34,49 +40,38 @@
     <thead>
     <tr>
       <th>id</th>
-      <th>Tên đăng nhập</th>
-      <!--        <th>Password</th>-->
-      <th>Email</th>
       <th>Tên</th>
+      <!--        <th>Password</th>-->
+      <th>Mô tả</th>
+      <th>Mã giảm giá</th>
       <!--    <th [nzShowFilter]="true" [nzFilters]="newArray">Address-->
       <!--      <th [nzShowFilter]="true" [nzFilters]="filterAddress">Địa chỉ-->
 
       <!--      </th>-->
 
-      <th [nzShowSort]="true" [nzSortDirections]="['ascend', 'descend']" (click)="handleSort('role')">
+      <!-- <th [nzShowSort]="true" [nzSortDirections]="['ascend', 'descend']" (click)="handleSort('role')">
         Cấp phân quyền
+      </th> -->
+      <th>
+        % giảm giá
       </th>
       <th>
-        Số điện thoại
+        <!-- <i class="fas fa-user"></i> Sử dụng icon User -->
+        Loại voucher
       </th>
-      <th><i class="fas fa-user"></i> <!-- Sử dụng icon User -->
-        Ngày sinh
-      </th>
-      <th>Giới tính</th>
-      <th>Ngày tạo</th>
-      <th>Ảnh</th>
+      <th>Thời gian hết hạn</th>
       <th>Hành động</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of data | filter:searchValue | sort:sortValue:isSort | filter:searchValue, let i = index">
+    <tr *ngFor="let item of data; let i = index">
       <td class="text-nowrap">{{validateService.getRowIndex(i, basicTable.nzPageIndex, basicTable.nzPageSize)}}</td>
-      <td>{{ item.userName }}</td>
-      <!--        <td>{{ item.passWord }}</td>-->
-      <!--      <td style=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{ item.passWord }}</td>-->
-
-      <td>{{ item.email }}</td>
-      <td>{{ item.name }}</td>
-      <!--      <td>{{ item.address }}</td>-->
-      <!--    <td>{{ item.age | sort: 'age' }}</td>-->
-      <td>{{ item.role }}</td>
-      <td>{{ item.phoneNumber }}</td>
-      <td>{{ item.dateOfBirth }}</td>
-      <td>{{ item.sex }}</td>
-      <td>{{ item.createDate | dateFormat: 'dd/MM/yyyy'  }}</td>
-      <!--    <td>{{ item.image }}</td>-->
-      <td><img style="width: 100%; max-width: 150px; max-height: 150px" [src]="item.image"/></td>
-
+      <td>{{item.name}}</td>
+      <td>{{item.description}}</td>
+      <td>{{item.code}}</td>
+      <td>{{item.percentDiscount}}</td>
+      <td>{{item.voucherType}}</td>
+      <td>{{item.expiredAt}}</td>
       <td style="min-width: 100px">
         <a style="font-size: 21px" class="mr-3" (click)="handleEdit(item)">
           <i nz-icon nzType="edit" nzTheme="outline"></i></a>

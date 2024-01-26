@@ -339,4 +339,9 @@ export class Api extends BaseService {
   deleteReport(id: number): Observable<any> {
     return this.httpClient.delete(`http://localhost:8080/api/authors/reports/${id}`)
   }
+
+  // voucher
+
+  // bill
+  
 }

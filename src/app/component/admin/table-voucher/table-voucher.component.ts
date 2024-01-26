@@ -6,13 +6,7 @@ import {ValidateService} from '../../../services/validate-service';
 import {NotificationService} from '../../../services/notification.service';
 import {FilterPipe} from '../../../shared/pipe/filter.pipe';
 import {faSort} from '@fortawesome/free-solid-svg-icons/faSort';
-
-interface Person {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-}
+import { Voucher } from './interface/voucher';
 
 @Component({
   selector: 'app-table-voucher',
@@ -25,35 +19,24 @@ export class TableVoucherComponent implements OnInit {
   formSearch: FormGroup;
   isAdd = false;
   isEdit = false;
-  data: any[];
+  data: Voucher[];
   total: number;
-  dataEdit: any;
+  dataEdit: Voucher;
   searchModel: SearchModelEntity = new SearchModelEntity();
   curPage = 1;
-  datafilter: any[];
-
-
-  searchValue: string;
-  sortValue: string;
+  
   isSort = false;
 
-  filterAddress: any[];
-
-  newArray =
-    [
-      // {
-      //   name: 'a',
-      //   age: 15,
-      // },
-      // {
-      //   name: 'b',
-      //   age: 15,
-      // },
-      {text: 'Joe', value: 'Joe'},
-      {text: 'John', value: 'John'}
-      // 'a', 'b', 'c'
-    ];
-
+  rawData = {
+    id: 1,
+    name: "code 20%",
+    description: "discount 20% for total bill greater 2M",
+    code: "DC20P",
+    percentDiscount: 20,
+    voucherType: 1,
+    expiredAt: "27/2/2024 00:00:00",
+  }
+  
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -63,8 +46,9 @@ export class TableVoucherComponent implements OnInit {
     this.formSearch = this.fb.group({
       name: null,
     });
-    this.handleSearch();
+    // this.handleSearch();
     // this.changePage();
+    this.data = Array(10).fill(this.rawData);
   }
 
   ngOnInit(): void {
@@ -72,22 +56,22 @@ export class TableVoucherComponent implements OnInit {
 
 
   handleUpdate(searchModel: SearchModelEntity, reset = false) {
-    this.http.post('http://localhost:8080/api/authors/user/search', this.searchModel).toPromise().then((data: any) => {
-      this.data = data.data;
-      this.total = data.optional;
-      // for (const item of data.data) {
-      //   this.datafilter = item.address;
-      //   console.log('this.datafilter : ', this.datafilter);
-      // }
+    // this.http.post('http://localhost:8080/api/authors/user/search', this.searchModel).toPromise().then((data: any) => {
+    //   this.data = data.data;
+    //   this.total = data.optional;
+    //   // for (const item of data.data) {
+    //   //   this.datafilter = item.address;
+    //   //   console.log('this.datafilter : ', this.datafilter);
+    //   // }
 
 
-      // this.filterAddress = this.data.map((record) => {
-      //   return {
-      //     text: `${record.address}`,
-      //     value: `${record.address}`
-      //   };
-      // });
-    });
+    //   // this.filterAddress = this.data.map((record) => {
+    //   //   return {
+    //   //     text: `${record.address}`,
+    //   //     value: `${record.address}`
+    //   //   };
+    //   // });
+    // });
   }
 
 
@@ -96,10 +80,10 @@ export class TableVoucherComponent implements OnInit {
     this.searchModel.pageSize = 10;
     // this.formSearch.get('userName').setValue(this.formSearch.get('name').value);
     // this.formSearch.get('address').setValue(this.formSearch.get('name').value);
-    this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
-    if (this.formSearch.get('name').value == '') {
-      this.formSearch.get('name').setValue(null);
-    }
+    // this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
+    // if (this.formSearch.get('name').value == '') {
+    //   this.formSearch.get('name').setValue(null);
+    // }
     this.handleUpdate(this.searchModel, true);
   }
 
@@ -129,20 +113,20 @@ export class TableVoucherComponent implements OnInit {
   }
 
   handleDelete(item: any) {
-    this.http.post('http://localhost:8080/api/user/delete', item).toPromise().then((data: any) => {
-      if (data.errorCode == '00') {
-        this.notificationService.showMessage('success', 'Xóa bài đăng thành công');
-        this.isEdit = false;
-      } else {
-        this.notificationService.showMessage('error', 'Xóa bài đăng thất bại');
-        this.isEdit = false;
-      }
-      this.changePage();
-    });
+    // this.http.post('http://localhost:8080/api/user/delete', item).toPromise().then((data: any) => {
+    //   if (data.errorCode == '00') {
+    //     this.notificationService.showMessage('success', 'Xóa bài đăng thành công');
+    //     this.isEdit = false;
+    //   } else {
+    //     this.notificationService.showMessage('error', 'Xóa bài đăng thất bại');
+    //     this.isEdit = false;
+    //   }
+    //   this.changePage();
+    // });
   }
 
-  handleSort(value: string) {
-    this.sortValue = value;
-    this.isSort = !this.isSort;
-  }
+  // handleSort(value: string) {
+  //   this.sortValue = value;
+  //   this.isSort = !this.isSort;
+  // }
 }
