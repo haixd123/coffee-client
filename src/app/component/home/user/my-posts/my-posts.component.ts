@@ -39,7 +39,8 @@ export class MyPostsComponent implements OnInit {
     // });
     this.myPostsUserId = JSON.parse(localStorage.getItem('user')).id;
     // this.handleSearch();
-    this.data = Array(4).fill(this.rawData);
+    // this.data = Array(4).fill(this.rawData);
+    this.handleSearch()
   }
 
   ngOnInit(): void {}
@@ -52,7 +53,7 @@ export class MyPostsComponent implements OnInit {
         // const a = data.data.filter((item: any) => item.userId == this.myPostsUserId);
         this.data = data.data;
         this.total = data.optional;
-        // console.log('this.data2: ', a);
+        console.log('this.data2: ', data);
       });
   }
 
