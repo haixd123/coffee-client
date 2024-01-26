@@ -4,6 +4,7 @@
 //  width: 420px;
 //}
 .list-top {
+  --color-primary: 84,84,84;
     display: flex;
     flex-flow: column nowrap;
     gap: 30px;
@@ -35,7 +36,7 @@
       }
       .top-title {
         padding: 0 0 10px 0;
-        font-size: 23px;
+        font-size: 22px;
         font-weight: 700;
         border-bottom: 2px solid rgba(var(--color-primary), 1);
       }
