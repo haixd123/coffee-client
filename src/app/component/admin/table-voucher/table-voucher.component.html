@@ -2,10 +2,19 @@
 
   <div class="d-flex align-items-center justify-content-between mb-4">
     <div class="d-flex flex-column">
-      <div class="d-flex align-items-center">
-        
+      <div class="d-flex flex-column mb-3">
+        <label>Xắp xếp theo</label>
+        <nz-select
+          style="width: 100%"
+          formControlName="typeSort"
+          (ngModelChange)="handleSearch()"
+        >
+          <nz-option nzValue="-1" nzLabel="Tất cả"></nz-option>
+          <nz-option nzValue="0" nzLabel="Thời gian tạo"></nz-option>
+          <nz-option nzValue="1" nzLabel="Giảm giá"></nz-option>
+        </nz-select>
       </div>
-      <div class="d-flex justify-content-end align-items-center">
+      <!-- <div class="d-flex justify-content-end align-items-center">
         <div class="d-flex">
           <nz-input-group [nzSuffix]="suffixIconSearch">
             <input class="px-1" formControlName="name" (change)="handleSearch()" type="text" nz-input
@@ -19,7 +28,7 @@
                 (click)="handleSearch()">
           <i nz-icon nzType="search" nzTheme="outline"></i> Tìm kiếm
         </button>
-      </div>
+      </div> -->
     </div>
 
     
@@ -40,10 +49,9 @@
     <thead>
     <tr>
       <th>id</th>
-      <th>Tên</th>
       <!--        <th>Password</th>-->
-      <th>Mô tả</th>
       <th>Mã giảm giá</th>
+      <th>Mô tả</th>
       <!--    <th [nzShowFilter]="true" [nzFilters]="newArray">Address-->
       <!--      <th [nzShowFilter]="true" [nzFilters]="filterAddress">Địa chỉ-->
 
@@ -59,6 +67,10 @@
         <!-- <i class="fas fa-user"></i> Sử dụng icon User -->
         Loại voucher
       </th>
+      <th>
+        Tối đa giảm giá
+      </th>
+      <th>Thời gian tạo</th>
       <th>Thời gian hết hạn</th>
       <th>Hành động</th>
     </tr>
@@ -66,11 +78,12 @@
     <tbody>
     <tr *ngFor="let item of data; let i = index">
       <td class="text-nowrap">{{validateService.getRowIndex(i, basicTable.nzPageIndex, basicTable.nzPageSize)}}</td>
-      <td>{{item.name}}</td>
+      <td>{{item.id}}</td>
       <td>{{item.description}}</td>
-      <td>{{item.code}}</td>
       <td>{{item.percentDiscount}}</td>
-      <td>{{item.voucherType}}</td>
+      <td>{{item.voucherType == 1 ? "Discount all bill":"Free ship"}}</td>
+      <td>{{item.maxDiscount | currency:'VND':'symbol':'1.0-0'}}</td>
+      <td>{{item.createdAt}}</td>
       <td>{{item.expiredAt}}</td>
       <td style="min-width: 100px">
         <a style="font-size: 21px" class="mr-3" (click)="handleEdit(item)">

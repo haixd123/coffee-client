@@ -4,6 +4,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {SearchModelEntity} from '../component/admin/search-model-entiry';
 import {BaseService} from '../shared/base-service/base-service.service';
 import {Comment} from '../component/admin/table-report/interface/comment';
+import { Voucher } from '../component/admin/table-voucher/interface/voucher';
 
 // import {BaseService} from './base-service.service';
 
@@ -341,7 +342,30 @@ export class Api extends BaseService {
   }
 
   // voucher
-
+  getAllVoucher(page:number,size:number):Observable<any>{
+    return this.httpClient.get(`http://localhost:8080/api/authors/voucher`,{
+      params: new HttpParams()
+      .append("page",page+"")
+      .append("size",size+"")
+    });
+  }
+  getAllAndSortVoucher(page:number,size:number,type:string):Observable<any>{
+    return this.httpClient.get(`http://localhost:8080/api/authors/voucher/sort-by-type`,{
+      params: new HttpParams()
+      .append("page",page+"")
+      .append("size",size+"")
+      .append("type",type)
+    })
+  }
+  createVoucher(voucher: Voucher):Observable<any>{
+    return this.httpClient.post(`http://localhost:8080/api/authors/voucher`,voucher);
+  }
+  updateVoucher(id:string,voucher:Voucher):Observable<any>{
+    return this.httpClient.put(`http://localhost:8080/api/authors/voucher/${id}`,voucher);
+  }
+  deleteVoucher(id:string):Observable<any>{
+    return this.httpClient.delete(`http://localhost:8080/api/authors/voucher/${id}`);
+  }
   // bill
   
 }

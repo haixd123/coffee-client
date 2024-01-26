@@ -1,97 +1,46 @@
 <form nz-form [formGroup]="formAdd">
   <!--  <button nz-button [nzType]="'primary'" (click)="showModal()"><span>Show Modal</span></button>-->
-  <nz-modal nzWidth="1000px" [(nzVisible)]="isAdd" nzTitle="Thêm mới tài khoản" (nzOnCancel)="handleCancel(false)"
+  <nz-modal nzWidth="600px" [(nzVisible)]="isAdd" nzTitle="Thêm mới voucher" (nzOnCancel)="handleCancel(false)"
             (nzOnOk)="handleOk()" [nzFooter]="null">
-    <div class="d-flex justify-content-between mb-3 mb-3">
-      <div class="col-4">
-        Tên đăng nhập
-        <input class="mt-1" formControlName="userName" nz-input placeholder="Username"/>
-<!--        <div *ngIf="f.data.errors">-->
-<!--          <div style="color: red;" *ngIf="f.data.errors.required"> Dữ liệu không được để trống</div>-->
-<!--        </div>-->
+    <div class="content">
+      <div class="form-group">
+        <label for="">Mô tả</label>
+        <textarea rows="4" nz-input class="mt-1" formControlName="description" placeholder="Mô tả voucher"></textarea>
+        <!-- <input class="mt-1" formControlName="description" nz-input placeholder="Mô tả voucher"/>  -->
+        <div class="text-danger" *ngIf="controlHasError('description', 'required')">Không được để trống</div>       
       </div>
-      <div class="col-4">
-        Mật khẩu
-        <input class="mt-1" formControlName="passWord" nz-input placeholder="Password"/>
+      <div class="form-group">
+        <label for="">Giảm giá (%)</label>
+        <input class="mt-1" formControlName="percentDiscount" nz-input placeholder="vd: 20"/>   
+        <div class="text-danger" *ngIf="controlHasError('percentDiscount', 'required')">Không được để trống</div>      
+        <div class="text-danger" *ngIf="controlHasError('percentDiscount', 'min')">% Giảm giá quá bé</div>      
+        <div class="text-danger" *ngIf="controlHasError('percentDiscount', 'max')">% Giảm giá quá lớn</div>      
+        <div class="text-danger" *ngIf="controlHasError('percentDiscount', 'pattern')">Có kí tự không hợp lệ</div>      
       </div>
-
-      <div class="col-4">
-        Email
-        <input class="mt-1" formControlName="email" nz-input placeholder="Email"/>
-<!--        <div *ngIf="f.data.errors">-->
-<!--          <div style="color: red;" *ngIf="f.data.errors.required"> Dữ liệu không được để trống</div>-->
-<!--        </div>-->
+      <div class="form-group">
+        <label for="">Loại Voucher</label>
+        <nz-select
+          style="width: 100%"
+          formControlName="voucherType"
+        >
+          <nz-option nzValue="1" nzLabel="Giảm giá đơn hàng"></nz-option>
+          <nz-option nzValue="2" nzLabel="Miễn phí ship"></nz-option>
+        </nz-select>     
       </div>
-    </div>
-
-    <div class="d-flex justify-content-between mb-3">
-      <div class="col-4">
-        Tên
-        <input class="mt-1" formControlName="name" nz-input placeholder="First name"/>
+      <div class="form-group">
+        <label for="">Giảm tối đa (vnd)</label>
+        <input class="mt-1" formControlName="maxDiscount" nz-input placeholder="vd: 1000"/>
+        <div class="text-danger" *ngIf="controlHasError('maxDiscount', 'required')">Không được để trống</div>      
+        <div class="text-danger" *ngIf="controlHasError('maxDiscount', 'min')">Giảm tối đa phải lớn hơn 1,000vnd</div>         
+        <div class="text-danger" *ngIf="controlHasError('maxDiscount', 'pattern')">Có kí tự không hợp lệ</div>         
       </div>
-
-      <div class="col-4">
-        Ngày sinh
-        <!--        <nz-form-item>-->
+      <div class="form-group">
+        <label >Ngày hết hạn</label>
         <nz-form-control [nzSm]="16" [nzLg]="24">
-          <nz-date-picker style="width: 100%;" class="mt-1" formControlName="dateOfBirthCur"></nz-date-picker>
+          <nz-date-picker style="width: 100%;" class="mt-1" formControlName="expiredAt"></nz-date-picker>
         </nz-form-control>
-        <!--        </nz-form-item>-->
-      </div>
-
-      <div class="col-4">
-        Địa chỉ
-        <input class="mt-1" formControlName="address" nz-input placeholder="Address"/>
       </div>
     </div>
-
-    <div class="d-flex justify-content-between mb-3">
-      <div class="col-4">
-        <div class="mb-1">
-          Giới tính
-        </div>
-        <nz-select class="col-12" formControlName="sex">
-          <nz-option nzValue="1" nzLabel="nam"></nz-option>
-          <nz-option nzValue="2" nzLabel="nữ"></nz-option>
-          <nz-option nzValue="3" nzLabel="khác"></nz-option>
-        </nz-select>
-      </div>
-
-      <div class="col-4">
-        Cấp phân quyền
-        <input class="mt-1" formControlName="role" nz-input placeholder="Role"/>
-      </div>
-
-      <div class="col-4">
-        Số điện thoại
-        <input class="mt-1" formControlName="phoneNumber" nz-input placeholder="Phone number"/>
-      </div>
-    </div>
-
-    <!--    <div class="col-md-6">-->
-    <!--      <input type="file" (change)="onFileChanged($event)">-->
-    <!--      <div class="col-md-6">-->
-    <!--        <input type="button" (click)="onUpload()" value="upload">-->
-    <!--      </div>-->
-    <!--    </div>-->
-
-    <nz-upload
-      style="margin-left: 15px"
-      [nzHeaders]="{ authorization: 'authorization-text' }"
-      (nzChange)="onUpload($event)"
-      [nzShowUploadList]="false"
-    >
-<!--      <ng-container *ngIf="!urlImage">-->
-<!--        <i class="upload-icon" nz-icon [nzType]="isLoading ? 'loading' : 'plus'"></i>-->
-<!--&lt;!&ndash;        <div class="ant-upload-text">{{ 'merchant.upload_logo' }}</div>&ndash;&gt;-->
-<!--                  <div class="ant-upload-text">{{ 'merchant.upload_logo' | translate }}</div>-->
-<!--      </ng-container>-->
-      <button nz-button><i nz-icon nzType="upload"></i>Click to Upload</button>
-      <i *ngIf="isLoading" class="upload-icon" nz-icon [nzType]="isLoading ? 'loading' : 'plus'"></i>
-
-    </nz-upload>
-
-
     <div class="d-flex justify-content-end mt-5">
       <button class="mr-4" (click)="handleOk()" nz-button nzType="primary">Ok</button>
       <button (click)="handleCancel(false)" nz-button nzType="primary">Cancel</button>

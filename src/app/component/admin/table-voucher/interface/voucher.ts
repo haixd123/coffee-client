@@ -1,9 +1,9 @@
 export interface Voucher{
-    id: number,
-    name: string,
+    id: string,
     description: string,
-    code: string,
     percentDiscount: number,
     voucherType: number,
-    expiredAt: string,
+    maxDiscount: number,
+    createdAt: Date | string,
+    expiredAt: Date | string,
 }

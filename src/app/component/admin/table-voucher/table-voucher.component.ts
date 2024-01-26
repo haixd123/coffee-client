@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {SearchModelEntity} from '../search-model-entiry';
-import {HttpClient} from '@angular/common/http';
 import {ValidateService} from '../../../services/validate-service';
 import {NotificationService} from '../../../services/notification.service';
-import {FilterPipe} from '../../../shared/pipe/filter.pipe';
 import {faSort} from '@fortawesome/free-solid-svg-icons/faSort';
 import { Voucher } from './interface/voucher';
+import { Api } from 'src/app/services/api';
 
 @Component({
   selector: 'app-table-voucher',
@@ -28,34 +27,62 @@ export class TableVoucherComponent implements OnInit {
   isSort = false;
 
   rawData = {
-    id: 1,
-    name: "code 20%",
+    id: "SDFEKI",
     description: "discount 20% for total bill greater 2M",
-    code: "DC20P",
     percentDiscount: 20,
     voucherType: 1,
-    expiredAt: "27/2/2024 00:00:00",
+    maxDiscount: 200_000,
+    createdAt: "2024/02/27 00:00:00",
+    expiredAt: "2024/02/27 00:00:00",
   }
   
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
+    private api: Api,
     public validateService: ValidateService,
     private notificationService: NotificationService,
   ) {
     this.formSearch = this.fb.group({
-      name: null,
+      typeSort: '0',
     });
-    // this.handleSearch();
-    // this.changePage();
-    this.data = Array(10).fill(this.rawData);
+    this.handleSearch();
+    this.changePage();
+    // this.data = Array(10).fill(this.rawData);
   }
 
   ngOnInit(): void {
   }
 
-
-  handleUpdate(searchModel: SearchModelEntity, reset = false) {
+  
+  handleUpdate() {
+    let typeSort = this.formSearch.get('typeSort').value;
+    let page = this.curPage - 1;
+    let size = 10;
+    if(typeSort == "-1"){
+      this.api.getAllVoucher(page,size).subscribe({
+        next: (res) => {
+          this.data = res.data.content;
+          this.total = res.data.totalElements;
+        },
+      })
+    }
+    if(typeSort == "0"){
+      this.api.getAllAndSortVoucher(page,size,"created_at").subscribe({
+        next: (res) => {
+          this.data = res.data.content;
+          this.total = res.data.totalElements;
+        },
+      })
+    }
+    if(typeSort == "1"){
+      this.api.getAllAndSortVoucher(page,size,"discount").subscribe({
+        next: (res) => {
+          this.data = res.data.content;
+          this.total = res.data.totalElements;
+        },
+      })
+    }
+    
     // this.http.post('http://localhost:8080/api/authors/user/search', this.searchModel).toPromise().then((data: any) => {
     //   this.data = data.data;
     //   this.total = data.optional;
@@ -84,7 +111,7 @@ export class TableVoucherComponent implements OnInit {
     // if (this.formSearch.get('name').value == '') {
     //   this.formSearch.get('name').setValue(null);
     // }
-    this.handleUpdate(this.searchModel, true);
+    this.handleUpdate();
   }
 
 
@@ -92,7 +119,7 @@ export class TableVoucherComponent implements OnInit {
     this.searchModel.pageIndex = this.curPage;
     this.searchModel.pageSize = 10;
     // this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
-    this.handleUpdate(this.searchModel, false);
+    this.handleUpdate();
   }
 
   handleAdd() {
@@ -112,7 +139,18 @@ export class TableVoucherComponent implements OnInit {
     }
   }
 
-  handleDelete(item: any) {
+  handleDelete(item: Voucher) {
+    this.api.deleteVoucher(item.id).subscribe({
+      next: res =>{
+        this.notificationService.showMessage('success', 'Xóa bài voucher thành công');
+        this.isEdit = false;
+        this.changePage();
+      },
+      error: error =>{
+        this.notificationService.showMessage('error', 'Xóa voucher thất bại');
+        this.isEdit = false;
+      }
+    })
     // this.http.post('http://localhost:8080/api/user/delete', item).toPromise().then((data: any) => {
     //   if (data.errorCode == '00') {
     //     this.notificationService.showMessage('success', 'Xóa bài đăng thành công');
