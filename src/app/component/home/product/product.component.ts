@@ -144,6 +144,7 @@ export class ProductComponent implements OnInit, OnChanges {
   }
 
   addItemCart(value: any) {
+    console.log('this.detailProduct: ', value)
     this.detailProduct = value;
     this.isVisible = false;
 

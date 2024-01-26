@@ -9,6 +9,7 @@
           <div class="detail">
             <span class="code">{{item.id}}</span>
             <button *ngIf="!exist(item.id)" class="btn-save" (click)="saveVoucher(item.id)">Lưu</button>
+            <button *ngIf="exist(item.id)" class="btn-save">Đã lưu</button>
           </div>
         </div>
       </ng-template>
@@ -20,8 +21,8 @@
     <div class="section-title">Tất cả sản phẩm</div>
     <owl-carousel-o [options]="customOptions">
       <ng-template *ngFor="let item of data;" carouselSlide>
-        <div class="item-product" (click)="showModal(item)">
-          <div class="image" >
+        <div class="item-product" >
+          <div class="image" (click)="showModal(item)">
             <span class="tag-discount">-{{item.discount}}%</span>
             <img
               [src]="item.image"
@@ -43,7 +44,7 @@
               }}</span>
             </div>
           </div>
-          <button class="btn-order">
+          <button class="btn-order" (click)="addItemCart(item)">
             <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
               <span>Chọn mua</span>
           </button>
@@ -57,9 +58,9 @@
     <div class="section-title">Sản phẩm dưới 50k</div>
     <owl-carousel-o [options]="customOptions">
       <ng-template *ngFor="let item of datProduct50k;" carouselSlide>
-        <div class="item-product" (click)="showModal(item)">
-          <div class="image" >
-            <span class="tag-discount">-20%</span>
+        <div class="item-product" >
+          <div class="image" (click)="showModal(item)">
+            <span class="tag-discount">-{{item.discount}}%</span>
             <img
               [src]="item.image"
             />
@@ -80,7 +81,7 @@
               }}</span>
             </div>
           </div>
-          <button class="btn-order">
+          <button class="btn-order" (click)="addItemCart(item)">
             <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
               <span>Chọn mua</span>
           </button>
@@ -94,9 +95,9 @@
     <div class="section-title">Sản phẩm bán chạy</div>
     <owl-carousel-o [options]="customOptions">
       <ng-template *ngFor="let item of dataTop5;" carouselSlide>
-        <div class="item-product" (click)="showModal(item)">
-          <div class="image" >
-            <span class="tag-discount">-20%</span>
+        <div class="item-product" >
+          <div class="image" (click)="showModal(item)">
+            <span class="tag-discount">-{{item.discount}}%</span>
             <img
               [src]="item.image"
             />
@@ -117,7 +118,7 @@
               }}</span>
             </div>
           </div>
-          <button class="btn-order">
+          <button class="btn-order" (click)="addItemCart(item)">
             <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
               <span>Chọn mua</span>
           </button>

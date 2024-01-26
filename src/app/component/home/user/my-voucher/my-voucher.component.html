@@ -29,6 +29,7 @@
         <div class="detail">
           <span class="code">{{item.id}}</span>
           <button *ngIf="!exist(item.id)" class="btn-save" (click)="saveVoucher(item.id)">Lưu</button>
+          <button *ngIf="exist(item.id)" class="btn-save" (click)="saveVoucher(item.id)">Đã lưu</button>
         </div>
       </div>
     </div>

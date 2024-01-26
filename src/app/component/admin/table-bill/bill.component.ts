@@ -94,16 +94,10 @@ export class BillComponent implements OnInit {
     this.http.get('http://localhost:8080/api/authors/bill').subscribe((res: any) => {
       console.log('res all bill: ', res)
       this.data = res.data.content;
-      // this.dataDetail = res.data.content.details;
-    })
-
-    this.searchModel.pageSize = 999;
-    this.api.getListBill(this.searchModel).toPromise().then((data: any) => {
-      // this.data = data.data;
-      // this.total = data.optional;
+      this.total = res.data.content.numberOfElements;
 
       const totalByMonth = {};
-      data.data.forEach(purchase => {
+      this.data.forEach(purchase => {
         // this.datePipe.transform(purchase.createDate, 'dd/MM/yyyy');
         // console.log('month: ', purchase.createDate);
         const month = this.datePipe.transform(purchase.createDate, 'dd/MM/yyyy').split('/').splice(1, 2).join('/');
@@ -126,6 +120,37 @@ export class BillComponent implements OnInit {
         };
       });
       return newArray;
+    })
+
+    this.searchModel.pageSize = 999;
+    this.api.getListBill(this.searchModel).toPromise().then((data: any) => {
+      // this.data = data.data;
+      // this.total = data.optional;
+
+      // const totalByMonth = {};
+      // data.data.forEach(purchase => {
+      //   // this.datePipe.transform(purchase.createDate, 'dd/MM/yyyy');
+      //   // console.log('month: ', purchase.createDate);
+      //   const month = this.datePipe.transform(purchase.createDate, 'dd/MM/yyyy').split('/').splice(1, 2).join('/');
+      //   // month = purchase.createDate.split('-')[1];
+      //   if (!totalByMonth[month]) {
+      //     totalByMonth[month] = 0;
+      //   }
+      //   totalByMonth[month] += Number(purchase.total);
+      // });
+      // const newArray = Object.entries(totalByMonth).map(([month, total]) => ({month, total}));
+      // this.dataChart = Object.entries(totalByMonth).map(([month, total]) => ({month, total}));
+      // // for (const item of newArray)
+      // console.log('newArray: ', newArray);
+      // console.log('dataChart: ', this.dataChart);
+      // this.dataChart = this.dataChart.map(item => {
+      //   console.log('this.dataChart: ', item);
+      //   return {
+      //     'name': `${item.month}`,
+      //     'value': `${item.total}`
+      //   };
+      // });
+      // return newArray;
     });
   }
 
@@ -200,11 +225,12 @@ export class BillComponent implements OnInit {
     })
     this.api.deleteBill(this.formHandleStatusBill.value).subscribe((res: any) => {
       console.log('res update bill ok: ', res)
-      this.notificationService.showMessage('success', 'Bạn không đồng ý hoàn tiền cho khách hàng')
+      this.notificationService.showMessage('success', 'Xóa hóa đơn thành công')
     })
   }
 
   viewDetailBill(value: any) {
+    console.log('view detail bill: ', value)
     this.dataDetail = value.details;
     this.isRefuse = true;
   }

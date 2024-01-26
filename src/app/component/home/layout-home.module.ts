@@ -23,6 +23,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { PaymentResultComponent } from './payment-result/paymen-result.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { MyVoucherComponent } from './user/my-voucher/my-voucher.component';
+import {OrderComponent} from "./user/order/order.component";
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MyVoucherComponent } from './user/my-voucher/my-voucher.component';
     ProductComponent,
     CheckoutComponent,
     PaymentResultComponent,
-    MyVoucherComponent
+    MyVoucherComponent,
+    OrderComponent
   ],
   imports: [
     NzFormModule,

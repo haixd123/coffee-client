@@ -1,10 +1,10 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Api } from '../../../services/api';
-import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
-import { Voucher } from '../../admin/table-voucher/interface/voucher';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
+import {Component, OnInit, Renderer2} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Api} from '../../../services/api';
+import {Router} from '@angular/router';
+import {DatePipe} from '@angular/common';
+import {Voucher} from '../../admin/table-voucher/interface/voucher';
+import {TokenStorageService} from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-checkout',
@@ -23,6 +23,7 @@ export class CheckoutComponent implements OnInit {
 
   myVoucher: Voucher[] = [];
   selectedVoucher: Voucher;
+  totalOfBill: any;
   // selectedVoucher: Voucher = {
   //   id: 'SHDFEJ',
   //   description: 'Sales 20%',
@@ -63,9 +64,10 @@ export class CheckoutComponent implements OnInit {
       this.totalQuantity += item.quantity;
       this.totalPrice +=
         (item.price - (item.price * item.discount) / 100) * item.quantity;
+      this.totalOfBill = this.totalPrice;
     }
-    
-    
+
+
   }
 
   getMyVoucher() {
@@ -73,21 +75,32 @@ export class CheckoutComponent implements OnInit {
       .getMyVoucher(this.currPage - 1, 9, this.storage.getUser().id)
       .subscribe({
         next: (res) => {
+          console.log('data voucher: ', res)
           this.myVoucher = res.data.content;
           this.totalEle = res.data.totalElements;
         },
       });
   }
-  removeVoucher(){
-    this.selectedVoucher = null;
+
+  chooseAnotherVoucher() {
+    this.openTableVoucher = !this.openTableVoucher
+    this.totalPrice = this.totalOfBill;
   }
+
+  removeVoucher() {
+    this.selectedVoucher = null;
+    this.totalPrice = this.totalOfBill;
+  }
+
+
   handleSelectedVoucher(voucher: Voucher) {
+    let a = this.totalPrice
     this.selectedVoucher = voucher;
     this.openTableVoucher = !this.openTableVoucher;
     let priceDiscount = this.totalPrice * (voucher.percentDiscount / 100);
-    if(priceDiscount < voucher.maxDiscount){
+    if (priceDiscount < voucher.maxDiscount) {
       this.totalPrice -= priceDiscount;
-    }else{
+    } else {
       this.totalPrice -= voucher.maxDiscount;
     }
   }
@@ -106,7 +119,7 @@ export class CheckoutComponent implements OnInit {
       const dataCart: any[] = [];
       let itemCart: any;
       for (const item of this.cartItem) {
-        const billDetail = { productId:item.id,quantity:item.quantity}
+        const billDetail = {productId: item.id, quantity: item.quantity}
         // itemCart =
         //   {'productId: ' : item.id +
         //   ',quantity: ' + item.quantity}
@@ -158,7 +171,8 @@ export class CheckoutComponent implements OnInit {
             this.renderer.removeChild(body, newTab);
             localStorage.removeItem('cartItems');
           },
-          error: (err) => {},
+          error: (err) => {
+          },
         });
       }
     }

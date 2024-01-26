@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Api} from "../../../../services/api";
+import {NotificationService} from "../../../../services/notification.service";
 
 @Component({
   selector: 'app-order',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private api: Api,
+    private notificationService: NotificationService,
+  ) { }
 
   ngOnInit(): void {
+    this.api.getBillByUser('nm1', 0, 10).subscribe({
+      next: (res) => {
+        console.log(res)
+      }
+    })
   }
 
 }

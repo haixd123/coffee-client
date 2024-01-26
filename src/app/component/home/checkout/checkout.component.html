@@ -125,7 +125,7 @@
         </div>
         <div class="voucher">
           <div class="title">Voucher</div>
-          <div class="selected-button" (click)="openTableVoucher =!openTableVoucher">Chọn voucher {{ selectedVoucher ? "khác": ''}}</div>
+          <div class="selected-button" (click)=" chooseAnotherVoucher()">Chọn voucher {{ selectedVoucher ? "khác": ''}}</div>
           <div *ngIf="selectedVoucher && selectedVoucher.voucherType == 1" class="voucher-value">{{selectedVoucher.id}} - Giảm {{selectedVoucher.percentDiscount}}% - Tối đa {{selectedVoucher.maxDiscount | currency : "VND" : "symbol" : "1.0-0"}}</div>
           <div *ngIf="selectedVoucher && selectedVoucher.voucherType == 2" class="voucher-value">{{selectedVoucher.id}} - Giảm phí ship {{selectedVoucher.percentDiscount}}% - Tối đa {{selectedVoucher.maxDiscount | currency : "VND" : "symbol" : "1.0-0"}}</div>
           <div *ngIf="selectedVoucher" class="clear-button" (click)="removeVoucher()">X</div>

@@ -29,25 +29,26 @@
   #basicTable
   [nzData]="data"
   [nzFrontPagination]="true"
-  [nzPageSizeOptions]="pageSizeOptions"
-  [(nzPageIndex)]="searchModel.pageIndex"
-  (nzPageSizeChange)="onPageSizeChange($event)"
-
   nzBordered
   nzShowSizeChanger
   [nzScroll]="{ x: '1200px'}"
 >
+  <!--  [nzPageSizeOptions]="pageSizeOptions"-->
+  <!--  [(nzPageIndex)]="searchModel.pageIndex"-->
+  <!--  (nzPageSizeChange)="onPageSizeChange($event)"-->
+  <!--  [nzTotal]="total"-->
   <thead>
   <tr>
-    <th nzWidth="100px">STT</th>
-    <th nzWidth="100px">Id</th>
-    <th nzWidth="210px">Tên</th>
-    <th nzWidth="210px">Email</th>
-    <th nzWidth="150px">Số điện thoại</th>
+    <th>STT</th>
+    <th>Id</th>
+    <th>Tên</th>
+    <th>Email</th>
+    <th>Số điện thoại</th>
     <th>Địa chỉ</th>
     <th>Ngày tạo hóa đơn</th>
     <th>Trạng thái</th>
     <th>Chi tiết hóa đơn</th>
+    <th>Tổng giá tiền</th>
     <th>Hành động</th>
   </tr>
   </thead>
@@ -61,16 +62,17 @@
     <!--    <td style=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden">-->
     <td> {{item.address}}</td>
     <td>{{ item.createDate | date: 'dd/MM/yyyy' }}</td>
-    <td>{{ item.status }}</td>
-    <td><a (click)="viewDetailBill(item)">Xem chi tiết</a></td>
+    <td>{{ item.status == 0 ? 'Chờ hoàn hàng' : item.status == 1 ? 'Đã nhận hàng' : 'Đã hoàn hàng'}}</td>
+    <td><a style="text-decoration: #e6e6e6" (click)="viewDetailBill(item)">Xem chi tiết</a></td>
+    <td>{{item.total}}</td>
     <td style="min-width: 120px; text-align: center">
       <!--            <a *ngIf="item.status == 0" style="font-size: 21px; color: #1890ff" nz-popconfirm-->
-      <a style="font-size: 21px; color: #1890ff" nz-popconfirm class="mr-3"
+      <a *ngIf="item.status == 0" style="font-size: 21px; color: #1890ff" nz-popconfirm class="mr-3"
          nzPopconfirmTitle="Bạn đồng ý cho người dùng hoàn hàng?" (nzOnConfirm)="handleOk(item)">
-        <i nz-icon nzType="check" nzTheme="outline"></i></a>
+        <i style="color: limegreen" nz-icon nzType="check" nzTheme="outline"></i></a>
 
       <!--            <a *ngIf="item.status == 0" style="font-size: 21px" class="mr-3" nz-popconfirm-->
-      <a style="font-size: 21px" class="mr-3" nz-popconfirm class="mr-3"
+      <a *ngIf="item.status == 0" style="font-size: 21px" class="mr-3" nz-popconfirm class="mr-3"
          nzPopconfirmTitle="Bạn không đồng ý cho người dùng hoàn hàng?"
          (nzOnConfirm)="handleOkRefuse(item)">
         <i style="color: red" nz-icon nzType="close" nzTheme="outline"></i>
@@ -83,10 +85,9 @@
   </tr>
   </tbody>
 </nz-table>
-<!--<div class="d-flex justify-content-end">-->
-<!--  <nz-pagination class="pb-4" (click)="changePage()" [(nzPageIndex)]="curPage" [nzTotal]="total"-->
-<!--                 [nzPageSizeOptions]="pageSizeOptions" (nzPageSizeChange)="onPageSizeChange($event)"></nz-pagination>-->
-<!--</div>-->
+<div class="d-flex justify-content-end">
+  <nz-pagination class="pb-4" (click)="changePage()" [(nzPageIndex)]="curPage" [nzTotal]="total"></nz-pagination>
+</div>
 
 
 <div style="display:flex; justify-content: center">
@@ -105,20 +106,21 @@
 </div>
 
 
-<nz-modal [(nzVisible)]="isRefuse" [nzTitle]="'Chi tiết hóa đơn'" (nzOnCancel)="handleCancelViewDetailBill()">
+<nz-modal [(nzVisible)]="isRefuse" [nzTitle]="'Chi tiết hóa đơn'" [nzFooter]="null" (nzOnCancel)="handleCancelViewDetailBill()">
   <div style="border: 1px solid #ccc; border-radius: 5px">
-    <div class="d-flex" *ngFor="let item of dataDetail">
+    <div class="d-flex pb-1 mb-1 box-detail" style="border-bottom: 1px solid #ccc" *ngFor="let item of dataDetail">
       <div class="col-3 p-0">
-        <div>image</div>
+        <div><img style="width: 100%;" [src]="item.product.image"/></div>
       </div>
       <div class="col-7">
-        <div class="d-flex justify-content-between"><span>Tên sản phẩm: </span> {{item.name}} ???</div>
+        <div class="d-flex justify-content-between"><span>Tên sản phẩm: </span> {{item.product.name}}</div>
         <div class="d-flex justify-content-between"><span>Số lượng: </span> {{item.quantity}}</div>
-        <div class="d-flex justify-content-between"><span>Giá tiền: </span> {{item.amount}}</div>
-        <div class="d-flex justify-content-between"><span>Mã giảm giá áp dụng: </span> {{item.voucher}}</div>
+        <div class="d-flex justify-content-between">
+          <span>Giá tiền: </span> {{item.product.price - item.product.price * (item.product.discount / 100)}}</div>
+        <div class="d-flex justify-content-between"><span>Mã giảm giá áp dụng: </span> {{item.vouchers}}</div>
       </div>
-      <div class="col-2">
-
+      <div class="col-2 d-flex justify-content-center align-items-center">
+        <span style="font-size: 20px; font-weight: 600">{{(item.product.price - item.product.price * (item.product.discount / 100)) * item.quantity}}</span>
       </div>
     </div>
   </div>

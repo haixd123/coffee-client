@@ -206,6 +206,22 @@ export class Api extends BaseService {
     return this.postRequestFile1(searchModel);
   }
 
+  getBillByUser(
+    name: string,
+    page: number,
+    size: number,
+  ): Observable<any> {
+    return this.httpClient.get<any>(
+      'http://localhost:8080/api/authors/bill/by-user',
+      {
+        params: new HttpParams()
+          .append('name', name + '')
+          .append('page', page + '')
+          .append('size', size + '')
+      }
+    );
+  }
+
   // payment online
 
   createPaymentWithVnPay(searchModel: SearchModelEntity) {
@@ -373,7 +389,7 @@ export class Api extends BaseService {
       .append("size",size+"")
     });
   }
-  
+
   getAllVoucherExpectUserOwn(page:number,size:number,userId:any):Observable<any>{
     return this.httpClient.get(`http://localhost:8080/api/authors/voucher/by-not-user/${userId}`,{
       params: new HttpParams()
@@ -394,7 +410,7 @@ export class Api extends BaseService {
       .append("type",type)
       .append("page",page+"")
       .append("size",size+"")
-      
+
     })
   }
   createVoucher(voucher: Voucher):Observable<any>{
@@ -407,5 +423,5 @@ export class Api extends BaseService {
     return this.httpClient.delete(`http://localhost:8080/api/authors/voucher/${id}`);
   }
   // bill
-  
+
 }
