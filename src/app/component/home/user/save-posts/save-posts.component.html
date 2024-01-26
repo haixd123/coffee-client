@@ -8,7 +8,7 @@
       <div style="display: flex; background-color: #fff"> -->
 
         <!--        <div *ngIf=" item1.postId == item.id" style="display: flex; background-color: #fff">-->
-        
+
           <!-- <div style="display: flex; background-color: #fff" class="mb-5 mt-5"> -->
 
           <!--          <div style="display: flex; background-color: #fff" class="mb-5 mt-5"-->
@@ -60,8 +60,8 @@
     </div>
     <div class="post-item" *ngFor="let item of dataDetailPost"  (click)="PostsDetail(item)">
       <div class="post-image">
-        <img *ngIf="item.imagePath" [src]="item.imagePath" [alt]="item.imagePath">
-        <img *ngIf="!item.imagePath" src="https://cdnphoto.dantri.com.vn/7Ay2bMHqImHAgbQN5gvn_3JJp-Q=/zoom/378_252/2023/10/23/rocketphongtugazaveisraelreuters-crop-1698024802873.jpeg" />
+        <img *ngIf="item.image" [src]="item.image" [alt]="item.image">
+        <img *ngIf="!item.image" src="https://cdnphoto.dantri.com.vn/7Ay2bMHqImHAgbQN5gvn_3JJp-Q=/zoom/378_252/2023/10/23/rocketphongtugazaveisraelreuters-crop-1698024802873.jpeg" />
       </div>
       <div class="description">
         <div class="post-title">{{item.title}}</div>

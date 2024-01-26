@@ -12,7 +12,7 @@ import { HttpParams } from '@angular/common/http';
   styleUrls: ['./payment-result.component.scss']
 })
 export class PaymentResultComponent implements OnInit,OnDestroy {
-  
+
   subscription : Subscription = null;
   constructor(
     private fb: FormBuilder,
@@ -33,6 +33,7 @@ export class PaymentResultComponent implements OnInit,OnDestroy {
       .append("billId",localStorage.getItem("billId"));
       this.api.getVnPaymentInfo(params).subscribe({
         next: res =>{
+          // sau khi thanh toán thành công thì call api tạo bill , m thấy không đáng ra là phải tạo từ lúc nhập form rồi  h lấy đâu ra thông tin người dùng mà tạo =))
             if(res.status == "OK"){
               localStorage.removeItem("cartItems");
             }
@@ -40,7 +41,7 @@ export class PaymentResultComponent implements OnInit,OnDestroy {
       })
       }
     });
-    
+
   }
 
   linkToCoffee() {

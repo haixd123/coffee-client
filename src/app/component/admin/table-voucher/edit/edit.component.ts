@@ -52,7 +52,7 @@ export class EditVoucherComponent implements OnInit, OnChanges {
           Validators.pattern(/^\d+$/),
         ],
       ],
-      voucherType: ['0', Validators.required],
+      voucherType: ['1', Validators.required],
       maxDiscount: [
         0,
         [

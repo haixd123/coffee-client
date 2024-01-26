@@ -302,13 +302,18 @@ export class TablePostsComponent implements OnInit {
     // const a = value;
     this.dataRefuse.status = -2;
     this.dataRefuse.reasonDeline = this.inputValue;
+    console.log('success1')
     this.api.updatePosts(this.dataRefuse).subscribe((res: any) => {
+      console.log('success2')
       this.notificationService.showMessage('success', 'Từ chối bài viết thành công');
       this.inputValue = '';
-    }, error => this.notificationService.showMessage('error', 'Từ chối bài viết thất bại'));
+    }, error =>  {
+      return
+      this.notificationService.showMessage('error', 'Từ chối bài viết thất bại')
+      console.log('success3');
+      });
 
     this.http.post(`http://localhost:8080/api/authors/user/deline/${this.dataRefuse.userId}`, this.dataRefuse.userId).subscribe((res: any) => {
-      console.log('res user: ', res)
     });
 
     this.http.get('http://localhost:8080/api/authors/notifications/' + this.dataRefuse.userId).subscribe((res: any) => {
