@@ -18,6 +18,7 @@ import {saveAs} from 'file-saver';
 
 export class BillComponent implements OnInit {
   formSearch: FormGroup;
+  formHandleStatusBill: FormGroup
 
   data: any[];
   total: number;
@@ -58,47 +59,8 @@ export class BillComponent implements OnInit {
   dataChart: any;
 
   test = 12000;
-
-
-  productSales1 = [
-    {
-      'name': 'Tháng 1',
-      'value': `${this.test}`
-    }, {
-      'name': 'Tháng 2',
-      'value': 14322
-    }, {
-      'name': 'Tháng 3',
-      'value': 1726
-    }, {
-      'name': 'Tháng 4',
-      'value': 2599
-    }, {
-      'name': 'Tháng 5',
-      'value': 705
-    }, {
-      'name': 'Tháng 6',
-      'value': 7050
-    }, {
-      'name': 'Tháng 7',
-      'value': 705
-    }, {
-      'name': 'Tháng 8',
-      'value': 705
-    }, {
-      'name': 'Tháng 9',
-      'value': 705
-    }, {
-      'name': 'Tháng 10',
-      'value': 705
-    }, {
-      'name': 'Tháng 11',
-      'value': 705
-    }, {
-      'name': 'Tháng 12',
-      'value': 705
-    }
-  ];
+  isRefuse = false;
+  dataDetail: any;
 
 
   constructor(
@@ -107,6 +69,7 @@ export class BillComponent implements OnInit {
     private api: Api,
     public datePipe: DatePipe,
     private notificationService: NotificationService,
+    private http: HttpClient,
   ) {
     this.formSearch = this.fb.group({
       pageIndex: 1,
@@ -128,11 +91,16 @@ export class BillComponent implements OnInit {
   }
 
   handleUpdate(searchModel: SearchModelEntity, reset = false) {
+    this.http.get('http://localhost:8080/api/authors/bill').subscribe((res: any) => {
+      console.log('res all bill: ', res)
+      this.data = res.data.content;
+      // this.dataDetail = res.data.content.details;
+    })
+
     this.searchModel.pageSize = 999;
     this.api.getListBill(this.searchModel).toPromise().then((data: any) => {
-      console.log('data: ', data.data);
-      this.data = data.data;
-      this.total = data.optional;
+      // this.data = data.data;
+      // this.total = data.optional;
 
       const totalByMonth = {};
       data.data.forEach(purchase => {
@@ -143,13 +111,10 @@ export class BillComponent implements OnInit {
         if (!totalByMonth[month]) {
           totalByMonth[month] = 0;
         }
-
         totalByMonth[month] += Number(purchase.total);
       });
-
       const newArray = Object.entries(totalByMonth).map(([month, total]) => ({month, total}));
       this.dataChart = Object.entries(totalByMonth).map(([month, total]) => ({month, total}));
-
       // for (const item of newArray)
       console.log('newArray: ', newArray);
       console.log('dataChart: ', this.dataChart);
@@ -160,16 +125,6 @@ export class BillComponent implements OnInit {
           'value': `${item.total}`
         };
       });
-      // const numberToRound = 5665151;
-      // const roundedNumber = Math.ceil(numberToRound / (numberToRound / 3)) * (numberToRound / 3);
-      //
-      // console.log('roundedNumber: ', roundedNumber);
-//       const number = 5665151;
-//
-// // Chuyển đổi số thành chuỗi và đếm số chữ số
-//       const numberOfDigits = String(number).length;
-
-      // console.log(`Số ${number} có ${numberOfDigits} chữ số.`);
       return newArray;
     });
   }
@@ -215,5 +170,47 @@ export class BillComponent implements OnInit {
     }, error => console.log('err: ', error));
   }
 
+  handleOk(value: any) {
+    //đồng ý thì set status -1 để thể hiện cho khách hoàn hàng
+    this.formHandleStatusBill = this.fb.group({
+      billId: value.id,
+      status: -1
+    })
+    this.api.updateBill(this.formHandleStatusBill.value).subscribe((res: any) => {
+      console.log('res update bill ok: ', res)
+      this.notificationService.showMessage('success', 'Bạn đã đồng ý hoàn tiền cho khách hàng')
+    })
+  }
+
+  handleOkRefuse(value: any) {
+    this.formHandleStatusBill = this.fb.group({
+      billId: value.id,
+      status: 2
+    })
+    this.api.updateBill(this.formHandleStatusBill.value).subscribe((res: any) => {
+      console.log('res update bill ok: ', res)
+      this.notificationService.showMessage('success', 'Bạn không đồng ý hoàn tiền cho khách hàng')
+    })
+  }
+
+  handleDelete(value: any) {
+    this.formHandleStatusBill = this.fb.group({
+      billId: value.id,
+      status: 2
+    })
+    this.api.deleteBill(this.formHandleStatusBill.value).subscribe((res: any) => {
+      console.log('res update bill ok: ', res)
+      this.notificationService.showMessage('success', 'Bạn không đồng ý hoàn tiền cho khách hàng')
+    })
+  }
+
+  viewDetailBill(value: any) {
+    this.dataDetail = value.details;
+    this.isRefuse = true;
+  }
+
+  handleCancelViewDetailBill() {
+    this.isRefuse = false
+  }
 
 }

@@ -46,8 +46,9 @@
     <th nzWidth="150px">Số điện thoại</th>
     <th>Địa chỉ</th>
     <th>Ngày tạo hóa đơn</th>
+    <th>Trạng thái</th>
     <th>Chi tiết hóa đơn</th>
-    <!--      <th>Hành động</th>-->
+    <th>Hành động</th>
   </tr>
   </thead>
   <tbody>
@@ -59,13 +60,26 @@
     <td>{{ item.phone }}</td>
     <!--    <td style=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden">-->
     <td> {{item.address}}</td>
-    <td>{{ item.createDate }}</td>
-    <td>{{ item.detail }}</td>
-    <!--      <td style="min-width: 120px; text-align: center">-->
-    <!--        <a style="font-size: 21px" class="mr-3" (click)="handleEdit(item)"><i nz-icon nzType="edit"-->
-    <!--                                                                              nzTheme="outline"></i></a>-->
-    <!--        <a style="font-size: 21px" nz-popconfirm nzPopconfirmTitle="Bạn chắc chắn muốn xóa bài đăng này?" (nzOnConfirm)="handleDelete(item)"><i nz-icon nzType="delete" nzTheme="outline"></i></a>-->
-    <!--      </td>-->
+    <td>{{ item.createDate | date: 'dd/MM/yyyy' }}</td>
+    <td>{{ item.status }}</td>
+    <td><a (click)="viewDetailBill(item)">Xem chi tiết</a></td>
+    <td style="min-width: 120px; text-align: center">
+      <!--            <a *ngIf="item.status == 0" style="font-size: 21px; color: #1890ff" nz-popconfirm-->
+      <a style="font-size: 21px; color: #1890ff" nz-popconfirm class="mr-3"
+         nzPopconfirmTitle="Bạn đồng ý cho người dùng hoàn hàng?" (nzOnConfirm)="handleOk(item)">
+        <i nz-icon nzType="check" nzTheme="outline"></i></a>
+
+      <!--            <a *ngIf="item.status == 0" style="font-size: 21px" class="mr-3" nz-popconfirm-->
+      <a style="font-size: 21px" class="mr-3" nz-popconfirm class="mr-3"
+         nzPopconfirmTitle="Bạn không đồng ý cho người dùng hoàn hàng?"
+         (nzOnConfirm)="handleOkRefuse(item)">
+        <i style="color: red" nz-icon nzType="close" nzTheme="outline"></i>
+      </a>
+
+      <a style="font-size: 21px; color: #1890ff" nz-popconfirm
+         nzPopconfirmTitle="Bạn muốn xóa hóa đơn này?" (nzOnConfirm)="handleDelete(item)">
+        <i nz-icon nzType="delete" nzTheme="outline"></i></a>
+    </td>
   </tr>
   </tbody>
 </nz-table>
@@ -88,7 +102,26 @@
                            [showDataLabel]="showDataLabel"
                            [barPadding]="barPadding" [tooltipDisabled]="tooltipDisabled" [roundEdges]="roundEdges">
   </ngx-charts-bar-vertical>
-
 </div>
+
+
+<nz-modal [(nzVisible)]="isRefuse" [nzTitle]="'Chi tiết hóa đơn'" (nzOnCancel)="handleCancelViewDetailBill()">
+  <div style="border: 1px solid #ccc; border-radius: 5px">
+    <div class="d-flex" *ngFor="let item of dataDetail">
+      <div class="col-3 p-0">
+        <div>image</div>
+      </div>
+      <div class="col-7">
+        <div class="d-flex justify-content-between"><span>Tên sản phẩm: </span> {{item.name}} ???</div>
+        <div class="d-flex justify-content-between"><span>Số lượng: </span> {{item.quantity}}</div>
+        <div class="d-flex justify-content-between"><span>Giá tiền: </span> {{item.amount}}</div>
+        <div class="d-flex justify-content-between"><span>Mã giảm giá áp dụng: </span> {{item.voucher}}</div>
+      </div>
+      <div class="col-2">
+
+      </div>
+    </div>
+  </div>
+</nz-modal>
 
 
