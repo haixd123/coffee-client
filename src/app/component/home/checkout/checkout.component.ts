@@ -23,6 +23,15 @@ export class CheckoutComponent implements OnInit {
 
   myVoucher: Voucher[] = [];
   selectedVoucher: Voucher;
+  // selectedVoucher: Voucher = {
+  //   id: 'SHDFEJ',
+  //   description: 'Sales 20%',
+  //   percentDiscount: 10,
+  //   voucherType: 1,
+  //   maxDiscount: 20000,
+  //   createdAt: '',
+  //   expiredAt: '',
+  // };
 
   constructor(
     private fb: FormBuilder,
@@ -45,6 +54,8 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.myVoucher = Array(9).fill(this.selectedVoucher);
+    this.getMyVoucher();
     this.cartItem = JSON.parse(localStorage.getItem('cartItems'));
     // this.formAdd.get('payments').setValue(1);
     for (const item of this.cartItem) {
@@ -52,12 +63,13 @@ export class CheckoutComponent implements OnInit {
       this.totalPrice +=
         (item.price - (item.price * item.discount) / 100) * item.quantity;
     }
-    this.getMyVoucher();
+    
+    
   }
 
   getMyVoucher() {
     this.api
-      .getMyVoucher(this.currPage - 1, 12, this.storage.getUser().id)
+      .getMyVoucher(this.currPage - 1, 9, this.storage.getUser().id)
       .subscribe({
         next: (res) => {
           this.myVoucher = res.data.content;
@@ -65,9 +77,18 @@ export class CheckoutComponent implements OnInit {
         },
       });
   }
+  removeVoucher(){
+    this.selectedVoucher = null;
+  }
   handleSelectedVoucher(voucher: Voucher) {
     this.selectedVoucher = voucher;
-    // TODO: HANDLE WHEN VOUCHER APPLY
+    this.openTableVoucher = !this.openTableVoucher;
+    let priceDiscount = this.totalPrice * (voucher.percentDiscount / 100);
+    if(priceDiscount < voucher.maxDiscount){
+      this.totalPrice -= priceDiscount;
+    }else{
+      this.totalPrice -= voucher.maxDiscount;
+    }
   }
 
   submitForm(): void {

@@ -125,12 +125,12 @@
         </div>
         <div class="voucher">
           <div class="title">Voucher</div>
-          <div class="selected-button" (click)="openTableVoucher =!openTableVoucher">Chọn voucher</div>
+          <div class="selected-button" (click)="openTableVoucher =!openTableVoucher">Chọn voucher {{ selectedVoucher ? "khác": ''}}</div>
           <div *ngIf="selectedVoucher && selectedVoucher.voucherType == 1" class="voucher-value">{{selectedVoucher.id}} - Giảm {{selectedVoucher.percentDiscount}}% - Tối đa {{selectedVoucher.maxDiscount | currency : "VND" : "symbol" : "1.0-0"}}</div>
           <div *ngIf="selectedVoucher && selectedVoucher.voucherType == 2" class="voucher-value">{{selectedVoucher.id}} - Giảm phí ship {{selectedVoucher.percentDiscount}}% - Tối đa {{selectedVoucher.maxDiscount | currency : "VND" : "symbol" : "1.0-0"}}</div>
-          <div *ngIf="selectedVoucher" class="clear-button" (click)="selectedVoucher = null">X</div>
+          <div *ngIf="selectedVoucher" class="clear-button" (click)="removeVoucher()">X</div>
           <!-- <div class="voucher-value">SDIFKF - Giảm 20% - Tối đa {{ 20000 | currency : "VND" : "symbol" : "1.0-0"}}</div> -->
-          <div class="overlay" *ngIf="openTableVoucher"></div>
+          <div class="overlay" *ngIf="openTableVoucher" (click)="openTableVoucher = !openTableVoucher"></div>
           <div class="table-voucher" *ngIf="openTableVoucher">
             <div class="title-table">Mã giảm giá của tôi</div>
             <span *ngIf="!myVoucher || myVoucher.length == 0" class="empty">Bạn chưa có voucher nào.</span>
@@ -152,7 +152,7 @@
             </div>
             <div class="bottom">
               <div class="btn-close" (click)="openTableVoucher = !openTableVoucher">Đóng</div>
-              <nz-pagination (click)="getMyVoucher()" [(nzPageIndex)]="currPage" [nzTotal]="totalEle"></nz-pagination>
+              <nz-pagination (click)="getMyVoucher()" [(nzPageIndex)]="currPage" [nzTotal]="totalEle" nzPageSize="9"></nz-pagination>
             </div>
           </div>
         </div>

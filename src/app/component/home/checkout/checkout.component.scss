@@ -2,13 +2,14 @@
     padding-top: 20px;
     display: flex;
     flex-flow: row;
-    justify-content: space-between;
+    gap: 10px;
     align-items: center;
     .title{
         font-size: 16px;
         font-weight: 700;
     }
     .selected-button{
+        margin-left: auto;
         padding: 5px 20px;
         background-color: rgba(84,84,84,.25);
         border-radius: 5px;
@@ -39,7 +40,7 @@
         border-radius: 5px;
         background-color: #fff;
         z-index: 99;
-        width: 60vw;
+        width: 65vw;
         display: flex;
         flex-flow: column;
         gap: 10px;
@@ -53,6 +54,54 @@
         .empty{
             padding: 50px;
             text-align: center;
+        }
+        .content{
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(150px,275px));
+            justify-content: space-around;
+            gap: 15px;
+            .voucher-item{
+                position: relative;
+                padding: 10px;
+                border-radius: 5px;
+                border: 1px solid #b5313a;
+                &:hover::after{
+                    display: block;
+                }
+                &::after{
+                    cursor: pointer;
+                    display: none;
+                    position: absolute;
+                    content: "";
+                    inset: 0 0 0 0;
+                    background-color: rgba(84,84,84,.1);
+                    color: #fff;
+                    z-index: 1;
+                }
+                .name{
+                  font-size: 16px;font-weight: 700;
+                  color: #b5313a;
+                }
+                .detail{
+                  display: flex;
+                  flex-flow: row nowrap;
+                  justify-content: space-between;
+                  .code{
+                    font-weight: 700;
+                  }
+                  .btn-save{
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                    border: none;
+                    background-color: #b5313a;
+                    color: #fff;
+                    font-size: 10px;
+                    &:hover{
+                      background-color: #e1505a;
+                    }
+                  }
+                }
+              }
         }
         .bottom{
             border-top: 2px solid #000;
