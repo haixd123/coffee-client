@@ -23,15 +23,7 @@ export class DraftPostComponent implements OnInit {
   PostsId: any;
   savePostsUserId: any;
   myPostsUserId: any;
-  data: any[] = [
-    {
-      imagePath: 'https://th.bing.com/th/id/OIP.PcX5mOVMNF6P3LafvjBAUQHaE7',
-      title: 'This is a title of post',
-      createdAt: '1706161763170',
-      category: 'Category',
-      contentPost: 'This is a long content of postThis is a long content of postThis is a long content of postThis is a long content of postThis is a long content of postThis is a long content of postThis is a long content of postThis is a long content of postThis is a long content of postThis is a long content of post',
-    }
-  ];
+  data: any[] = [];
 
   constructor(
     private http: HttpClient,
@@ -45,7 +37,7 @@ export class DraftPostComponent implements OnInit {
       status: 2,
     });
     this.myPostsUserId = JSON.parse(localStorage.getItem('user')).id;
-    // this.handleSearch();
+    this.handleSearch();
     this.savePostsUserId = JSON.parse(localStorage.getItem('user')).id;
   }
 

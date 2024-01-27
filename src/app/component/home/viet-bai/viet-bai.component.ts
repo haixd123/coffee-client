@@ -78,7 +78,7 @@ export class VietBaiComponent implements OnInit {
         imagePath: this.dataEdit.imagePath,
         userId: this.dataEdit.userId,
         createdAt: this.dataEdit.createdAt,
-        categoryCur: [this.dataEdit.category],
+        categoryCur: this.dataEdit.category,
         like1: this.dataEdit.like1,
         comment: this.dataEdit.comment,
       });
