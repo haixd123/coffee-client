@@ -55,6 +55,8 @@ export class HomePostsComponent implements OnInit, OnChanges {
   dataMostLike: any;
   dataMostComment: any;
   dataMostRate: any;
+  dataHidePost: any;
+  isOpenModalHidePost = false;
 
   constructor(
     private fb: FormBuilder,
@@ -203,17 +205,10 @@ export class HomePostsComponent implements OnInit, OnChanges {
     this.router.navigate(['/home/write']);
   }
 
-  deletePosts(item: any) {
+  deletePosts(item?: any) {
     if (this.userLocalstorage.role == 'ADMIN') {
-      item.status = -1;
-      this.api.updatePosts(item).subscribe((res: any) => {
-        this.notificationService.showMessage('success', 'Ẩn bài viết thành công');
-        this.changePage();
-      }, error => this.notificationService.showMessage('error', 'Ẩn bài viết thất bại'));
-
-      this.http.get('http://localhost:8080/api/authors/notifications/' + item.userId).subscribe((res: any) => {
-        this.notificationReceiver = res;
-      });
+      this.dataHidePost = item;
+      this.isOpenModalHidePost = true;
     } else {
       this.api.deletePosts(item).subscribe((data: any) => {
         if (data.errorCode == '00') {
@@ -278,5 +273,23 @@ export class HomePostsComponent implements OnInit, OnChanges {
         this.dataMostRate = res.data.content
       }
     })
+  }
+
+  handleCancelHidePost() {
+    this.isOpenModalHidePost = false;
+  }
+
+  handleOkHidePost() {
+    this.isOpenModalHidePost = true;
+    this.dataHidePost.status = -1;
+    this.api.updatePosts(this.dataHidePost).subscribe((res: any) => {
+      this.notificationService.showMessage('success', 'Ẩn bài viết thành công');
+      this.isOpenModalHidePost = false;
+      this.changePage();
+    }, error => this.notificationService.showMessage('error', 'Ẩn bài viết thất bại'));
+
+    this.http.get('http://localhost:8080/api/authors/notifications/' + this.dataHidePost.userId).subscribe((res: any) => {
+      this.notificationReceiver = res;
+    });
   }
 }

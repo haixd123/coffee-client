@@ -149,7 +149,22 @@ export class Api extends BaseService {
     return this.post('/LikePosts/create', searchModel);
   }
 
-  // Notify
+  //LikeComment
+  updateLikeComment(value: any) {
+    return this.post('/authors/likeComment/update', value);
+  }
+
+  getListLikeComment(value: any) {
+    return this.post('/authors/likeComment/findTotalLikeCommentByPost', value);
+  }
+
+  getDetailListLikeComment(value: any) {
+    return this.post('/authors/likeComment/findDetailTotalLikeCommentByPost', value);
+  }
+
+
+
+  //Notify
   // createSqlGetListfromUser(searchModel: SearchModelEntity) {
   //   return this.post('/authors/notify/search-list-from-user', searchModel);
   // }
@@ -184,7 +199,7 @@ export class Api extends BaseService {
     return this.post('/authors/user/search', searchModel);
   }
 
-  // Bill
+  //Bill
   getListBill(searchModel: SearchModelEntity) {
     return this.post('/authors/bill/search', searchModel);
   }
@@ -206,6 +221,37 @@ export class Api extends BaseService {
     return this.postRequestFile1(searchModel);
   }
 
+  getBillByEmail(
+    email: string,
+    page: number,
+    size: number,
+  ): Observable<any> {
+    return this.httpClient.get<any>(
+      `http://localhost:8080/api/authors/bill/by-user/${email}`,
+      {
+        params: new HttpParams()
+          .append('page', page + '')
+          .append('size', size + '')
+      }
+    );
+  }
+
+  sortByPriceOrDate(
+    sortBy: string,
+    page: number,
+    size: number,
+  ): Observable<any> {
+    return this.httpClient.get<any>(
+      'http://localhost:8080/api/authors/bill/sort',
+      {
+        params: new HttpParams()
+          .append('sortBy', sortBy + '')
+          .append('page', page + '')
+          .append('size', size + '')
+      }
+    );
+  }
+
   getBillByUser(
     name: string,
     page: number,
@@ -222,7 +268,7 @@ export class Api extends BaseService {
     );
   }
 
-  // payment online
+  //payment online
 
   createPaymentWithVnPay(searchModel: SearchModelEntity) {
     return this.post('/payment/authors/create-payment', searchModel);
@@ -232,12 +278,12 @@ export class Api extends BaseService {
     return this.get('/payment/payment-info', params);
   }
 
-  // User
+  //User
   updateUser(searchModel: SearchModelEntity) {
     return this.post('/user/update', searchModel);
   }
 
-  // comment
+  //comment
 
   changeStatusComment(commentId: number, status: number) {
     return this.httpClient.post(`http://localhost:8080/api/authors/comment/${commentId}/change-status/${status}`, null);
@@ -374,7 +420,7 @@ export class Api extends BaseService {
     return this.httpClient.delete(`http://localhost:8080/api/authors/reports/${id}`)
   }
 
-  // voucher
+  //voucher
   getAllVoucher(page:number,size:number):Observable<any>{
     return this.httpClient.get(`http://localhost:8080/api/authors/voucher`,{
       params: new HttpParams()
@@ -422,6 +468,6 @@ export class Api extends BaseService {
   deleteVoucher(id:string):Observable<any>{
     return this.httpClient.delete(`http://localhost:8080/api/authors/voucher/${id}`);
   }
-  // bill
+  //bill
 
 }

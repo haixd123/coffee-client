@@ -1,260 +1,280 @@
 <form [formGroup]="formReply"></form>
 <div class="mt-5" style="max-width: 1200px; margin: auto">
-    <div class="row">
-        <!--    Like, share, comment-->
-        <div class="d-flex flex-column ant-col-1" style="position: fixed; margin-left: -50px">
-            <div *ngIf="isLike">
-                <a style="font-size: 25px; color: #1890ff" (click)="handleUnLike()">
-                    <i nz-icon nzType="like" nzTheme="fill"></i></a>
-            </div>
-            <div *ngIf="!isLike">
-                <a style="font-size: 25px" (click)="handleLike()">
-                    <i nz-icon nzType="like" nzTheme="outline"></i></a>
-            </div>
-            <a style="font-size: 25px" (click)="focusTextAriaComment()"><i nz-icon nzType="comment"
-                                                                           nzTheme="outline"></i></a>
-            <div *ngIf="isSave" (click)="handleUnSave()">
-                <a style="font-size: 25px; color: #1890ff"><i nz-icon nzType="star" nzTheme="fill"></i></a>
-            </div>
-            <div *ngIf="!isSave" (click)="handleSave()">
-                <a style="font-size: 25px"><i nz-icon nzType="star" nzTheme="outline"></i></a>
-            </div>
+  <div class="row">
+    <!--    Like, share, comment-->
+    <div class="d-flex flex-column ant-col-1" style="position: fixed; margin-left: -50px">
+      <div *ngIf="isLike">
+        <a style="font-size: 25px; color: #1890ff" (click)="handleUnLike()">
+          <i nz-icon nzType="like" nzTheme="fill"></i></a>
+      </div>
+      <div *ngIf="!isLike">
+        <a style="font-size: 25px" (click)="handleLike()">
+          <i nz-icon nzType="like" nzTheme="outline"></i></a>
+      </div>
+      <a style="font-size: 25px" (click)="focusTextAriaComment()"><i nz-icon nzType="comment"
+                                                                     nzTheme="outline"></i></a>
+      <div *ngIf="isSave" (click)="handleUnSave()">
+        <a style="font-size: 25px; color: #1890ff"><i nz-icon nzType="star" nzTheme="fill"></i></a>
+      </div>
+      <div *ngIf="!isSave" (click)="handleSave()">
+        <a style="font-size: 25px"><i nz-icon nzType="star" nzTheme="outline"></i></a>
+      </div>
+    </div>
+
+    <!--    content - detail-->
+    <div class="col-12 pr-4" style="min-height: 700px">
+      <div *ngFor="let item of dataPosts">
+        <div *ngIf="item.id == idPostsLocalstorage">
+          <div class="test" innerHTML="{{item.contentDetail}}"></div>
         </div>
+      </div>
+    </div>
 
-        <!--    content - detail-->
-        <div class="col-12 pr-4" style="min-height: 700px">
-            <div *ngFor="let item of dataPosts">
-                <div *ngIf="item.id == idPostsLocalstorage">
-                    <div class="test" innerHTML="{{item.contentDetail}}"></div>
-                </div>
-            </div>
+    <!--    right-content-->
+    <!--    <div class="ant-col-8">-->
+    <!--      <div class="mt-5">-->
+    <!--        <div class="mb-5">-->
+    <!--          <span style="font-size: 23px; font-weight: 600"> Tin hot</span>-->
+    <!--        </div>-->
+    <!--        <div class="mt-2 d-flex" style=";border-bottom: 1px solid #ccc">-->
+    <!--          <div class="mb-3">-->
+    <!--            <a><img style="max-width: 90px"-->
+    <!--                    src="https://media.loveitopcdn.com/2360/hinh-dang-va-cau-tao-hat-ca-phe-nhan-robusta.jpg"/></a>-->
+    <!--          </div>-->
+    <!--          <div class="ml-2 mb-3" style="font-weight: 500; font-size: 14px">-->
+    <!--            <span-->
+    <!--              style="text-overflow: ellipsis; display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3;">Testtttttttt Testttttttt Testtttttt Testttttt Testtttttt Testttttttt vvTesttttttttt Testtttttttt Testtttttttt Testtttttttt Testtttttttt</span>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+
+    <!--      <div class="mt-5">-->
+    <!--        <div class="mb-5">-->
+    <!--          <span style="font-size: 23px; font-weight: 600"> Tin Mới</span>-->
+    <!--        </div>-->
+    <!--        <div class="mt-2 d-flex" style=";border-bottom: 1px solid #ccc">-->
+    <!--          <div class="mb-3">-->
+    <!--            <a><img style="max-width: 90px"-->
+    <!--                    src="https://media.loveitopcdn.com/2360/hinh-dang-va-cau-tao-hat-ca-phe-nhan-robusta.jpg"/></a>-->
+    <!--          </div>-->
+    <!--          <div class="ml-2 mb-3" style="font-weight: 500; font-size: 14px">-->
+    <!--            <span-->
+    <!--              style="text-overflow: ellipsis; display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3;">Testtttttttt Testttttttt Testtttttt Testttttt Testtttttt Testttttttt vvTesttttttttt Testtttttttt Testtttttttt Testtttttttt Testtttttttt</span>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+
+    <!--      <div class="mt-5">-->
+    <!--        <div class="mb-5">-->
+    <!--          <span style="font-size: 23px; font-weight: 600">Tin liên quan</span>-->
+    <!--        </div>-->
+    <!--        <div class="mt-2 d-flex" style=";border-bottom: 1px solid #ccc">-->
+    <!--          <div class="mb-3">-->
+    <!--            <a><img style="max-width: 90px"-->
+    <!--                    src="https://media.loveitopcdn.com/2360/hinh-dang-va-cau-tao-hat-ca-phe-nhan-robusta.jpg"/></a>-->
+    <!--          </div>-->
+    <!--          <div class="ml-2 mb-3" style="font-weight: 500; font-size: 14px">-->
+    <!--            <span-->
+    <!--              style="text-overflow: ellipsis; display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3;">Testtttttttt Testttttttt Testtttttt Testttttt Testtttttt Testttttttt vvTesttttttttt Testtttttttt Testtttttttt Testtttttttt Testtttttttt</span>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+
+    <!--      &lt;!&ndash;      Thăm dò ý kiến&ndash;&gt;-->
+    <!--      <div class="mt-5">-->
+    <!--        <div class="mb-5">-->
+    <!--          <span style="font-size: 23px; font-weight: 600">Khảo sát</span>-->
+    <!--        </div>-->
+
+    <!--        <div class="pl-4" style="background-color: #ccc; width: 90%; font-size: 16px">-->
+    <!--          <div class="mb-3 mt-2 pt-2">-->
+    <!--            <span style="font-size: 19px; font-weight: 500">Loại cafe bạn yêu thích nhất</span>-->
+    <!--          </div>-->
+    <!--          <div class="form-check d-flex align-items-center">-->
+    <!--            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">-->
+    <!--            <label class="form-check-label" for="flexRadioDefault1">-->
+    <!--              robusta-->
+    <!--            </label>-->
+    <!--          </div>-->
+    <!--          <div class="form-check d-flex align-items-center my-1">-->
+    <!--            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>-->
+    <!--            <label class="form-check-label" for="flexRadioDefault2">-->
+    <!--              Arabica-->
+    <!--            </label>-->
+    <!--          </div>-->
+    <!--          <div class="form-check d-flex align-items-center">-->
+    <!--            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" checked>-->
+    <!--            <label class="form-check-label" for="flexRadioDefault3">-->
+    <!--              Cherry-->
+    <!--            </label>-->
+    <!--          </div>-->
+    <!--          <div class="d-flex mt-4">-->
+    <!--            <div class="mr-4">-->
+    <!--              <button type="button" class="btn btn-success">Gửi ý kiến</button>-->
+    <!--            </div>-->
+    <!--            <div>-->
+    <!--              <button type="button" class="btn btn-primary">Xem kết quả</button>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--          <div style="width: 100%" class="py-2">-->
+    <!--              <span>-->
+    <!--                Đã có 2000 người than gia-->
+    <!--              </span>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+
+    <!--    </div>-->
+
+    <!--        <div style="width: 100%" class="mt-2 mb-5">{{this.hashTag}}</div>-->
+
+    <div class="mb-2 mt-3">
+      <nz-rate [(ngModel)]="inputRating" nzAllowHalf (click)="rating()"></nz-rate>
+    </div>
+
+    <div style="border: 2px solid #c3c3c3" class="ant-col-23 mb-5 mx-1">
+      <!--      <div style="border: 2px solid #c3c3c3; position: absolute; bottom: 0;" class="ant-col-23 mb-5 mx-1">-->
+      <div class="m-3">
+        <div class="d-flex align-items-center mb-2">
+          <i nz-icon nzType="comment" nzTheme="outline" class="mr-2" style="font-size: 20px"></i>
+          <span style="font-size: 20px">Bình luận</span>
         </div>
-
-        <!--    right-content-->
-        <!--    <div class="ant-col-8">-->
-        <!--      <div class="mt-5">-->
-        <!--        <div class="mb-5">-->
-        <!--          <span style="font-size: 23px; font-weight: 600"> Tin hot</span>-->
-        <!--        </div>-->
-        <!--        <div class="mt-2 d-flex" style=";border-bottom: 1px solid #ccc">-->
-        <!--          <div class="mb-3">-->
-        <!--            <a><img style="max-width: 90px"-->
-        <!--                    src="https://media.loveitopcdn.com/2360/hinh-dang-va-cau-tao-hat-ca-phe-nhan-robusta.jpg"/></a>-->
-        <!--          </div>-->
-        <!--          <div class="ml-2 mb-3" style="font-weight: 500; font-size: 14px">-->
-        <!--            <span-->
-        <!--              style="text-overflow: ellipsis; display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3;">Testtttttttt Testttttttt Testtttttt Testttttt Testtttttt Testttttttt vvTesttttttttt Testtttttttt Testtttttttt Testtttttttt Testtttttttt</span>-->
-        <!--          </div>-->
-        <!--        </div>-->
-        <!--      </div>-->
-
-        <!--      <div class="mt-5">-->
-        <!--        <div class="mb-5">-->
-        <!--          <span style="font-size: 23px; font-weight: 600"> Tin Mới</span>-->
-        <!--        </div>-->
-        <!--        <div class="mt-2 d-flex" style=";border-bottom: 1px solid #ccc">-->
-        <!--          <div class="mb-3">-->
-        <!--            <a><img style="max-width: 90px"-->
-        <!--                    src="https://media.loveitopcdn.com/2360/hinh-dang-va-cau-tao-hat-ca-phe-nhan-robusta.jpg"/></a>-->
-        <!--          </div>-->
-        <!--          <div class="ml-2 mb-3" style="font-weight: 500; font-size: 14px">-->
-        <!--            <span-->
-        <!--              style="text-overflow: ellipsis; display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3;">Testtttttttt Testttttttt Testtttttt Testttttt Testtttttt Testttttttt vvTesttttttttt Testtttttttt Testtttttttt Testtttttttt Testtttttttt</span>-->
-        <!--          </div>-->
-        <!--        </div>-->
-        <!--      </div>-->
-
-        <!--      <div class="mt-5">-->
-        <!--        <div class="mb-5">-->
-        <!--          <span style="font-size: 23px; font-weight: 600">Tin liên quan</span>-->
-        <!--        </div>-->
-        <!--        <div class="mt-2 d-flex" style=";border-bottom: 1px solid #ccc">-->
-        <!--          <div class="mb-3">-->
-        <!--            <a><img style="max-width: 90px"-->
-        <!--                    src="https://media.loveitopcdn.com/2360/hinh-dang-va-cau-tao-hat-ca-phe-nhan-robusta.jpg"/></a>-->
-        <!--          </div>-->
-        <!--          <div class="ml-2 mb-3" style="font-weight: 500; font-size: 14px">-->
-        <!--            <span-->
-        <!--              style="text-overflow: ellipsis; display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3;">Testtttttttt Testttttttt Testtttttt Testttttt Testtttttt Testttttttt vvTesttttttttt Testtttttttt Testtttttttt Testtttttttt Testtttttttt</span>-->
-        <!--          </div>-->
-        <!--        </div>-->
-        <!--      </div>-->
-
-        <!--      &lt;!&ndash;      Thăm dò ý kiến&ndash;&gt;-->
-        <!--      <div class="mt-5">-->
-        <!--        <div class="mb-5">-->
-        <!--          <span style="font-size: 23px; font-weight: 600">Khảo sát</span>-->
-        <!--        </div>-->
-
-        <!--        <div class="pl-4" style="background-color: #ccc; width: 90%; font-size: 16px">-->
-        <!--          <div class="mb-3 mt-2 pt-2">-->
-        <!--            <span style="font-size: 19px; font-weight: 500">Loại cafe bạn yêu thích nhất</span>-->
-        <!--          </div>-->
-        <!--          <div class="form-check d-flex align-items-center">-->
-        <!--            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">-->
-        <!--            <label class="form-check-label" for="flexRadioDefault1">-->
-        <!--              robusta-->
-        <!--            </label>-->
-        <!--          </div>-->
-        <!--          <div class="form-check d-flex align-items-center my-1">-->
-        <!--            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>-->
-        <!--            <label class="form-check-label" for="flexRadioDefault2">-->
-        <!--              Arabica-->
-        <!--            </label>-->
-        <!--          </div>-->
-        <!--          <div class="form-check d-flex align-items-center">-->
-        <!--            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" checked>-->
-        <!--            <label class="form-check-label" for="flexRadioDefault3">-->
-        <!--              Cherry-->
-        <!--            </label>-->
-        <!--          </div>-->
-        <!--          <div class="d-flex mt-4">-->
-        <!--            <div class="mr-4">-->
-        <!--              <button type="button" class="btn btn-success">Gửi ý kiến</button>-->
-        <!--            </div>-->
-        <!--            <div>-->
-        <!--              <button type="button" class="btn btn-primary">Xem kết quả</button>-->
-        <!--            </div>-->
-        <!--          </div>-->
-        <!--          <div style="width: 100%" class="py-2">-->
-        <!--              <span>-->
-        <!--                Đã có 2000 người than gia-->
-        <!--              </span>-->
-        <!--          </div>-->
-        <!--        </div>-->
-        <!--      </div>-->
-
-        <!--    </div>-->
-
-        <!--        <div style="width: 100%" class="mt-2 mb-5">{{this.hashTag}}</div>-->
-
-        <div class="mb-2 mt-3">
-            <nz-rate [(ngModel)]="inputRating" nzAllowHalf (click)="rating()"></nz-rate>
-        </div>
-
-        <div style="border: 2px solid #c3c3c3" class="ant-col-23 mb-5 mx-1">
-            <!--      <div style="border: 2px solid #c3c3c3; position: absolute; bottom: 0;" class="ant-col-23 mb-5 mx-1">-->
-            <div class="m-3">
-                <div class="d-flex align-items-center mb-2">
-                    <i nz-icon nzType="comment" nzTheme="outline" class="mr-2" style="font-size: 20px"></i>
-                    <span style="font-size: 20px">Bình luận</span>
-                </div>
-                <form nz-form [formGroup]="formAdd">
-                    <div class="input-group">
+        <form nz-form [formGroup]="formAdd">
+          <div class="input-group">
           <textarea #textareaComment formControlName="commentText" placeholder="Bạn nghĩ gì về tin này"
                     class="form-control"
                     aria-label="With textarea"></textarea>
+          </div>
+          <div style="text-align: end" class="mt-3">
+            <button type="button" class="btn btn-primary" (click)="handleSubmitComment()">Bình luận</button>
+          </div>
+          <div *ngFor="let itemComment of dataComment">
+            <div *ngIf="itemComment.postId == idPostsLocalstorage">
+              <div *ngFor="let itemUser of dataUser">
+                <div *ngIf="itemUser.id == itemComment.userId">
+                  <div class="mt-5 row itemPosts">
+                    <div class="col-1">
+                      <a><img style="width: 100%; min-width: 45px; max-width: 45px; height: 45px; border-radius: 50%"
+                              [src]="itemUser.image"/></a>
                     </div>
-                    <div style="text-align: end" class="mt-3">
-                        <button type="button" class="btn btn-primary" (click)="handleSubmitComment()">Bình luận</button>
-                    </div>
-                    <div *ngFor="let itemComment of dataComment">
-                        <div *ngIf="itemComment.postId == idPostsLocalstorage">
-                            <div *ngFor="let itemUser of dataUser">
-                                <div *ngIf="itemUser.id == itemComment.userId">
-                                    <div class="mt-5 row itemPosts">
-                                        <div class="col-1">
-                                            <a><img style="width: 100%; min-width: 45px; max-width: 45px; height: 45px; border-radius: 50%"
-                                                    [src]="itemUser.image"/></a>
-                                        </div>
-                                        <div class="col-10 ">
-                                            <div>
+                    <div class="col-10 ">
+                      <div>
                         <span style="font-size: 15px; font-weight: 500" class="mr-1">
                           {{itemUser.name}}
                         </span>
-                                                <!--                        <span style="font-size: 13px; font-weight: 400">13:49 ngày 24/10/2023</span>-->
-                                                <span
-                                                        style="font-size: 14px; font-weight: 400;color: #000000a6">{{itemComment.createAt}}</span>
-                                                <!--                        <span-->
-                                                <!--                          style="font-size: 14px; font-weight: 400;color: #000000a6">{{itemComment.createAt | date: 'dd/MM/yyyy HH:mm:ss'}}</span>-->
-                                            </div>
-                                            <div>
-                                                <div style="font-size: 14px;color: #000000a6"
-                                                     class="my-2">{{itemComment.commentText}}</div>
-                                            </div>
-                                            <div class="d-flex mb-3">
-                                                <!--                                                //??? code cũ-->
-                                                <div *ngIf="itemComment.likeComment == 0 || itemComment.likeComment == null"
-                                                     class="mr-2 "
-                                                     (click)="handleLikeComment(itemComment)">
-                                                    <a style="color: #000000a6" class="d-flex align-items-center">
-                                                        <i style="color: #000000a6" nz-icon nzType="like"
-                                                           nzTheme="outline" class="mr-2"></i>
-                                                        thích
-                                                    </a>
-                                                </div>
-                                                <div *ngIf="itemComment.likeComment == 1" class="mr-2 "
-                                                     (click)="handleDisLikeComment(itemComment)">
-                                                    <a style="color: #1890ff" class="d-flex align-items-center">
-                                                        <i style="color: #1890ff" nz-icon nzType="like" nzTheme="fill"
-                                                           class="mr-2"></i>
-                                                        thích
-                                                    </a>
-                                                </div>
-                                                <!--                        <div style="border-left: 1px solid #c3c3c3; color: #000000a6" class="pl-2"-->
-                                                <div style="border-left: 1px solid #c3c3c3; color: #000000a6"
-                                                     class="pl-2"
-                                                     (click)="handleReplyComment(itemComment) ">
-                                                    <a>Trả lời</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--                    <div *ngIf="(itemUser.id == idUserLocalstorage) || userLocalstorage.role == 'ADMIN' || (postOfUser == idUserLocalstorage)"-->
-                                        <div class="col-1" style="position: relative">
-                                            <div class="moreButton">
-                                                <i style="font-size: 25px" nz-icon nzType="more" nzTheme="outline"
-                                                   (click)="handleMoreBtn(itemComment)"></i>
-                                                <div class="editComment"
-                                                     style="border: 1px solid #c3c3c3; position: absolute; top: 32px; right: 7px; background-color: #fff; z-index: 100; min-width: 100px">
-                                                    <!--                          <div style="padding: 6px 40px 6px 40px" class="hoverEditPosts"-->
-                                                    <div *ngIf="userLocalstorage.role != 'ADMIN' && itemComment.userId != idUserLocalstorage"
-                                                         style="padding: 6px 10px 6px 10px"
-                                                         class="hoverEditPosts d-flex justify-content-center"
-                                                         (click)="reportComment(itemComment)">Báo xấu
-                                                    </div>
-                                                    <!--                          Chỉ người comment được sửa comment của chính hoj-->
-                                                    <div *ngIf="itemComment.userId == idUserLocalstorage"
-                                                         style="padding: 6px 40px 6px 40px"
-                                                         class="hoverEditPosts d-flex justify-content-center"
-                                                         (click)="editComment(itemComment)">Sửa
-                                                    </div>
-                                                    <!--                          idOfPostUser == idUserLocalstorage -> Chủ bài viết cũng đc xóa comment của ng khác -->
-                                                    <div *ngIf="(itemUser.id == idUserLocalstorage) || userLocalstorage.role == 'ADMIN' || (idOfPostUser == idUserLocalstorage)"
-                                                         style="padding: 6px 40px 6px 40px"
-                                                         class="hoverEditPosts d-flex justify-content-center"
-                                                         nz-popconfirm
-                                                         nzPopconfirmTitle="Bạn chắc chắn muốn xóa bình luận này?"
-                                                         (nzOnConfirm)="deleteComment(itemComment)">Xóa
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <!--                        <span style="font-size: 13px; font-weight: 400">13:49 ngày 24/10/2023</span>-->
+                        <span
+                          style="font-size: 14px; font-weight: 400;color: #000000a6">{{itemComment.createAt}}</span>
+                        <!--                        <span-->
+                        <!--                          style="font-size: 14px; font-weight: 400;color: #000000a6">{{itemComment.createAt | date: 'dd/MM/yyyy HH:mm:ss'}}</span>-->
+                      </div>
+                      <div>
+                        <div style="font-size: 14px;color: #000000a6"
+                             class="my-2">{{itemComment.commentText}}</div>
+                      </div>
+                      <div class="d-flex mb-3">
+                        <!--                                                //??? code cũ-->
+<!--                        <div *ngIf="itemComment.likeComment == 0 || itemComment.likeComment == null"-->
+<!--                             class="mr-2 "-->
+<!--                             (click)="handleLikeComment(itemComment)">-->
+<!--                          <a style="color: #000000a6" class="d-flex align-items-center">-->
+<!--                            <i style="color: #000000a6" nz-icon nzType="like"-->
+<!--                               nzTheme="outline" class="mr-2"></i>-->
+<!--                            {{itemComment.totalCount}} thích-->
+<!--                          </a>-->
+<!--                        </div>-->
+<!--                        <div *ngIf="itemComment.likeComment == 1" class="mr-2 "-->
+<!--                             (click)="handleDisLikeComment(itemComment)">-->
+<!--                          <a style="color: #1890ff" class="d-flex align-items-center">-->
+<!--                            <i style="color: #1890ff" nz-icon nzType="like" nzTheme="fill"-->
+<!--                               class="mr-2"></i>-->
+<!--                            {{itemComment.totalCount}} thích-->
+<!--                          </a>-->
+<!--                        </div>-->
+
+<!--                        <div *ngIf="itemComment.lcUserId == 0 && itemComment.lcCommentId == 0"-->
+                        <div *ngIf="itemComment.lcUserId != idUserLocalstorage"
+                             class="mr-2 "
+                             (click)="handleLikeComment(itemComment)">
+                          <a style="color: #000000a6" class="d-flex align-items-center">
+                            <i style="color: #000000a6" nz-icon nzType="like"
+                               nzTheme="outline" class="mr-2"></i>
+                            {{itemComment?.totalCount}} thích
+                          </a>
                         </div>
+<!--                        <div *ngIf="itemComment.lcUserId != 0 && itemComment.lcCommentId != 0 && idUserLocalstorage == itemComment.lcUserId" class="mr-2 "-->
+                        <div *ngIf="idUserLocalstorage == itemComment.lcUserId" class="mr-2 "
+                             (click)="handleDisLikeComment(itemComment)">
+                          <a style="color: #1890ff" class="d-flex align-items-center">
+                            <i style="color: #1890ff" nz-icon nzType="like" nzTheme="fill"
+                               class="mr-2"></i>
+                            {{itemComment?.totalCount}} thích
+                          </a>
+                        </div>
+                        <div style="border-left: 1px solid #c3c3c3; color: #000000a6"
+                             class="pl-2"
+                             (click)="handleReplyComment(itemComment) ">
+                          <a>Trả lời</a>
+                        </div>
+                      </div>
                     </div>
-                    <div [hidden]="!isReplyComment">
-                        <div class="input-group">
+                    <!--                    <div *ngIf="(itemUser.id == idUserLocalstorage) || userLocalstorage.role == 'ADMIN' || (postOfUser == idUserLocalstorage)"-->
+                    <div class="col-1" style="position: relative">
+                      <div class="moreButton">
+                        <i style="font-size: 25px" nz-icon nzType="more" nzTheme="outline"
+                           (click)="handleMoreBtn(itemComment)"></i>
+                        <div class="editComment"
+                             style="border: 1px solid #c3c3c3; position: absolute; top: 32px; right: 7px; background-color: #fff; z-index: 100; min-width: 100px">
+                          <!--                          <div style="padding: 6px 40px 6px 40px" class="hoverEditPosts"-->
+                          <div *ngIf="userLocalstorage.role != 'ADMIN' && itemComment.userId != idUserLocalstorage"
+                               style="padding: 6px 10px 6px 10px"
+                               class="hoverEditPosts d-flex justify-content-center"
+                               (click)="reportComment(itemComment)">Báo xấu
+                          </div>
+                          <!--                          Chỉ người comment được sửa comment của chính hoj-->
+                          <div *ngIf="itemComment.userId == idUserLocalstorage"
+                               style="padding: 6px 40px 6px 40px"
+                               class="hoverEditPosts d-flex justify-content-center"
+                               (click)="editComment(itemComment)">Sửa
+                          </div>
+                          <!--                          idOfPostUser == idUserLocalstorage -> Chủ bài viết cũng đc xóa comment của ng khác -->
+                          <div
+                            *ngIf="(itemUser.id == idUserLocalstorage) || userLocalstorage.role == 'ADMIN' || (idOfPostUser == idUserLocalstorage)"
+                            style="padding: 6px 40px 6px 40px"
+                            class="hoverEditPosts d-flex justify-content-center"
+                            nz-popconfirm
+                            nzPopconfirmTitle="Bạn chắc chắn muốn xóa bình luận này?"
+                            (nzOnConfirm)="deleteComment(itemComment)">Xóa
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div [hidden]="!isReplyComment">
+            <div class="input-group">
               <textarea #textareaReply formControlName="commentReplyText" placeholder="Bạn nghĩ gì về tin này"
                         class="form-control"
                         aria-label="With textarea"></textarea>
-                        </div>
-                        <div style="text-align: end" class="mt-3">
-                            <button *ngIf="!isEdit" type="button" class="btn btn-primary"
-                                    (click)="handleSubmitComment()">Bình luận
-                            </button>
-                        </div>
-                    </div>
-                </form>
             </div>
-        </div>
+            <div style="text-align: end" class="mt-3">
+              <button *ngIf="!isEdit" type="button" class="btn btn-primary"
+                      (click)="handleSubmitComment()">Bình luận
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
 <nz-modal [(nzVisible)]="isRefuse" [nzTitle]="'Lý do tố cáo bình luận'" (nzOnCancel)="handleCancelRefuse()"
           (nzOnOk)="handleOkRefuse()">
-    <input class="p-2" type="text" nz-input [(ngModel)]="inputValue" placeholder="Nhập thông tin">
+  <input class="p-2" type="text" nz-input [(ngModel)]="inputValue" placeholder="Nhập thông tin">
 </nz-modal>
 <!--<app-notification [dataInfoUserNotification]="dataInfoUserNotification"></app-notification>-->
 <!--<app-notification></app-notification>-->

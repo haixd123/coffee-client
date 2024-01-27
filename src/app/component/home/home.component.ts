@@ -215,7 +215,7 @@ export class HomeComponent implements OnInit {
     this.shareDataService.setActivedNav("info");
   }
 
-  changeNav(tabName: string){
+  changeNav(tabName: string) {
     this.shareDataService.setActivedNav(tabName);
   }
 
@@ -242,7 +242,7 @@ export class HomeComponent implements OnInit {
 
   linkToPostDetail(item: any) {
     console.log('item: ', item)
-    if (item.content == 'Bài viết của bạn đã bị gỡ.' || item.content == 'Bài viết của bạn đã bị từ chối.') {
+    if (item.content == 'Đã gỡ bài viết của bạn.') {
       this.formDetailPost = this.fb.group({
         id: item.postId,
       })
@@ -251,7 +251,16 @@ export class HomeComponent implements OnInit {
         this.shareDataService.sendDataEditPosts(res.data);
         this.router.navigate(['/home/write']);
       })
-
+    }
+    if (item.content == 'Đã từ chối bài viết của bạn.') {
+      this.formDetailPost = this.fb.group({
+        id: item.postId,
+      })
+      this.api.getDetailPost(this.formDetailPost.value).subscribe((res: any) => {
+        console.log('res detail post: ', res)
+        this.shareDataService.sendDataEditPosts(res.data);
+        this.router.navigate(['/home/user/refusePosts']);
+      })
     }
     localStorage.setItem('postsCategory', item?.postCategory);
     this.shareDataService.sendDataCategory(item?.postCategory);

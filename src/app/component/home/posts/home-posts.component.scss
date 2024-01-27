@@ -31,8 +31,10 @@
   --color-primary: 84, 84, 84;
   padding: 20px 0;
   background-color: #fff;
-  max-width: 85vw;
-  margin: 0 auto;
+  //max-width: 85vw;
+  max-width: 1200px;
+  margin: auto;
+  //margin: 0 auto;
   .form-search {
     width: 75%;
     margin: 0 auto 30px auto;
@@ -113,6 +115,13 @@
           font-style: italic;
         }
         .post-category {
+          width: fit-content;
+          padding: 2.5px 5px;
+          background-color: rgba(var(--color-primary), 0.15);
+          border-radius: 5px;
+          //font-size: 24px !important;
+        }
+        .post-category1 {
           width: fit-content;
           padding: 2.5px 5px;
           background-color: rgba(var(--color-primary), 0.15);
@@ -206,7 +215,7 @@
           flex-flow: column nowrap;
           gap: 5px;
           .post-title {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
           }
           .post-create {
@@ -217,7 +226,7 @@
             padding: 2.5px 5px;
             background-color: rgba(var(--color-primary), 0.15);
             border-radius: 5px;
-            font-size: 10px;
+            font-size: 14px;
           }
           .post-content {
             line-height: 1.3;

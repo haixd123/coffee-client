@@ -12,7 +12,7 @@ import { Api } from 'src/app/services/api';
   styleUrls: ['./my-voucher.component.scss']
 })
 export class MyVoucherComponent implements OnInit,OnDestroy {
-  
+
   currPage: number = 1;
   totalEle: number = 0;
   vouchers : Voucher[] = [];
@@ -24,7 +24,7 @@ export class MyVoucherComponent implements OnInit,OnDestroy {
     private storage:TokenStorageService,
     private api:Api,
   ) {
-    
+
   }
   ngOnDestroy(): void {
     this.shareDataService.setActivedNav('');
@@ -36,15 +36,15 @@ export class MyVoucherComponent implements OnInit,OnDestroy {
 
     this.getMyVoucher();
     this.getNotMyVoucher();
-      
+
   }
   getMyVoucher(){
-    this.api.getMyVoucher(this.currPage-1,12,this.storage.getUser().id).subscribe({
+    this.api.getMyVoucher(this.currPage-1,10,this.storage.getUser().id).subscribe({
       next: res =>{
         this.vouchers = res.data.content;
         this.totalEle = res.data.totalElements;
       }
-    }) 
+    })
   }
 
   getNotMyVoucher(){
@@ -52,7 +52,7 @@ export class MyVoucherComponent implements OnInit,OnDestroy {
       next: res =>{
         this.suggestedVoucher = res.data.content;
       }
-    })  
+    })
   }
 
   saveVoucher(voucherId:string){

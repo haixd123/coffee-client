@@ -22,7 +22,7 @@
 
         <!--           class="d-flex my-4 pb-5 col-8">-->
         <div class="image" (click)="PostsDetail(item)">
-          <img *ngIf="item.imagePath" [src]="item.imagePath" />
+          <img *ngIf="item.imagePath" [src]="item.imagePath"/>
           <img
             *ngIf="!item.imagePath"
             src="https://cdnphoto.dantri.com.vn/7Ay2bMHqImHAgbQN5gvn_3JJp-Q=/zoom/378_252/2023/10/23/rocketphongtugazaveisraelreuters-crop-1698024802873.jpeg"
@@ -50,7 +50,7 @@
           <div class="post-create">
             {{ item.createdAt | dateFormat : "dd/MM/yyyy" }}
           </div>
-          <div class="post-category">
+          <div class="post-category1">
             <!-- <i
                 *ngIf="item.category"
                 class="mr-1 mb-1"
@@ -96,7 +96,7 @@
             style="
               border: 1px solid #c3c3c3;
               position: absolute;
-              top: 27px;
+              top: 25px;
               right: 7px;
               background-color: #fff;
               z-index: 100;
@@ -178,8 +178,9 @@
               <!--          <div *ngIf="category == item.category && idPostsLocalstorage != item.id">-->
               <div class="post-item" (click)="changeToDetailPosts(item)">
                 <div class="image">
-                  <img *ngIf="item.imagePath" [src]="item.imagePath" />
-                  <img *ngIf="!item.imagePath" src="https://cdnphoto.dantri.com.vn/7Ay2bMHqImHAgbQN5gvn_3JJp-Q=/zoom/378_252/2023/10/23/rocketphongtugazaveisraelreuters-crop-1698024802873.jpeg" />
+                  <img *ngIf="item.imagePath" [src]="item.imagePath"/>
+                  <img *ngIf="!item.imagePath"
+                       src="https://cdnphoto.dantri.com.vn/7Ay2bMHqImHAgbQN5gvn_3JJp-Q=/zoom/378_252/2023/10/23/rocketphongtugazaveisraelreuters-crop-1698024802873.jpeg"/>
                 </div>
                 <div class="description">
                   <span class="post-title">{{ item.title }}</span>
@@ -230,8 +231,9 @@
               <!--          <div *ngIf="category == item.category && idPostsLocalstorage != item.id">-->
               <div class="post-item" (click)="changeToDetailPosts(item)">
                 <div class="image">
-                  <img *ngIf="item.imagePath" [src]="item.imagePath" />
-                  <img *ngIf="!item.imagePath" src="https://cdnphoto.dantri.com.vn/7Ay2bMHqImHAgbQN5gvn_3JJp-Q=/zoom/378_252/2023/10/23/rocketphongtugazaveisraelreuters-crop-1698024802873.jpeg" />
+                  <img *ngIf="item.imagePath" [src]="item.imagePath"/>
+                  <img *ngIf="!item.imagePath"
+                       src="https://cdnphoto.dantri.com.vn/7Ay2bMHqImHAgbQN5gvn_3JJp-Q=/zoom/378_252/2023/10/23/rocketphongtugazaveisraelreuters-crop-1698024802873.jpeg"/>
                 </div>
                 <div class="description">
                   <span class="post-title">{{ item.title }}</span>
@@ -288,8 +290,9 @@
               <!--          <div *ngIf="category == item.category && idPostsLocalstorage != item.id">-->
               <div class="post-item" (click)="changeToDetailPosts(item)">
                 <div class="image">
-                  <img *ngIf="item.imagePath" [src]="item.imagePath" />
-                  <img *ngIf="!item.imagePath" src="https://cdnphoto.dantri.com.vn/7Ay2bMHqImHAgbQN5gvn_3JJp-Q=/zoom/378_252/2023/10/23/rocketphongtugazaveisraelreuters-crop-1698024802873.jpeg" />
+                  <img *ngIf="item.imagePath" [src]="item.imagePath"/>
+                  <img *ngIf="!item.imagePath"
+                       src="https://cdnphoto.dantri.com.vn/7Ay2bMHqImHAgbQN5gvn_3JJp-Q=/zoom/378_252/2023/10/23/rocketphongtugazaveisraelreuters-crop-1698024802873.jpeg"/>
                 </div>
                 <div class="description">
                   <span class="post-title">{{ item.title }}</span>
@@ -391,10 +394,10 @@
 </div>
 
 <nz-modal
-  [(nzVisible)]="isRefuse"
-  [nzTitle]="'Lý do tố cáo bình luận'"
-  (nzOnCancel)="handleCancelRefuse()"
-  (nzOnOk)="handleOkRefuse()"
+  [(nzVisible)]="isOpenModalHidePost"
+  [nzTitle]="'Lý do ẩn bình luận'"
+  (nzOnCancel)="handleCancelHidePost()"
+  (nzOnOk)="handleOkHidePost()"
 >
   <input
     class="p-2"
@@ -404,5 +407,20 @@
     placeholder="Nhập thông tin"
   />
 </nz-modal>
+
+<!--<nz-modal-->
+<!--  [(nzVisible)]="isRefuse"-->
+<!--  [nzTitle]="'Lý do muốn ẩn bài viết'"-->
+<!--  (nzOnCancel)="handleCancelRefuse()"-->
+<!--  (nzOnOk)="handleOkRefuse()"-->
+<!--&gt;-->
+<!--  <input-->
+<!--    class="p-2"-->
+<!--    type="text"-->
+<!--    nz-input-->
+<!--    [(ngModel)]="inputValue"-->
+<!--    placeholder="Nhập thông tin"-->
+<!--  />-->
+<!--</nz-modal>-->
 <!--<app-posts-detail [PostsId]="PostsId"></app-posts-detail>-->
 <!--<app-detail style="display:none;" [postDetailCategory]="postDetailCategory"></app-detail>-->

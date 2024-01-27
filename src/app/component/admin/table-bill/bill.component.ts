@@ -61,7 +61,7 @@ export class BillComponent implements OnInit {
   test = 12000;
   isRefuse = false;
   dataDetail: any;
-
+  dataChartTotal: any;
 
   constructor(
     private fb: FormBuilder,
@@ -72,29 +72,18 @@ export class BillComponent implements OnInit {
     private http: HttpClient,
   ) {
     this.formSearch = this.fb.group({
-      pageIndex: 1,
-      pageSize: 10,
-      name: null,
+      email: null,
     });
-    this.handleSearch();
   }
 
   ngOnInit(): void {
-  }
-
-  formatString(input: string): string {
-    return input.toUpperCase();
-  }
-
-  formatNumber(input: number): number {
-    return input;
-  }
-
-  handleUpdate(searchModel: SearchModelEntity, reset = false) {
+    this.handleSearch();
+    this.handleSearchByEmail();
     this.http.get('http://localhost:8080/api/authors/bill').subscribe((res: any) => {
       console.log('res all bill: ', res)
-      this.data = res.data.content;
-      this.total = res.data.content.numberOfElements;
+      this.dataChartTotal = res.data.content
+      // this.data = res.data.content;
+      // this.total = res.data.content.numberOfElements;
 
       const totalByMonth = {};
       this.data.forEach(purchase => {
@@ -110,10 +99,7 @@ export class BillComponent implements OnInit {
       const newArray = Object.entries(totalByMonth).map(([month, total]) => ({month, total}));
       this.dataChart = Object.entries(totalByMonth).map(([month, total]) => ({month, total}));
       // for (const item of newArray)
-      console.log('newArray: ', newArray);
-      console.log('dataChart: ', this.dataChart);
       this.dataChart = this.dataChart.map(item => {
-        console.log('this.dataChart: ', item);
         return {
           'name': `${item.month}`,
           'value': `${item.total}`
@@ -121,55 +107,78 @@ export class BillComponent implements OnInit {
       });
       return newArray;
     })
+  }
 
-    this.searchModel.pageSize = 999;
+  formatString(input: string): string {
+    return input.toUpperCase();
+  }
+
+  formatNumber(input: number): number {
+    return input;
+  }
+
+  handleUpdate() {
+
+    this.searchModel.pageIndex = 1;
+    if (this.curPage > 1) {
+      this.searchModel.pageIndex = this.curPage;
+    }
+    this.searchModel.pageSize = 10;
+    if (this.formSearch.get('email').value == '') {
+      this.formSearch.get('email').setValue(null);
+    }
+    this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value)
     this.api.getListBill(this.searchModel).toPromise().then((data: any) => {
-      // this.data = data.data;
-      // this.total = data.optional;
-
-      // const totalByMonth = {};
-      // data.data.forEach(purchase => {
-      //   // this.datePipe.transform(purchase.createDate, 'dd/MM/yyyy');
-      //   // console.log('month: ', purchase.createDate);
-      //   const month = this.datePipe.transform(purchase.createDate, 'dd/MM/yyyy').split('/').splice(1, 2).join('/');
-      //   // month = purchase.createDate.split('-')[1];
-      //   if (!totalByMonth[month]) {
-      //     totalByMonth[month] = 0;
-      //   }
-      //   totalByMonth[month] += Number(purchase.total);
-      // });
-      // const newArray = Object.entries(totalByMonth).map(([month, total]) => ({month, total}));
-      // this.dataChart = Object.entries(totalByMonth).map(([month, total]) => ({month, total}));
-      // // for (const item of newArray)
-      // console.log('newArray: ', newArray);
-      // console.log('dataChart: ', this.dataChart);
-      // this.dataChart = this.dataChart.map(item => {
-      //   console.log('this.dataChart: ', item);
-      //   return {
-      //     'name': `${item.month}`,
-      //     'value': `${item.total}`
-      //   };
-      // });
-      // return newArray;
+      console.log('this.curPage: ', this.curPage)
+      this.data = data.data;
+      this.total = data.optional;
     });
   }
 
+  handleSort(value?: any) {
+    this.api.sortByPriceOrDate(value, 0, 10).subscribe({
+      next: (res) => {
+        this.data = res.data.content;
+        this.total = res.data.totalElements;
+      }
+    })
+  }
+
+  handleSearchByEmail(event?: any) {
+    console.log('aaaaaaaaaaa')
+    // let a = this.formSearch.get('email').value
+    // this.searchModel.pageIndex = 1;
+    // this.searchModel.pageSize = 10;
+    if (this.formSearch.get('email').value == '') {
+      // a = null
+      this.formSearch.get('email').setValue(null);
+    }
+    // this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
+    this.api.getBillByEmail(this.formSearch.get('email').value, this.curPage - 1, 10).subscribe({
+      next: (res: any) => {
+        console.log('content :: ', res.data.content);
+        this.data = res.data.content;
+        this.total = res.data.totalElements;
+      }
+    })
+  }
 
   handleSearch() {
-    this.searchModel.pageIndex = 1;
-    this.searchModel.pageSize = 10;
-    if (this.formSearch.get('name').value == '') {
-      this.formSearch.get('name').setValue(null);
-    }
-    this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
-    this.handleUpdate(this.searchModel, true);
+    // this.searchModel.pageIndex = 1;
+    // this.searchModel.pageSize = 10;
+    // if (this.formSearch.get('email').value == '') {
+    //   this.formSearch.get('email').setValue(null);
+    // }
+    // this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
+    this.handleUpdate();
   }
 
   changePage() {
-    this.searchModel.pageIndex = this.curPage;
-    this.searchModel.pageSize = 10;
-    this.handleUpdate(this.searchModel, false);
+    // this.searchModel.pageIndex = this.curPage;
+    // this.searchModel.pageSize = 10;
+    this.handleUpdate();
   }
+
 
   onPageSizeChange(value: any) {
     this.pageSize = value;

@@ -11,25 +11,96 @@
 <div style="max-width: 1200px; margin: auto;">
   <div style="font-size: 22px; font-weight: 700" class="mb-3">Đơn hàng của tôi</div>
   <div style="border: 1px solid #ccc; border-radius: 5px">
-    <div style="width: 100%; background-color: #e6e6e6; height: 50px; font-size: 18px; font-weight: 600" class="d-flex align-items-center">
+    <div style="width: 100%; background-color: #e6e6e6; height: 50px; font-size: 18px; font-weight: 600"
+         class="d-flex align-items-center">
       <div class="col-2 p-0 mr-2"></div>
       <div class="col-3" style="border-left: 1px solid #fff; border-right: 1px solid #fff">Thông tin người nhận</div>
-      <div class="col-2 p-0 ml-2">Chi tiết hóa đơn</div>
-      <div class="col-2" style="border-left: 1px solid #fff; border-right: 1px solid #fff;">trạng thái</div>
+      <div class="col-2 p-0 ml-2" style="border-right: 1px solid #fff">Chi tiết hóa đơn</div>
+      <div class="col-1 p-0 ml-2">Giá tiền</div>
+      <div class="col-1" style="border-left: 1px solid #fff; border-right: 1px solid #fff;">trạng thái</div>
       <div class="col-3">Hành động</div>
     </div>
-    <div class="d-flex">
-      <div class="col-2 p-0 mr-2"><img src="assets/coffee-logo-png-7521.png" style="width: 130px; height: 130px" /></div>
-      <div class="col-3 d-flex align-items-center">Thông tin người nhận</div>
-      <div class="col-2 d-flex align-items-center">Xem chi tiết</div>
-      <div class="col-2 d-flex align-items-center">trạng thái</div>
-      <div class="col-3 d-flex align-items-center justify-content-around">
-        <div><i class="p-3 handleButton" style="cursor: pointer; font-size: 30px" nz-icon nzType="check-circle" nzTheme="outline"></i></div>
-        <div><i class="p-3 handleButton" style="cursor: pointer; font-size: 30px" nz-icon nzType="field-time" nzTheme="outline"></i></div>
-        <div><i class="p-3 handleButton" style="cursor: pointer; font-size: 30px" nz-icon nzType="undo" nzTheme="outline"></i></div>
+    <div class="d-flex mt-2" style="border-radius: 5px; border: 1px solid #ccc" *ngFor="let item of data">
+      <div class="col-2 p-0 mr-2"><img [src]="item.details[0].product.image" style="width: 130px; height: 130px"/></div>
+      <div class="col-3 d-flex align-items-center">
+        <div>
+          <div>Tên: {{ item.name }}</div>
+          <div>SĐT: {{ item.phone }}</div>
+          <div>Địa chỉ: {{item.address}}</div>
+          <div>Ngày tạo hóa đơn: {{ item.createDate | date: 'dd/MM/yyyy' }}</div>
+        </div>
+      </div>
+      <div class="col-2 ml-2 d-flex align-items-center item-detail" style="text-decoration:  underline" (click)="viewDetailBill(item)">Xem chi tiết</div>
+      <div class="col-1 ml-2 p-0 d-flex align-items-center">{{item.total | currency : "VND" : "symbol" : "1.0-0"}}</div>
+      <div class="col-1 ml-1 p-0 pr-2 d-flex align-items-center">{{ item.status == 0 ? 'Chờ hoàn hàng' : item.status == 1 ? 'Đã nhận hàng' : item.status == 2 ? 'Đã đặt hàng' : item.status == -1 ? 'Đã hoàn hàng' : 'chưa nhận được hàng'}}</div>
+      <div class="col-3 p-0 pl-2 d-flex align-items-center">
+        <div><a nz-popconfirm nzPopconfirmTitle="Bạn chắc chắn đã nhận được hàng?" (nzOnConfirm)="handleConfirm(item)">
+          <i class="p-1 handleButton" style="cursor: pointer; font-size: 30px; color: #898989" nz-icon nzType="check-circle"
+                nzTheme="outline"></i>
+        </a></div>
+        <div class="mx-3"><a nz-popconfirm nzPopconfirmTitle="Bạn chưa nhận được hàng?" (nzOnConfirm)="handleWarning(item)">
+          <i class="p-1 handleButton" style="cursor: pointer; font-size: 31px; color: #898989" nz-icon nzType="field-time"
+                nzTheme="outline"></i>
+        </a></div>
+        <div><a nz-popconfirm nzPopconfirmTitle="Bạn muốn hoàn hàng?" (nzOnConfirm)="handleUndo(item)">
+          <i class="p-1 handleButton" style="cursor: pointer; font-size: 30px; color: #898989" nz-icon nzType="undo"
+                nzTheme="outline"></i>
+        </a></div>
+      </div>
+
+
+<!--      <div class="col-2 p-0 mr-2"><img src="assets/coffee-logo-png-7521.png" style="width: 130px; height: 130px"/></div>-->
+<!--      <div class="col-3 d-flex align-items-center">
+  <div>
+          <div>Tên: </div>
+          <div>SĐT: </div>
+          <div>Địa chỉ: </div>
+          <div>Ngày tạo hóa đơn: </div>
+        </div>
+        </div>-->
+<!--      <div class="col-2 d-flex align-items-center" style="text-decoration:  underline">Xem chi tiết</div>-->
+<!--      <div class="col-2 d-flex align-items-center">trạng thái</div>-->
+<!--      <div class="col-3 d-flex align-items-center justify-content-around">-->
+<!--        <div><a nz-popconfirm nzPopconfirmTitle="Bạn chắc chắn đã nhận được hàng?" (nzOnConfirm)="handleConfirm()">-->
+<!--          <i class="p-3 handleButton" style="cursor: pointer; font-size: 30px; color: #898989" nz-icon nzType="check-circle"-->
+<!--             nzTheme="outline"></i>-->
+<!--        </a></div>-->
+<!--        <div><a nz-popconfirm nzPopconfirmTitle="Bạn chưa nhận được hàng?" (nzOnConfirm)="handleWarning()">-->
+<!--          <i class="p-3 handleButton" style="cursor: pointer; font-size: 30px; color: #898989" nz-icon nzType="field-time"-->
+<!--             nzTheme="outline"></i>-->
+<!--        </a></div>-->
+<!--        <div><a nz-popconfirm nzPopconfirmTitle="Bạn muốn hoàn hàng?" (nzOnConfirm)="handleUndo()">-->
+<!--          <i class="p-3 handleButton" style="cursor: pointer; font-size: 30px; color: #898989" nz-icon nzType="undo"-->
+<!--             nzTheme="outline"></i>-->
+<!--        </a></div>-->
+<!--      </div>-->
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end mt-3">
+    <nz-pagination class="pb-4" (click)="changePage()" [(nzPageIndex)]="curPage" [nzTotal]="total"></nz-pagination>
+  </div>
+</div>
+
+
+<nz-modal [(nzVisible)]="isRefuse" [nzTitle]="'Chi tiết hóa đơn'" [nzFooter]="null" (nzOnCancel)="handleCancelViewDetailBill()">
+  <div style="border: 1px solid #ccc; border-radius: 5px">
+    <div class="d-flex pb-1 mb-1 box-detail" style="border-bottom: 1px solid #ccc" *ngFor="let item of dataDetail">
+      <div class="col-3 p-0">
+        <div><img style="width: 100%;" [src]="item.product.image"/></div>
+      </div>
+      <div class="col-7">
+        <div class="d-flex justify-content-between"><span>Tên sản phẩm: </span> {{item.product.name}}</div>
+        <div class="d-flex justify-content-between"><span>Số lượng: </span> {{item.quantity}}</div>
+        <div class="d-flex justify-content-between">
+          <span>Giá tiền: </span> {{(item.product.price - item.product.price * (item.product.discount / 100)) | currency : "VND" : "symbol" : "1.0-0"}}</div>
+        <div class="d-flex justify-content-between"><span>Mã giảm giá áp dụng: </span> {{item.vouchers}}</div>
+      </div>
+      <div class="col-2 d-flex justify-content-center align-items-center">
+        <span style="font-size: 20px; font-weight: 600">{{((item.product.price - item.product.price * (item.product.discount / 100)) * item.quantity) | currency : "VND" : "symbol" : "1.0-0"}}</span>
       </div>
     </div>
   </div>
-</div>
+</nz-modal>
 
 

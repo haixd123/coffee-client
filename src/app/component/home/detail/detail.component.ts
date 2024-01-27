@@ -116,6 +116,8 @@ export class DetailComponent implements OnInit {
   }
 
   handleUpdate(searchModel: SearchModelEntity, reset = false) {
+    console.log('call again1')
+
     this.api.getListPosts(this.searchModel).toPromise().then((data: any) => {
       this.data = data.data;
       this.total = data.optional;

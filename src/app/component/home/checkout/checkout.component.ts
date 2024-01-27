@@ -24,6 +24,7 @@ export class CheckoutComponent implements OnInit {
   myVoucher: Voucher[] = [];
   selectedVoucher: Voucher;
   totalOfBill: any;
+  userLocalstorage: any;
   // selectedVoucher: Voucher = {
   //   id: 'SHDFEJ',
   //   description: 'Sales 20%',
@@ -44,15 +45,18 @@ export class CheckoutComponent implements OnInit {
   ) {
     this.formAdd = this.fb.group({
       name: [null, [Validators.required]],
-      email: [null, [Validators.required]],
+      email: null,
       phone: [null, [Validators.required]],
       address: [null, [Validators.required]],
       billDetails: [],
       payments: 1,
       createDate: null,
       total: null,
-      // voucherIds: ['3S5D5F']
+      voucherIds: [null]
     });
+
+    this.userLocalstorage = JSON.parse(localStorage.getItem('user'));
+
   }
 
   ngOnInit(): void {
@@ -103,6 +107,8 @@ export class CheckoutComponent implements OnInit {
     } else {
       this.totalPrice -= voucher.maxDiscount;
     }
+    this.formAdd.get('voucherIds').setValue([voucher.id]);
+
   }
 
   submitForm(): void {
@@ -114,6 +120,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   handleCheckout() {
+    this.formAdd.get('email').setValue(this.userLocalstorage.email)
     if (this.formAdd.valid) {
       //handle checkout
       const dataCart: any[] = [];

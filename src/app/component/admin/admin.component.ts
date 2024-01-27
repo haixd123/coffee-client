@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {NzLayoutModule} from 'ng-zorro-antd/layout';
 import {Router} from '@angular/router';
+import {ShareDataService} from "../../services/share-data.service";
 
 @Component({
   selector: 'app-admin',
@@ -52,13 +53,19 @@ export class AdminComponent implements OnInit {
   isCollapsed = false;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private shareDataService: ShareDataService,
+
   ) {
     this.infoUser = JSON.parse(localStorage.getItem('user'));
 
   }
 
   ngOnInit(): void {
+  }
+
+  changeNav(tabName: string) {
+    this.shareDataService.setActivedNav(tabName);
   }
 
   ChangeValueHeader(value) {

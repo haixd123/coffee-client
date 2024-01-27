@@ -220,10 +220,10 @@ export class VietBaiComponent implements OnInit {
 
       if (this.dataEdit != null) {
         console.log('this.dataEdit: ', this.dataEdit)
+        this.formAdd.get('category').setValue(this.formAdd.get('categoryCur').value.toString());
         this.formAdd.get('imagePath').setValue(this.urlImage ? this.urlImage : this.dataEdit.imagePath);
         if (this.userLocalstorage.role == 'ADMIN') {
           this.formAdd.get('status').setValue(1);
-          this.formAdd.get('category').setValue(this.formAdd.get('categoryCur').value);
           this.api.updatePosts(this.formAdd.value).toPromise().then((data: any) => {
             if (data.errorCode == '00') {
               this.notificationService.showMessage('success', data.errorDescription);
@@ -237,7 +237,7 @@ export class VietBaiComponent implements OnInit {
           });
         } else {
           this.formAdd.get('status').setValue(0);
-          this.formAdd.get('category').setValue(this.formAdd.get('categoryCur').value);
+          // this.formAdd.get('category').setValue(this.formAdd.get('categoryCur').value.toString());
           this.formAdd.get('imagePath').setValue(this.urlImage ? this.urlImage : this.dataEdit.imagePath);
           this.api.updatePosts(this.formAdd.value).toPromise().then((data: any) => {
             if (data.errorCode == '00') {

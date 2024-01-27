@@ -64,6 +64,7 @@ export class TableEquipmentComponent implements OnInit {
 
   handleSearch() {
     this.searchModel.pageIndex = 1;
+    console.log('a')
     this.searchModel.pageSize = 10;
     this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
     if (this.formSearch.get('name').value == '') {

@@ -68,7 +68,7 @@
           flex-flow: column nowrap;
           gap: 5px;
           .post-title {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
           }
           .post-create {
@@ -79,7 +79,7 @@
             padding: 2.5px 5px;
             background-color: rgba(var(--color-primary), 0.15);
             border-radius: 5px;
-            font-size: 10px;
+            font-size: 14px;;
           }
           .post-content {
             line-height: 1.3;

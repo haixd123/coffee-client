@@ -13,8 +13,8 @@
 
     <div class="d-flex justify-content-end">
       <nz-input-group [nzSuffix]="suffixIconSearch">
-        <input class="px-1" formControlName="name" (change)="handleSearch()" type="text" nz-input
-               placeholder="Tìm theo tên người dùng"/>
+        <input class="px-1" formControlName="email" (change)="handleSearch()" type="text" nz-input
+               placeholder="Tìm theo email người dùng"/>
         <!--      <input class="px-1" [(ngModel)]="searchValue" type="text" nz-input placeholder="input search text"/>-->
       </nz-input-group>
       <ng-template #suffixIconSearch>
@@ -28,14 +28,12 @@
 <nz-table
   #basicTable
   [nzData]="data"
-  [nzFrontPagination]="true"
-  nzBordered
-  nzShowSizeChanger
   [nzScroll]="{ x: '1200px'}"
+  [nzFrontPagination]="false"
 >
   <!--  [nzPageSizeOptions]="pageSizeOptions"-->
-  <!--  [(nzPageIndex)]="searchModel.pageIndex"-->
-  <!--  (nzPageSizeChange)="onPageSizeChange($event)"-->
+  <!--    (nzPageSizeChange)="onPageSizeChange($event)"-->
+  <!--  [(nzPageIndex)]="curPage"-->
   <!--  [nzTotal]="total"-->
   <thead>
   <tr>
@@ -45,10 +43,11 @@
     <th>Email</th>
     <th>Số điện thoại</th>
     <th>Địa chỉ</th>
-    <th>Ngày tạo hóa đơn</th>
+    <th [nzShowSort]="true" [nzSortDirections]="['ascend', 'descend']" (click)="handleSort('date')">Ngày tạo hóa đơn
+    </th>
     <th>Trạng thái</th>
     <th>Chi tiết hóa đơn</th>
-    <th>Tổng giá tiền</th>
+    <th [nzShowSort]="true" [nzSortDirections]="['ascend', 'descend']" (click)="handleSort('price')">Tổng giá tiền</th>
     <th>Hành động</th>
   </tr>
   </thead>
@@ -60,11 +59,11 @@
     <td>{{ item.email }}</td>
     <td>{{ item.phone }}</td>
     <!--    <td style=" white-space: nowrap; text-overflow: ellipsis; overflow: hidden">-->
-    <td> {{item.address}}</td>
+    <td>{{item.address}}</td>
     <td>{{ item.createDate | date: 'dd/MM/yyyy' }}</td>
-    <td>{{ item.status == 0 ? 'Chờ hoàn hàng' : item.status == 1 ? 'Đã nhận hàng' : 'Đã hoàn hàng'}}</td>
-    <td><a style="text-decoration: #e6e6e6" (click)="viewDetailBill(item)">Xem chi tiết</a></td>
-    <td>{{item.total}}</td>
+    <td>{{ item.status == 0 ? 'Chờ hoàn hàng' : item.status == 1 ? 'Đã nhận hàng' : item.status == 2 ? 'Đã đặt hàng' : item.status == -1 ? 'Đã hoàn hàng' : 'chưa nhận được hàng'}}</td>
+    <td><a style="text-decoration: underline" (click)="viewDetailBill(item)">Xem chi tiết</a></td>
+    <td>{{item.total | currency : "VND" : "symbol" : "1.0-0"}}</td>
     <td style="min-width: 120px; text-align: center">
       <!--            <a *ngIf="item.status == 0" style="font-size: 21px; color: #1890ff" nz-popconfirm-->
       <a *ngIf="item.status == 0" style="font-size: 21px; color: #1890ff" nz-popconfirm class="mr-3"
@@ -106,7 +105,8 @@
 </div>
 
 
-<nz-modal [(nzVisible)]="isRefuse" [nzTitle]="'Chi tiết hóa đơn'" [nzFooter]="null" (nzOnCancel)="handleCancelViewDetailBill()">
+<nz-modal [(nzVisible)]="isRefuse" [nzTitle]="'Chi tiết hóa đơn'" [nzFooter]="null"
+          (nzOnCancel)="handleCancelViewDetailBill()">
   <div style="border: 1px solid #ccc; border-radius: 5px">
     <div class="d-flex pb-1 mb-1 box-detail" style="border-bottom: 1px solid #ccc" *ngFor="let item of dataDetail">
       <div class="col-3 p-0">
@@ -116,11 +116,12 @@
         <div class="d-flex justify-content-between"><span>Tên sản phẩm: </span> {{item.product.name}}</div>
         <div class="d-flex justify-content-between"><span>Số lượng: </span> {{item.quantity}}</div>
         <div class="d-flex justify-content-between">
-          <span>Giá tiền: </span> {{item.product.price - item.product.price * (item.product.discount / 100)}}</div>
+          <span>Giá tiền: </span> {{(item.product.price - item.product.price * (item.product.discount / 100))  | currency : "VND" : "symbol" : "1.0-0"}}</div>
         <div class="d-flex justify-content-between"><span>Mã giảm giá áp dụng: </span> {{item.vouchers}}</div>
       </div>
       <div class="col-2 d-flex justify-content-center align-items-center">
-        <span style="font-size: 20px; font-weight: 600">{{(item.product.price - item.product.price * (item.product.discount / 100)) * item.quantity}}</span>
+        <span
+          style="font-size: 20px; font-weight: 600">{{((item.product.price - item.product.price * (item.product.discount / 100)) * item.quantity)  | currency : "VND" : "symbol" : "1.0-0"}}</span>
       </div>
     </div>
   </div>

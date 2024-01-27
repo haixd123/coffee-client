@@ -21,7 +21,7 @@
         (click)="isCollapsed = !isCollapsed"></i></div>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzOpen nzTitle="Admin" nzIcon="dashboard">
+      <li nz-submenu nzOpen nzTitle="Information" nzIcon="dashboard">
         <ul>
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/admin/coffee-bean" (click)="ChangeValueHeader('Quản lý cà phê')">Coffee</a>
@@ -29,18 +29,44 @@
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/admin/equipment" (click)="ChangeValueHeader('Quản lý trang thiết bị')">equipment</a>
           </li>
+<!--          <li nz-menu-item nzMatchRouter>-->
+<!--            <a routerLink="/admin/posts" (click)="ChangeValueHeader('Quản lý bài viết')">posts</a>-->
+<!--          </li>-->
+<!--          <li nz-menu-item nzMatchRouter>-->
+<!--            <a routerLink="/admin/user" (click)="ChangeValueHeader('Quản lý tài khoản')">user</a>-->
+<!--          </li>-->
+<!--          <li nz-menu-item nzMatchRouter>-->
+<!--            <a routerLink="/admin/product" (click)="ChangeValueHeader('Quản lý sản phẩm')">product</a>-->
+<!--          </li>-->
+<!--          <li nz-menu-item nzMatchRouter>-->
+<!--            <a routerLink="/admin/bill" (click)="ChangeValueHeader('Quản lý hóa đơn mua hàng')">bill</a>-->
+<!--          </li>-->
+<!--          <li nz-menu-item nzMatchRouter>-->
+<!--            <a routerLink="/admin/comment" (click)="ChangeValueHeader('Quản lý bình luận')">comment</a>-->
+<!--          </li>-->
+<!--          <li nz-menu-item nzMatchRouter>-->
+<!--            <a routerLink="/admin/report" (click)="ChangeValueHeader('Quản lý báo cáo')">report</a>-->
+<!--          </li>-->
+<!--          <li nz-menu-item nzMatchRouter>-->
+<!--            <a routerLink="/admin/voucher" (click)="ChangeValueHeader('Quản lý voucher')">voucher</a>-->
+<!--          </li>-->
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="Business" nzIcon="bar-chart">
+        <ul>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/admin/posts" (click)="ChangeValueHeader('Quản lý bài viết')">posts</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/admin/user" (click)="ChangeValueHeader('Quản lý tài khoản')">user</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/admin/product" (click)="ChangeValueHeader('Quản lý sản phẩm')">product</a>
+            <a routerLink="/admin/voucher" (click)="ChangeValueHeader('Quản lý voucher')">voucher</a>
           </li>
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/admin/bill" (click)="ChangeValueHeader('Quản lý hóa đơn mua hàng')">bill</a>
           </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/admin/product" (click)="ChangeValueHeader('Quản lý sản phẩm')">product</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="social network" nzIcon="team">
+        <ul>
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/admin/comment" (click)="ChangeValueHeader('Quản lý bình luận')">comment</a>
           </li>
@@ -48,7 +74,10 @@
             <a routerLink="/admin/report" (click)="ChangeValueHeader('Quản lý báo cáo')">report</a>
           </li>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/admin/voucher" (click)="ChangeValueHeader('Quản lý voucher')">voucher</a>
+            <a routerLink="/admin/posts" (click)="ChangeValueHeader('Quản lý bài viết')">posts</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/admin/user" (click)="ChangeValueHeader('Quản lý tài khoản')">user</a>
           </li>
         </ul>
       </li>
@@ -109,6 +138,16 @@
               <!--                <i class="mr-3" nz-icon nzType="user" nzTheme="outline"></i>-->
               <i class="mr-3" nz-icon nzType="file-ppt" nzTheme="outline"></i>
               Bài viết cá nhân</a>
+            <a style="font-size: 17px; height: 32px; color: #000"
+               class="d-flex align-items-center my-3 mt-3 user-hover"
+               [routerLink]="['/home/user/order']" (click)="changeNav('voucher')">
+              <i class="mr-3" nz-icon nzType="audit" nzTheme="outline"></i>
+              Đơn hàng của tôi</a>
+            <a style="font-size: 17px; height: 32px; color: #000"
+               class="d-flex align-items-center my-3 mt-3 user-hover"
+               [routerLink]="['/home/user/my-voucher']" (click)="changeNav('voucher')">
+              <i class="mr-3" nz-icon nzType="audit" nzTheme="outline"></i>
+              Voucher của tôi</a>
 <!--            <a style="font-size: 17px; height: 32px; color: #000" class="d-flex align-items-center my-3 user-hover"-->
 <!--               [routerLink]="['/home/user/draftPosts']">-->
 <!--              <i class="mr-3" nz-icon nzType="file-sync" nzTheme="outline"></i>-->

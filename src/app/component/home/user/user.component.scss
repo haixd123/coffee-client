@@ -12,8 +12,10 @@ display: block;
 }
 .container{
   --color-primary:84,84,84;
-  max-width: 90vw;
-  margin: 0 auto;
+  max-width: 1300px;
+  margin: auto;
+  //max-width: 90vw;
+  //margin: 0 auto;
   .nav{
     position: fixed;
     top: 15%;

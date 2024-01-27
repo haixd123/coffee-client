@@ -7,15 +7,15 @@
         <label for="">Mô tả</label>
         <textarea rows="4" nz-input class="mt-1" formControlName="description" placeholder="Mô tả voucher"></textarea>
         <!-- <input class="mt-1" formControlName="description" nz-input placeholder="Mô tả voucher"/>  -->
-        <div class="text-danger" *ngIf="controlHasError('description', 'required')">Không được để trống</div>       
+        <div class="text-danger" *ngIf="controlHasError('description', 'required')">Không được để trống</div>
       </div>
       <div class="form-group">
         <label for="">Giảm giá (%)</label>
-        <input class="mt-1" formControlName="percentDiscount" nz-input placeholder="vd: 20"/>   
-        <div class="text-danger" *ngIf="controlHasError('percentDiscount', 'required')">Không được để trống</div>      
-        <div class="text-danger" *ngIf="controlHasError('percentDiscount', 'min')">% Giảm giá quá bé</div>      
-        <div class="text-danger" *ngIf="controlHasError('percentDiscount', 'max')">% Giảm giá quá lớn</div>      
-        <div class="text-danger" *ngIf="controlHasError('percentDiscount', 'pattern')">Có kí tự không hợp lệ</div>      
+        <input class="mt-1" formControlName="percentDiscount" nz-input placeholder="vd: 20"/>
+        <div class="text-danger" *ngIf="controlHasError('percentDiscount', 'required')">Không được để trống</div>
+        <div class="text-danger" *ngIf="controlHasError('percentDiscount', 'min')">% Giảm giá quá bé</div>
+        <div class="text-danger" *ngIf="controlHasError('percentDiscount', 'max')">% Giảm giá quá lớn</div>
+        <div class="text-danger" *ngIf="controlHasError('percentDiscount', 'pattern')">Có kí tự không hợp lệ</div>
       </div>
       <div class="form-group">
         <label for="">Loại Voucher</label>
@@ -24,15 +24,15 @@
           formControlName="voucherType"
         >
           <nz-option nzValue="1" nzLabel="Giảm giá đơn hàng"></nz-option>
-          <nz-option nzValue="2" nzLabel="Miễn phí ship"></nz-option>
-        </nz-select>     
+<!--          <nz-option nzValue="2" nzLabel="Miễn phí ship"></nz-option>-->
+        </nz-select>
       </div>
       <div class="form-group">
         <label for="">Giảm tối đa (vnd)</label>
         <input class="mt-1" formControlName="maxDiscount" nz-input placeholder="vd: 1000"/>
-        <div class="text-danger" *ngIf="controlHasError('maxDiscount', 'required')">Không được để trống</div>      
-        <div class="text-danger" *ngIf="controlHasError('maxDiscount', 'min')">Giảm tối đa phải lớn hơn 1,000vnd</div>         
-        <div class="text-danger" *ngIf="controlHasError('maxDiscount', 'pattern')">Có kí tự không hợp lệ</div>         
+        <div class="text-danger" *ngIf="controlHasError('maxDiscount', 'required')">Không được để trống</div>
+        <div class="text-danger" *ngIf="controlHasError('maxDiscount', 'min')">Giảm tối đa phải lớn hơn 1,000vnd</div>
+        <div class="text-danger" *ngIf="controlHasError('maxDiscount', 'pattern')">Có kí tự không hợp lệ</div>
       </div>
       <div class="form-group">
         <label >Ngày hết hạn</label>

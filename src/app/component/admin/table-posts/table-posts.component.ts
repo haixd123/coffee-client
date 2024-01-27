@@ -181,7 +181,7 @@ export class TablePostsComponent implements OnInit {
       });
     });
     // this.changePage(a.status);
-    this.changePage();
+    // this.changePage();
   }
 
   handleDelete(item: any) {
@@ -204,7 +204,7 @@ export class TablePostsComponent implements OnInit {
       });
     });
     // this.changePage(a.status);
-    this.changePage();
+    // this.changePage();
   }
 
   handleRefuse(item: any) {
@@ -295,7 +295,7 @@ export class TablePostsComponent implements OnInit {
       this.notificationService.showMessage('success', 'Duyệt bài viết thành công');
     }, error => this.notificationService.showMessage('error', 'Duyệt bài viết thất bại'));
 
-    this.changePage(a.status);
+    // this.changePage(a.status);
   }
 
   handleOkRefuse() {
@@ -320,7 +320,7 @@ export class TablePostsComponent implements OnInit {
       this.notificationReceiver = res;
     });
     this.isRefuse = false;
-    this.changePage(this.dataRefuse.status);
+    // this.changePage(this.dataRefuse.status);
   }
 
   handleCancelRefuse() {
@@ -340,7 +340,7 @@ export class TablePostsComponent implements OnInit {
       this.notificationReceiver = res;
     });
     this.isRefuse = false;
-    this.changePage(this.dataRefuse.status);
+    // this.changePage(this.dataRefuse.status);
   }
 
   handleUpdatedData(updatedData: any) {

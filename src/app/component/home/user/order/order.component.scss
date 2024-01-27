@@ -1,8 +1,14 @@
 .handleButton:hover {
-  background-color: #e6e6e6;
+  //background-color: #e6e6e6;
+  opacity: 0.6;
+
 }
 
 .handleButton {
 //  border: 3px solid #ccc;
-  border-radius: 5px;
+//  border-radius: 5px;
+}
+
+.item-detail {
+  cursor: pointer;
 }
