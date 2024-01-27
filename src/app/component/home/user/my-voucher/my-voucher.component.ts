@@ -32,7 +32,7 @@ export class MyVoucherComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
     this.userId = this.storage.getUser().id;
-    this.shareDataService.setActivedNav('voucher');
+    this.shareDataService.setActivedNav('hidden_2_nav');
 
     this.getMyVoucher();
     this.getNotMyVoucher();

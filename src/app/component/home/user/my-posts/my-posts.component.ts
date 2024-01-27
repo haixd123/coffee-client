@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Api } from '../../../../services/api';
+import { ShareDataService } from 'src/app/services/share-data.service';
 
 @Component({
   selector: 'app-my-posts',
@@ -32,7 +33,8 @@ export class MyPostsComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private fb: FormBuilder,
-    private api: Api
+    private api: Api,
+    private shareDataService: ShareDataService
   ) {
     // this.formSearch = this.fb.group({
     //   status: 1,
@@ -43,7 +45,9 @@ export class MyPostsComponent implements OnInit {
     this.handleSearch()
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.shareDataService.setActivedNav('myPosts');
+  }
 
   handleUpdate(searchModel: SearchModelEntity, reset = false) {
     this.api

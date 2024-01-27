@@ -1,5 +1,5 @@
-<div [ngClass]="{'row':tabActive!='voucher','container':tabActive!='voucher'}" >
-  <div class="col-2 mt-4" *ngIf="tabActive != 'voucher'">
+<div [ngClass]="{'row':tabActive!='hidden_2_nav','container':tabActive!='hidden_2_nav'}" >
+  <div class="col-2 mt-4" *ngIf="tabActive != 'hidden_2_nav'">
     <div class="nav">
       <div class="nav-item" [class.active]="tabActive =='info'">
         <a [routerLink]="['/home/user/info']" (click)="changeTab('info')">Thông tin tài khoản</a>
@@ -22,10 +22,10 @@
 
     </div>
   </div>
-  <div [class.col-8]="tabActive != 'voucher'">
+  <div [class.col-8]="tabActive != 'hidden_2_nav'">
     <router-outlet></router-outlet>
   </div>
-  <div class="col-2 my-4" *ngIf="tabActive != 'voucher'">
+  <div class="col-2 my-4" *ngIf="tabActive != 'hidden_2_nav'">
     <div class="info">
       <div class="title">
         Mức độ yêu thích

@@ -47,6 +47,7 @@ export class RefusePostComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.shareDataService.setActivedNav('refusePosts');
   }
 
   handleUpdate(searchModel: SearchModelEntity, reset = false) {

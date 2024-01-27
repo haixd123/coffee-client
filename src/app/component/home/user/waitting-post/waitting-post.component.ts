@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {SearchModelEntity} from '../../../admin/search-model-entiry';
 import {Api} from '../../../../services/api';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import { ShareDataService } from 'src/app/services/share-data.service';
 
 @Component({
   selector: 'app-waitting-post',
@@ -28,6 +29,7 @@ export class WaittingPostComponent implements OnInit {
     private router: Router,
     private api: Api,
     private fb: FormBuilder,
+    private shareDataService: ShareDataService
   ) {
     this.formSearch = this.fb.group({
       status: 1,
@@ -38,6 +40,8 @@ export class WaittingPostComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.shareDataService.setActivedNav('waitingPostswaitingPosts');
   }
 
   handleUpdate(searchModel: SearchModelEntity, reset = false) {

@@ -1,14 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Api} from "../../../../services/api";
 import {NotificationService} from "../../../../services/notification.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import { ShareDataService } from 'src/app/services/share-data.service';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss']
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent implements OnInit,OnDestroy {
   formHandleStatusBill: FormGroup
   infoUser: any;
   curPage = 1;
@@ -21,11 +22,16 @@ export class OrderComponent implements OnInit {
     private api: Api,
     private notificationService: NotificationService,
     private fb: FormBuilder,
+    private shareDataService: ShareDataService
   ) {
     this.infoUser = JSON.parse(localStorage.getItem('user'))
   }
+  ngOnDestroy(): void {
+    this.shareDataService.setActivedNav('');
+  }
 
   ngOnInit(): void {
+    this.shareDataService.setActivedNav('hidden_2_nav');
     this.api.getBillByEmail(this.infoUser.email, this.curPage-1, 10).subscribe({
       next: (res) => {
         console.log('res-getBillByEmail: ', res)
