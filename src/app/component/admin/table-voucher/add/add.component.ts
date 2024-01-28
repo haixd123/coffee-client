@@ -33,6 +33,9 @@ export class AddVoucherComponent implements OnInit {
     private storage: AngularFireStorage,
     public datePipe: DatePipe
   ) {
+    this.resetForm();
+  }
+  resetForm(){
     this.formAdd = this.fb.group({
       id: [null],
       description: ['', Validators.required],
@@ -55,7 +58,7 @@ export class AddVoucherComponent implements OnInit {
         ],
       ],
       createdAt: [new Date()],
-      expiredAt: [new Date(), Validators.required],
+      expiredAt: [new Date().setHours(0,0,0,0), Validators.required],
     });
   }
 
@@ -93,7 +96,7 @@ export class AddVoucherComponent implements OnInit {
           );
           this.isAdd = false;
           this.handleCancel(true);
-          this.formAdd.reset();
+          this.resetForm()
         },
         error: (err) => {
           this.notificationService.showMessage(
@@ -102,7 +105,7 @@ export class AddVoucherComponent implements OnInit {
           );
           this.isAdd = false;
           this.handleCancel(true);
-          this.formAdd.reset();
+          this.resetForm();
         },
       });
     }

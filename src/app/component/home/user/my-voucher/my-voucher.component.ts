@@ -38,6 +38,19 @@ export class MyVoucherComponent implements OnInit,OnDestroy {
     this.getNotMyVoucher();
 
   }
+  // timeLeft(expiredAt : Date):{type:string,value:number}{
+  //   const min = 1000 * 60;
+  //   const hour = 1000 * 60 * 60;
+  //   const day = 1000 * 60 *60 *24;
+  //   const resultMili : number = expiredAt.getTime() - new Date().getTime();
+  //   if(resultMili > day){
+  //     return {type:"ngày",value:resultMili/day}
+  //   }else if(resultMili > hour){
+  //     return {type: "giờ",value: resultMili/hour}
+  //   }else{
+  //     return {type:"phút",value:resultMili/min};
+  //   }
+  // }
   getMyVoucher(){
     this.api.getMyVoucher(this.currPage-1,10,this.storage.getUser().id).subscribe({
       next: res =>{

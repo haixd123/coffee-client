@@ -26,6 +26,7 @@
       <div class="voucher-item" *ngFor="let item of suggestedVoucher">
         <p class="name">{{item.description}}</p>
         <p class="description">{{item.voucherType == 1 ? 'Giảm tối đa '+item.maxDiscount:'Miễn phí vận chuyển'}}</p>
+        <!-- <p class="time-left">{{ timeLeft(item.expiredAt).value < 0 ? "Voucher đã hết hạn" : "Voucher còn " +timeLeft(item.expiredAt).value+" "+timeLeft(item.expiredAt).type}}</p> -->
         <div class="detail">
           <span class="code">{{item.id}}</span>
           <button *ngIf="!exist(item.id)" class="btn-save" (click)="saveVoucher(item.id)">Lưu</button>
