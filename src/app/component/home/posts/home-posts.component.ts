@@ -179,9 +179,12 @@ export class HomePostsComponent implements OnInit, OnChanges {
     this.update(this.searchModel, true);
   }
 
-  searchPostByTitle(){
+  searchPostByTitle() {
     this.searchModel.pageIndex = 1;
     this.searchModel.pageSize = 10;
+    if (this.formSearchInput.get('title').value == '') {
+      this.formSearchInput.get('title').setValue(null)
+    }
     this.searchModel = Object.assign({}, this.searchModel, this.formSearchInput.value);
     console.log(this.searchModel);
     this.update(this.searchModel, true);
