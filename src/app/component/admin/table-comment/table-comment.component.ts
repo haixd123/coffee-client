@@ -73,7 +73,7 @@ export class TableCommentComponent implements OnInit {
     let page = this.curPage - 1;
     let size = 10;
     if (typeS == '0') {
-      let status = Number(this.formSearch.get('status').value);
+      let status = Number(this.formSearch.get('status').value || 1);
       let userId = this.formSearch.get('value').value;
       if (userId != null && (userId + '').trim().length > 0) {
         this.api.getAllCommentByUserId(page, size, userId, status).subscribe({
@@ -87,7 +87,7 @@ export class TableCommentComponent implements OnInit {
       }
     }
     if (typeS == '1') {
-      let status = Number(this.formSearch.get('status').value);
+      let status = Number(this.formSearch.get('status').value || 1);
       let postId = this.formSearch.get('value').value;
       if (postId != null && (postId + '').trim().length > 0) {
         this.api.getAllCommentByPostId(page, size, postId, status).subscribe({
@@ -101,7 +101,7 @@ export class TableCommentComponent implements OnInit {
       }
     }
     if (typeS == '3') {
-      let status = this.formSearch.get('status').value;
+      let status = this.formSearch.get('status').value || 1;
       this.api.getAllCommentByStatus(page, size, status).subscribe({
         next: (res) => {
           this.data = res.data.content;
