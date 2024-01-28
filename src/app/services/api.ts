@@ -484,4 +484,11 @@ export class Api extends BaseService {
   }
   //bill
 
+  getToTalCommentByPost1(value: any) {
+    return this.post('/authors/comment/findTotalLikeCommentByPost1', value);
+  }
+
+  updateComment1(value: any) {
+    return this.post('/authors/likeComment/update1', value);
+  }
 }

@@ -152,12 +152,12 @@
             <div class="mt-5 row itemPosts">
               <div class="col-1">
                 <a><img style="width: 100%; min-width: 45px; max-width: 45px; height: 45px; border-radius: 50%"
-                        [src]="itemComment.avatarUser"/></a>
+                        [src]="itemComment.image"/></a>
               </div>
               <div class="col-10 ">
                 <div>
                   <span style="font-size: 15px; font-weight: 500" class="mr-1">
-                    {{itemComment.username}}
+                    {{itemComment.name}}
                   </span>
                   <!--                        <span style="font-size: 13px; font-weight: 400">13:49 ngày 24/10/2023</span>-->
                   <span
@@ -167,7 +167,7 @@
                 </div>
                 <div>
                   <div style="font-size: 14px;color: #000000a6"
-                       class="my-2">{{itemComment.commentText}}</div>
+                       class="my-2">{{itemComment.contentText}}</div>
                 </div>
                 <div class="d-flex mb-3">
                   <!--                                                //??? code cũ-->
@@ -190,7 +190,11 @@
 <!--                        </div>-->
 
 <!--                        <div *ngIf="itemComment.lcUserId == 0 && itemComment.lcCommentId == 0"-->
+<<<<<<< Updated upstream
                   <div *ngIf="itemComment.userLiked == 0"
+=======
+                  <div *ngIf="itemComment.lcUserId != idUserLocalstorage"
+>>>>>>> Stashed changes
                        class="mr-2 "
                        (click)="handleLikeComment(itemComment)">
                     <a style="color: #000000a6" class="d-flex align-items-center">
@@ -200,7 +204,7 @@
                     </a>
                   </div>
 <!--                        <div *ngIf="itemComment.lcUserId != 0 && itemComment.lcCommentId != 0 && idUserLocalstorage == itemComment.lcUserId" class="mr-2 "-->
-                  <div *ngIf="itemComment.userLiked == 1" class="mr-2 "
+                  <div *ngIf="itemComment.lcUserId == idUserLocalstorage" class="mr-2 "
                        (click)="handleDisLikeComment(itemComment)">
                     <a style="color: #1890ff" class="d-flex align-items-center">
                       <i style="color: #1890ff" nz-icon nzType="like" nzTheme="fill"
@@ -233,6 +237,33 @@
                          style="padding: 6px 40px 6px 40px"
                          class="hoverEditPosts d-flex justify-content-center"
                          (click)="editComment(itemComment)">Sửa
+<<<<<<< Updated upstream
+=======
+                        <div *ngIf="itemComment.lcUserId != idUserLocalstorage"
+                             class="mr-2 "
+                             (click)="handleLikeComment(itemComment)">
+                          <a style="color: #000000a6" class="d-flex align-items-center">
+                            <i style="color: #000000a6" nz-icon nzType="like"
+                               nzTheme="outline" class="mr-2"></i>
+                             thích
+                          </a>
+                        </div>
+<!--                        <div *ngIf="itemComment.lcUserId != 0 && itemComment.lcCommentId != 0 && idUserLocalstorage == itemComment.lcUserId" class="mr-2 "-->
+                        <div *ngIf="idUserLocalstorage == itemComment.lcUserId" class="mr-2 "
+                             (click)="handleDisLikeComment(itemComment)">
+                          <a style="color: #1890ff" class="d-flex align-items-center">
+                            <i style="color: #1890ff" nz-icon nzType="like" nzTheme="fill"
+                               class="mr-2"></i>
+                             thích
+                          </a>
+                        </div>
+                        <div style="border-left: 1px solid #c3c3c3; color: #000000a6"
+                             class="pl-2"
+                             (click)="handleReplyComment(itemComment) ">
+                          <a>Trả lời</a>
+                        </div>
+                      </div>
+>>>>>>> Stashed changes
                     </div>
                     <!--                          idOfPostUser == idUserLocalstorage -> Chủ bài viết cũng đc xóa comment của ng khác -->
                     <div
@@ -247,7 +278,7 @@
                 </div>
               </div>
             </div>
-          </div>
+<!--          </div>-->
           <div [hidden]="!isReplyComment">
             <div class="input-group">
               <textarea #textareaReply formControlName="commentReplyText" placeholder="Bạn nghĩ gì về tin này"
@@ -272,3 +303,4 @@
 </nz-modal>
 <!--<app-notification [dataInfoUserNotification]="dataInfoUserNotification"></app-notification>-->
 <!--<app-notification></app-notification>-->
+<!--</div>-->
