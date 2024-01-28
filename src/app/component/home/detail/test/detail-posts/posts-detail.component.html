@@ -190,11 +190,8 @@
 <!--                        </div>-->
 
 <!--                        <div *ngIf="itemComment.lcUserId == 0 && itemComment.lcCommentId == 0"-->
-<<<<<<< Updated upstream
                   <div *ngIf="itemComment.userLiked == 0"
-=======
                   <div *ngIf="itemComment.lcUserId != idUserLocalstorage"
->>>>>>> Stashed changes
                        class="mr-2 "
                        (click)="handleLikeComment(itemComment)">
                     <a style="color: #000000a6" class="d-flex align-items-center">
@@ -237,8 +234,6 @@
                          style="padding: 6px 40px 6px 40px"
                          class="hoverEditPosts d-flex justify-content-center"
                          (click)="editComment(itemComment)">Sửa
-<<<<<<< Updated upstream
-=======
                         <div *ngIf="itemComment.lcUserId != idUserLocalstorage"
                              class="mr-2 "
                              (click)="handleLikeComment(itemComment)">
@@ -263,7 +258,6 @@
                           <a>Trả lời</a>
                         </div>
                       </div>
->>>>>>> Stashed changes
                     </div>
                     <!--                          idOfPostUser == idUserLocalstorage -> Chủ bài viết cũng đc xóa comment của ng khác -->
                     <div
