@@ -261,15 +261,31 @@ export class VietBaiComponent implements OnInit {
     this.formAdd.get('userId').setValue(this.userLocalstorage.id);
     console.log('this.tags: ', this.tags);
     // setTimeout(() => {
-    this.api.createPosts(this.formAdd.value).toPromise().then((data: any) => {
-      if (data.errorCode == '00') {
-        this.notificationService.showMessage('success', 'Lưu bài viết nháp thành công');
-        this.router.navigate(['/home/user/draftPosts']);
-        this.urlImage = null;
-        this.formAdd.reset();
-      } else {
-        this.notificationService.showMessage('error', 'Lưu bài viết nháp thất bại');
-      }
-    });
+    if(this.dataEdit == null) {
+      this.api.createPosts(this.formAdd.value).toPromise().then((data: any) => {
+        if (data.errorCode == '00') {
+          this.notificationService.showMessage('success', 'Lưu bài viết nháp thành công');
+          this.router.navigate(['/home/user/draftPosts']);
+          this.urlImage = null;
+          this.formAdd.reset();
+        } else {
+          this.notificationService.showMessage('error', 'Lưu bài viết nháp thất bại');
+        }
+      });
+    } else {
+      this.api.updatePosts(this.formAdd.value).toPromise().then((data: any) => {
+        if (data.errorCode == '00') {
+          this.notificationService.showMessage('success', 'Lưu bài viết nháp thành công');
+          this.router.navigate(['/home/user/draftPosts']);
+          this.urlImage = null;
+          this.formAdd.reset();
+        } else {
+          this.notificationService.showMessage('error', 'Lưu bài viết nháp thất bại');
+        }
+      });
+    }
+
+
+
   }
 }
