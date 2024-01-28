@@ -93,31 +93,20 @@
           ></i>
           <div
             class="editPost"
-            style="
-              border: 1px solid #c3c3c3;
-              position: absolute;
-              top: 25px;
-              right: 7px;
-              background-color: #fff;
-              z-index: 100;
-              width: 110px;
-            "
           >
             <div
               *ngIf="
                 userLocalstorage?.role != 'ADMIN' &&
                 userLocalstorage?.id != item.userId
               "
-              style="padding: 6px 10px 6px 10px"
-              class="hoverEditPosts d-flex justify-content-center"
+              class="btn-hover"
               (click)="reportPosts(item)"
             >
               Báo xấu
             </div>
             <div
               *ngIf="userLocalstorage?.id == item.userId"
-              style="padding: 6px 40px 6px 40px"
-              class="hoverEditPosts d-flex justify-content-center"
+              class="btn-hover"
               (click)="editPosts(item)"
             >
               Sửa
@@ -127,8 +116,7 @@
                 userLocalstorage?.id == item.userId ||
                 userLocalstorage?.role == 'ADMIN'
               "
-              style="padding: 6px 40px 6px 40px"
-              class="hoverEditPosts d-flex justify-content-center"
+              class="btn-hover"
               nz-popconfirm
               nzPopconfirmTitle="Bạn chắc chắn muốn  xóa bài đăng này?"
               (nzOnCancel)="handleMoreBtn()"

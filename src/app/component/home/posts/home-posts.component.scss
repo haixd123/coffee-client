@@ -25,8 +25,29 @@
 
 .moreButton:hover .editPost {
   display: block;
+  z-index: 100;
 }
-
+.editPost{
+  display: none;
+  position: absolute;
+  
+  border-radius: 2.5px;
+  border: 1px solid #000;
+  background-color: #fff;
+  top: 0%;
+  right: 100%;
+  width: max-content;
+  font-size: 12px;
+  z-index: -1;
+  .btn-hover{
+    padding: 5px 20px;
+    box-shadow: inset 0 0 rgba(0, 0, 0, 0.1);
+    transition: box-shadow cubic-bezier(0.445, 0.05, 0.55, 0.95) .2s;
+    &:hover{
+      box-shadow: inset 0 50px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
 .container {
   --color-primary: 84, 84, 84;
   padding: 20px 0;

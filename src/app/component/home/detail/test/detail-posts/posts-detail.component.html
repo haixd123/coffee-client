@@ -216,12 +216,12 @@
                   <div class="editComment">
                     <!--                          <div style="padding: 6px 40px 6px 40px" class="hoverEditPosts"-->
                     <div *ngIf="userLocalstorage.role != 'ADMIN' && itemComment.userId != idUserLocalstorage"
-                      class="btn-report"
+                      class="btn-hover"
                       (click)="reportComment(itemComment)">Báo xấu
                     </div>
                     <!--                          Chỉ người comment được sửa comment của chính hoj-->
                     <div *ngIf="itemComment.userId == idUserLocalstorage"
-                      class="btn-edit" (click)="editComment(itemComment)">Sửa
+                      class="btn-hover" (click)="editComment(itemComment)">Sửa
                       <!-- <div *ngIf="itemComment.lcUserId != idUserLocalstorage" class="mr-2 "
                         (click)="handleLikeComment(itemComment)">
                         <a style="color: #000000a6" class="d-flex align-items-center">
@@ -244,7 +244,7 @@
                     </div>
                     <div
                       *ngIf="(itemComment.idUser == idUserLocalstorage) || userLocalstorage.role == 'ADMIN' || (idOfPostUser == idUserLocalstorage)"
-                      class="btn-delete"
+                      class="btn-hover"
                       nz-popconfirm nzPopconfirmTitle="Bạn chắc chắn muốn xóa bình luận này?"
                       (nzOnConfirm)="deleteComment(itemComment)">Xóa
                     </div>
