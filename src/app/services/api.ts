@@ -158,9 +158,9 @@ export class Api extends BaseService {
     return this.httpClient.post(`http://localhost:8080/api/authors/post/comment`, request);
   }
 
-  getDetailListLikeComment(value: any) {
-    return this.post('/authors/likeComment/findDetailTotalLikeCommentByPost', value);
-  }
+  // getDetailListLikeComment(value: any) {
+  //   return this.post('/authors/likeComment/findDetailTotalLikeCommentByPost', value);
+  // }
 
 
 

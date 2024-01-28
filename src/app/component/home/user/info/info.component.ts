@@ -82,6 +82,7 @@ export class InfoComponent implements OnInit, OnChanges {
 
   handleUpdate(searchModel: SearchModelEntity) {
     this.api.getListUser(this.searchModel).toPromise().then((data: any) => {
+      console.log('data: ', data)
       this.data = data.data;
       this.total = data.optional;
     });

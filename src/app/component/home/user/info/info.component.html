@@ -1,6 +1,6 @@
 <form nz-form [formGroup]="formAdd">
   <div style="margin-left: 20px; padding: 30px 20px 30px 30px;">
-<!--    <div style="max-width: 1200px; margin: auto">-->
+    <!--    <div style="max-width: 1200px; margin: auto">-->
     <div *ngFor="let item of data">
       <div class="row" *ngIf="item.id == idUserLocalstorage">
         <!--        <div class="col-2 mt-4">-->
@@ -61,18 +61,18 @@
                      <span *ngIf="item.name" style="font-size: 16px; font-weight: 600; color: #000">
                        {{item.name}}
                      </span>
-<!--                      <span *ngIf="!item.name" style="font-size: 16px; font-weight: 600; color: #000">-->
-<!--                      Chưa có thông tin-->
-<!--                    </span>-->
+                      <!--                      <span *ngIf="!item.name" style="font-size: 16px; font-weight: 600; color: #000">-->
+                      <!--                      Chưa có thông tin-->
+                      <!--                    </span>-->
                     </div>
                     <div *ngIf="!isUpdateName && isCancelUpdateName">
                       <input formControlName="name" *ngIf="item.name"
                              style="font-size: 16px; color: #000; font-weight: 500"
                              class="py-2" nz-input
                              placeholder="Nhập họ và tên" type="text"/>
-<!--                      <input formControlName="name" *ngIf="!item.name" style="font-size: 16px" class="py-2" nz-input-->
-<!--                             placeholder="Nhập họ và tên"-->
-<!--                             type="text"/>-->
+                      <!--                      <input formControlName="name" *ngIf="!item.name" style="font-size: 16px" class="py-2" nz-input-->
+                      <!--                             placeholder="Nhập họ và tên"-->
+                      <!--                             type="text"/>-->
                       <div class="d-flex justify-content-end mt-2">
                         <button class="mr-3 px-2 py-1" nz-button nzType="primary" (click)="handleUpdateInfo()">Xác nhận
                         </button>
@@ -154,7 +154,7 @@
                   <div>
                     <span style="font-size: 16px; color: #000">Giới tính</span><br/>
                     <div *ngIf="isUpdateSex">
-                    <span *ngIf="item.sex != 0" style="font-size: 16px; font-weight: 600; color: #000">{{item.sex}}
+                    <span *ngIf="item.sex != 0" style="font-size: 16px; font-weight: 600; color: #000">{{item.sex == 1 ? 'Nam' : item.sex == 2 ? 'Nữ' : 'Khác'}}
                     </span>
                       <span *ngIf="item.sex == 0" style="font-size: 16px; font-weight: 600; color: #000">
                       Chưa có thông tin
