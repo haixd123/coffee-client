@@ -1,11 +1,11 @@
 <div class="container">
   <div class="form-search">
-    <form nz-form [formGroup]="formSearchInput" (submit)="(null)">
+    <form nz-form [formGroup]="formSearchInput" (submit)="searchPostByTitle()">
       <input
         nz-input
         type="text"
-        formControlName="inputSearch"
-        placeholder="Tìm kiếm bài viết theo tên"
+        formControlName="title"
+        placeholder="Tìm kiếm bài viết theo tiêu đề bài viết"
       />
       <button>
         <i nz-icon nzType="search" nzTheme="outline"></i>

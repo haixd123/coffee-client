@@ -72,7 +72,8 @@ export class HomePostsComponent implements OnInit, OnChanges {
       status: 1,
     });
     this.formSearchInput = this.fb.group({
-      inputSearch: null
+      title: null,
+      status: 1
     });
     this.subscription = this.shareDataService.dataCategory$.subscribe((data) => {
       this.category = data;
@@ -175,6 +176,14 @@ export class HomePostsComponent implements OnInit, OnChanges {
     this.searchModel.pageSize = 10;
     this.formSearch.get('category').setValue(value);
     this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
+    this.update(this.searchModel, true);
+  }
+
+  searchPostByTitle(){
+    this.searchModel.pageIndex = 1;
+    this.searchModel.pageSize = 10;
+    this.searchModel = Object.assign({}, this.searchModel, this.formSearchInput.value);
+    console.log(this.searchModel);
     this.update(this.searchModel, true);
   }
 
