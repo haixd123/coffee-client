@@ -395,7 +395,7 @@
 
 <nz-modal
   [(nzVisible)]="isOpenModalHidePost"
-  [nzTitle]="'Lý do ẩn bình luận'"
+  [nzTitle]="'Lý do ẩn bài viết'"
   (nzOnCancel)="handleCancelHidePost()"
   (nzOnOk)="handleOkHidePost()"
 >
@@ -403,7 +403,23 @@
     class="p-2"
     type="text"
     nz-input
-    [(ngModel)]="inputValue"
+    [(ngModel)]="inputValue1"
+    placeholder="Nhập thông tin"
+  />
+</nz-modal>
+
+
+<nz-modal
+  [(nzVisible)]="isOpenModalReportPost"
+  [nzTitle]="'Lý do tố cáo'"
+  (nzOnCancel)="handleCancelReport()"
+  (nzOnOk)="handleOkReport()"
+>
+  <input
+    class="p-2"
+    type="text"
+    nz-input
+    [(ngModel)]="inputValue2"
     placeholder="Nhập thông tin"
   />
 </nz-modal>

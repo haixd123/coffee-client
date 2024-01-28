@@ -21,6 +21,7 @@ export class HomePostsComponent implements OnInit, OnChanges {
   formSearch: FormGroup;
   formSearchInput: FormGroup;
   formSearchPost: FormGroup;
+  formReportPost: FormGroup;
   PostsId: any;
   data: any[];
   curPage: number;
@@ -57,6 +58,9 @@ export class HomePostsComponent implements OnInit, OnChanges {
   dataMostRate: any;
   dataHidePost: any;
   isOpenModalHidePost = false;
+  inputValue1: any;
+  inputValue2: any;
+  isOpenModalReportPost = false
 
   constructor(
     private fb: FormBuilder,
@@ -241,6 +245,8 @@ export class HomePostsComponent implements OnInit, OnChanges {
 
   reportPosts(value: any) {
     this.isRefuse = true;
+    this.isOpenModalReportPost = true
+    // this.isOpenModalHidePost = true;
     this.dataReportPost = value;
   }
 
@@ -292,16 +298,38 @@ export class HomePostsComponent implements OnInit, OnChanges {
   }
 
   handleOkHidePost() {
-    this.isOpenModalHidePost = true;
-    this.dataHidePost.status = -1;
-    this.api.updatePosts(this.dataHidePost).subscribe((res: any) => {
-      this.notificationService.showMessage('success', 'Ẩn bài viết thành công');
-      this.isOpenModalHidePost = false;
-      this.changePage();
-    }, error => this.notificationService.showMessage('error', 'Ẩn bài viết thất bại'));
+
+      this.dataHidePost.status = -1;
+      this.api.updatePosts(this.dataHidePost).subscribe((res: any) => {
+        this.notificationService.showMessage('success', 'Ẩn bài viết thành công');
+        this.isOpenModalHidePost = false;
+        this.changePage();
+      }, error => this.notificationService.showMessage('error', 'Ẩn bài viết thất bại'));
 
     this.http.get('http://localhost:8080/api/authors/notifications/' + this.dataHidePost.userId).subscribe((res: any) => {
       this.notificationReceiver = res;
     });
+  }
+
+
+  handleOkReport() {
+      this.formReportPost = this.fb.group({
+        dataReportId: Number(this.dataReportPost?.id),
+        reportType: 1,
+        userReportId: Number(this.userLocalstorage.id),
+        reason: this.inputValue2,
+      });
+      this.api.createReport(this.formReportPost.value).subscribe((res: any) => {
+        this.notificationService.showMessage('success', res.message);
+        this.isOpenModalReportPost = false;
+        this.inputValue = '';
+      })
+    this.http.get('http://localhost:8080/api/authors/notifications/' + this.dataHidePost.userId).subscribe((res: any) => {
+      this.notificationReceiver = res;
+    });
+  }
+
+  handleCancelReport() {
+
   }
 }

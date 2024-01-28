@@ -73,6 +73,7 @@ export class PostsDetailComponent implements OnInit {
   dataRating: number;
   dataIsLike: any;
   postIdLocalstorage: any;
+  dataReply: any;
 
   constructor(
     private fb: FormBuilder,
@@ -358,6 +359,7 @@ export class PostsDetailComponent implements OnInit {
       this.notificationService.showMessage('error', 'Bạn không thể tự trả lời chính mình');
       return false;
     }
+    console.log('dataInfoCommentNotification: ', this.dataInfoCommentNotification)
     const commentId = Math.floor(Math.random() * 10000000);
     if (this.dataEdit) {
       this.formAdd.get('id').setValue(this.dataEdit?.id);
@@ -380,10 +382,11 @@ export class PostsDetailComponent implements OnInit {
 
     if (!this.dataEdit) {
       this.formAdd.get('userId').setValue(null);
-      this.formAdd.get('replyCommentId').setValue(this.dataInfoCommentNotification?.id || null);
+      this.formAdd.get('replyCommentId').setValue(this.dataReply ? 1 : null);
+      // console.log('rely??: ', this.formAdd.get('replyCommentId').value)
       this.formAdd.get('userId').setValue(JSON.parse(localStorage.getItem('user')).id);
       this.formAdd.get('postId').setValue(this.idPostsLocalstorage);
-      this.formAdd.get('commentId').setValue(commentId);
+      this.formAdd.get('id').setValue(this.dataInfoCommentNotification?.commentId ? this.dataInfoCommentNotification?.commentId : null);
       this.formAdd.get('commentText').setValue(this.formAdd.get('commentText').value ? this.formAdd.get('commentText').value : this.formAdd.get('commentReplyText').value);
       this.formAdd.get('createAt').setValue(this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss'));
       this.api.createComment(this.formAdd.value).toPromise().then((res: any) => {
@@ -395,7 +398,7 @@ export class PostsDetailComponent implements OnInit {
       });
     }
 
-    //??? code cu
+    // ??? code cu
     // if (this.dataInfoCommentNotification) {
     //   // this.formNotify.get('userId').setValue(this.dataInfoCommentNotification.userId);
     //   this.formNotify.get('userId').setValue(JSON.parse(localStorage.getItem('user')).id);
@@ -426,8 +429,11 @@ export class PostsDetailComponent implements OnInit {
 
 
   handleReplyComment(itemComment?: any) {
+    console.log('data reply: ', itemComment)
     this.isReplyComment = !this.isReplyComment;
     this.dataInfoCommentNotification = itemComment;
+    this.formAdd.get('replyCommentId').setValue(1);
+    this.dataReply = 1;
     if (this.isReplyComment) {
       this.formAdd.reset();
       setTimeout(() => {

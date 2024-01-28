@@ -332,9 +332,9 @@ export class TablePostsComponent implements OnInit {
   handleReup(value: any) {
     value.status = 1;
     this.api.updatePosts(value).subscribe((res: any) => {
-      this.notificationService.showMessage('success', 'Từ chối bài viết thành công');
+      this.notificationService.showMessage('success', 'Đăng lại bài viết thành công');
       this.inputValue = '';
-    }, error => this.notificationService.showMessage('error', 'Từ chối bài viết thất bại'));
+    }, error => this.notificationService.showMessage('error', 'Đăng lại bài viết thất bại'));
 
     this.http.get('http://localhost:8080/api/authors/notifications/' + this.dataRefuse.userId).subscribe((res: any) => {
       this.notificationReceiver = res;
