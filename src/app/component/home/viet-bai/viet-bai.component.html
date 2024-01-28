@@ -85,7 +85,7 @@
     <!--             placeholder="hashTag"/>-->
     <!--    </div>-->
     <div class="d-flex justify-content-end my-3 mx-3">
-      <button *ngIf="dataEdit == null || !dataEdit" (click)="Save()" class="mr-3" style="border-radius: 4px" nz-button
+      <button *ngIf="dataEdit == null || (dataEdit && (dataEdit.status == 2 ||dataEdit.status == -2))" (click)="Save()" class="mr-3" style="border-radius: 4px" nz-button
               nzType="primary">Lưu bài viết nháp
       </button>
       <button (click)="Submit()" style="border-radius: 4px" nz-button nzType="primary">Đăng bài</button>

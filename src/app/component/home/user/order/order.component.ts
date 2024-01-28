@@ -17,6 +17,7 @@ export class OrderComponent implements OnInit,OnDestroy {
   data: any;
   isRefuse = false;
   dataDetail: any;
+  specificTotal: any;
 
   constructor(
     private api: Api,
@@ -86,6 +87,7 @@ export class OrderComponent implements OnInit,OnDestroy {
   viewDetailBill(value: any) {
     console.log('view detail bill: ', value)
     this.dataDetail = value.details;
+    this.specificTotal = value.total;
     this.isRefuse = true;
   }
 

@@ -63,6 +63,7 @@ export class BillComponent implements OnInit {
   dataDetail: any;
   dataChartTotal: any;
 
+  specificTotal: any;
   constructor(
     private fb: FormBuilder,
     public validateService: ValidateService,
@@ -249,6 +250,7 @@ export class BillComponent implements OnInit {
     console.log('view detail bill: ', value)
     this.dataDetail = value.details;
     this.isRefuse = true;
+    this.specificTotal = value.total;
   }
 
   handleCancelViewDetailBill() {

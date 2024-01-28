@@ -11,8 +11,7 @@
         <a style="font-size: 25px" (click)="handleLike()">
           <i nz-icon nzType="like" nzTheme="outline"></i></a>
       </div>
-      <a style="font-size: 25px" (click)="focusTextAriaComment()"><i nz-icon nzType="comment"
-                                                                     nzTheme="outline"></i></a>
+      <a style="font-size: 25px" (click)="focusTextAriaComment()"><i nz-icon nzType="comment" nzTheme="outline"></i></a>
       <div *ngIf="isSave" (click)="handleUnSave()">
         <a style="font-size: 25px; color: #1890ff"><i nz-icon nzType="star" nzTheme="fill"></i></a>
       </div>
@@ -141,9 +140,8 @@
         </div>
         <form nz-form [formGroup]="formAdd">
           <div class="input-group">
-          <textarea #textareaComment formControlName="commentText" placeholder="Bạn nghĩ gì về tin này"
-                    class="form-control"
-                    aria-label="With textarea"></textarea>
+            <textarea #textareaComment formControlName="commentText" placeholder="Bạn nghĩ gì về tin này"
+              class="form-control" aria-label="With textarea"></textarea>
           </div>
           <div style="text-align: end" class="mt-3">
             <button type="button" class="btn btn-primary" (click)="handleSubmitComment()">Bình luận</button>
@@ -152,7 +150,7 @@
             <div class="mt-5 row itemPosts">
               <div class="col-1">
                 <a><img style="width: 100%; min-width: 45px; max-width: 45px; height: 45px; border-radius: 50%"
-                        [src]="itemComment.image"/></a>
+                    [src]="itemComment.image" /></a>
               </div>
               <div class="col-10 ">
                 <div>
@@ -160,58 +158,52 @@
                     {{itemComment.name}}
                   </span>
                   <!--                        <span style="font-size: 13px; font-weight: 400">13:49 ngày 24/10/2023</span>-->
-                  <span
-                    style="font-size: 14px; font-weight: 400;color: #000000a6">{{itemComment.createAt}}</span>
+                  <span style="font-size: 14px; font-weight: 400;color: #000000a6">{{itemComment.createAt}}</span>
                   <!--                        <span-->
                   <!--                          style="font-size: 14px; font-weight: 400;color: #000000a6">{{itemComment.createAt | date: 'dd/MM/yyyy HH:mm:ss'}}</span>-->
                 </div>
                 <div>
-                  <div style="font-size: 14px;color: #000000a6"
-                       class="my-2">{{itemComment.commentText}}</div>
+                  <div style="font-size: 14px;color: #000000a6" class="my-2">{{itemComment.commentText}}</div>
                 </div>
                 <div class="d-flex mb-3">
                   <!--                                                //??? code cũ-->
-<!--                        <div *ngIf="itemComment.likeComment == 0 || itemComment.likeComment == null"-->
-<!--                             class="mr-2 "-->
-<!--                             (click)="handleLikeComment(itemComment)">-->
-<!--                          <a style="color: #000000a6" class="d-flex align-items-center">-->
-<!--                            <i style="color: #000000a6" nz-icon nzType="like"-->
-<!--                               nzTheme="outline" class="mr-2"></i>-->
-<!--                            {{itemComment.totalCount}} thích-->
-<!--                          </a>-->
-<!--                        </div>-->
-<!--                        <div *ngIf="itemComment.likeComment == 1" class="mr-2 "-->
-<!--                             (click)="handleDisLikeComment(itemComment)">-->
-<!--                          <a style="color: #1890ff" class="d-flex align-items-center">-->
-<!--                            <i style="color: #1890ff" nz-icon nzType="like" nzTheme="fill"-->
-<!--                               class="mr-2"></i>-->
-<!--                            {{itemComment.totalCount}} thích-->
-<!--                          </a>-->
-<!--                        </div>-->
+                  <!--                        <div *ngIf="itemComment.likeComment == 0 || itemComment.likeComment == null"-->
+                  <!--                             class="mr-2 "-->
+                  <!--                             (click)="handleLikeComment(itemComment)">-->
+                  <!--                          <a style="color: #000000a6" class="d-flex align-items-center">-->
+                  <!--                            <i style="color: #000000a6" nz-icon nzType="like"-->
+                  <!--                               nzTheme="outline" class="mr-2"></i>-->
+                  <!--                            {{itemComment.totalCount}} thích-->
+                  <!--                          </a>-->
+                  <!--                        </div>-->
+                  <!--                        <div *ngIf="itemComment.likeComment == 1" class="mr-2 "-->
+                  <!--                             (click)="handleDisLikeComment(itemComment)">-->
+                  <!--                          <a style="color: #1890ff" class="d-flex align-items-center">-->
+                  <!--                            <i style="color: #1890ff" nz-icon nzType="like" nzTheme="fill"-->
+                  <!--                               class="mr-2"></i>-->
+                  <!--                            {{itemComment.totalCount}} thích-->
+                  <!--                          </a>-->
+                  <!--                        </div>-->
 
-<!--                        <div *ngIf="itemComment.lcUserId == 0 && itemComment.lcCommentId == 0"-->
-<!--                  <div *ngIf="itemComment.userLiked == 0"-->
-                  <div *ngIf="itemComment.lcUserId != idUserLocalstorage"
-                       class="mr-2 "
-                       (click)="handleLikeComment(itemComment)">
+                  <!--                        <div *ngIf="itemComment.lcUserId == 0 && itemComment.lcCommentId == 0"-->
+                  <!--                  <div *ngIf="itemComment.userLiked == 0"-->
+                  <div *ngIf="itemComment.lcUserId != idUserLocalstorage" class="mr-2 "
+                    (click)="handleLikeComment(itemComment)">
                     <a style="color: #000000a6" class="d-flex align-items-center">
-                      <i style="color: #000000a6" nz-icon nzType="like"
-                         nzTheme="outline" class="mr-2"></i>
+                      <i style="color: #000000a6" nz-icon nzType="like" nzTheme="outline" class="mr-2"></i>
                       {{itemComment?.totalCount}} thích
                     </a>
                   </div>
-<!--                        <div *ngIf="itemComment.lcUserId != 0 && itemComment.lcCommentId != 0 && idUserLocalstorage == itemComment.lcUserId" class="mr-2 "-->
+                  <!--                        <div *ngIf="itemComment.lcUserId != 0 && itemComment.lcCommentId != 0 && idUserLocalstorage == itemComment.lcUserId" class="mr-2 "-->
                   <div *ngIf="itemComment.lcUserId == idUserLocalstorage" class="mr-2 "
-                       (click)="handleDisLikeComment(itemComment)">
+                    (click)="handleDisLikeComment(itemComment)">
                     <a style="color: #1890ff" class="d-flex align-items-center">
-                      <i style="color: #1890ff" nz-icon nzType="like" nzTheme="fill"
-                         class="mr-2"></i>
+                      <i style="color: #1890ff" nz-icon nzType="like" nzTheme="fill" class="mr-2"></i>
                       {{itemComment?.amountLike}} thích
                     </a>
                   </div>
-                  <div style="border-left: 1px solid #c3c3c3; color: #000000a6"
-                       class="pl-2"
-                       (click)="handleReplyComment(itemComment) ">
+                  <div style="border-left: 1px solid #c3c3c3; color: #000000a6" class="pl-2"
+                    (click)="handleReplyComment(itemComment) ">
                     <a>Trả lời</a>
                   </div>
                 </div>
@@ -220,68 +212,56 @@
               <div class="col-1" style="position: relative">
                 <div class="moreButton">
                   <i style="font-size: 25px" nz-icon nzType="more" nzTheme="outline"
-                     (click)="handleMoreBtn(itemComment)"></i>
-                  <div class="editComment"
-                       style="border: 1px solid #c3c3c3; position: absolute; top: 32px; right: 7px; background-color: #fff; z-index: 100; min-width: 100px">
+                    (click)="handleMoreBtn(itemComment)"></i>
+                  <div class="editComment">
                     <!--                          <div style="padding: 6px 40px 6px 40px" class="hoverEditPosts"-->
                     <div *ngIf="userLocalstorage.role != 'ADMIN' && itemComment.userId != idUserLocalstorage"
-                         style="padding: 6px 10px 6px 10px"
-                         class="hoverEditPosts d-flex justify-content-center"
-                         (click)="reportComment(itemComment)">Báo xấu
+                      class="btn-report"
+                      (click)="reportComment(itemComment)">Báo xấu
                     </div>
                     <!--                          Chỉ người comment được sửa comment của chính hoj-->
                     <div *ngIf="itemComment.userId == idUserLocalstorage"
-                         style="padding: 6px 40px 6px 40px"
-                         class="hoverEditPosts d-flex justify-content-center"
-                         (click)="editComment(itemComment)">Sửa
-                        <div *ngIf="itemComment.lcUserId != idUserLocalstorage"
-                             class="mr-2 "
-                             (click)="handleLikeComment(itemComment)">
-                          <a style="color: #000000a6" class="d-flex align-items-center">
-                            <i style="color: #000000a6" nz-icon nzType="like"
-                               nzTheme="outline" class="mr-2"></i>
-                             thích
-                          </a>
-                        </div>
-<!--                        <div *ngIf="itemComment.lcUserId != 0 && itemComment.lcCommentId != 0 && idUserLocalstorage == itemComment.lcUserId" class="mr-2 "-->
-                        <div *ngIf="idUserLocalstorage == itemComment.lcUserId" class="mr-2 "
-                             (click)="handleDisLikeComment(itemComment)">
-                          <a style="color: #1890ff" class="d-flex align-items-center">
-                            <i style="color: #1890ff" nz-icon nzType="like" nzTheme="fill"
-                               class="mr-2"></i>
-                             thích
-                          </a>
-                        </div>
-                        <div style="border-left: 1px solid #c3c3c3; color: #000000a6"
-                             class="pl-2"
-                             (click)="handleReplyComment(itemComment) ">
-                          <a>Trả lời</a>
-                        </div>
+                      class="btn-edit" (click)="editComment(itemComment)">Sửa
+                      <!-- <div *ngIf="itemComment.lcUserId != idUserLocalstorage" class="mr-2 "
+                        (click)="handleLikeComment(itemComment)">
+                        <a style="color: #000000a6" class="d-flex align-items-center">
+                          <i style="color: #000000a6" nz-icon nzType="like" nzTheme="outline" class="mr-2"></i>
+                          thích
+                        </a>
+                      </div> -->
+                      <!--                        <div *ngIf="itemComment.lcUserId != 0 && itemComment.lcCommentId != 0 && idUserLocalstorage == itemComment.lcUserId" class="mr-2 "-->
+                      <!-- <div *ngIf="idUserLocalstorage == itemComment.lcUserId" class="mr-2 "
+                        (click)="handleDisLikeComment(itemComment)">
+                        <a style="color: #1890ff" class="d-flex align-items-center">
+                          <i style="color: #1890ff" nz-icon nzType="like" nzTheme="fill" class="mr-2"></i>
+                          thích
+                        </a>
                       </div>
+                      <div style="border-left: 1px solid #c3c3c3; color: #000000a6" class="pl-2"
+                        (click)="handleReplyComment(itemComment) ">
+                        <a>Trả lời</a>
+                      </div> -->
                     </div>
-                    <!--                          idOfPostUser == idUserLocalstorage -> Chủ bài viết cũng đc xóa comment của ng khác -->
                     <div
                       *ngIf="(itemComment.idUser == idUserLocalstorage) || userLocalstorage.role == 'ADMIN' || (idOfPostUser == idUserLocalstorage)"
-                      style="padding: 6px 40px 6px 40px"
-                      class="hoverEditPosts d-flex justify-content-center"
-                      nz-popconfirm
-                      nzPopconfirmTitle="Bạn chắc chắn muốn xóa bình luận này?"
+                      class="btn-delete"
+                      nz-popconfirm nzPopconfirmTitle="Bạn chắc chắn muốn xóa bình luận này?"
                       (nzOnConfirm)="deleteComment(itemComment)">Xóa
                     </div>
                   </div>
+                  <!--                          idOfPostUser == idUserLocalstorage -> Chủ bài viết cũng đc xóa comment của ng khác -->
                 </div>
               </div>
             </div>
-<!--          </div>-->
+          </div>
+          <!--          </div>-->
           <div [hidden]="!isReplyComment">
             <div class="input-group">
               <textarea #textareaReply formControlName="commentReplyText" placeholder="Bạn nghĩ gì về tin này"
-                        class="form-control"
-                        aria-label="With textarea"></textarea>
+                class="form-control" aria-label="With textarea"></textarea>
             </div>
             <div style="text-align: end" class="mt-3">
-              <button *ngIf="!isEdit" type="button" class="btn btn-primary"
-                      (click)="handleSubmitComment()">Bình luận
+              <button *ngIf="!isEdit" type="button" class="btn btn-primary" (click)="handleSubmitComment()">Bình luận
               </button>
             </div>
           </div>
@@ -292,7 +272,7 @@
 </div>
 
 <nz-modal [(nzVisible)]="isRefuse" [nzTitle]="'Lý do tố cáo bình luận'" (nzOnCancel)="handleCancelRefuse()"
-          (nzOnOk)="handleOkRefuse()">
+  (nzOnOk)="handleOkRefuse()">
   <input class="p-2" type="text" nz-input [(ngModel)]="inputValue" placeholder="Nhập thông tin">
 </nz-modal>
 <!--<app-notification [dataInfoUserNotification]="dataInfoUserNotification"></app-notification>-->
