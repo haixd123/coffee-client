@@ -167,7 +167,7 @@
                 </div>
                 <div>
                   <div style="font-size: 14px;color: #000000a6"
-                       class="my-2">{{itemComment.contentText}}</div>
+                       class="my-2">{{itemComment.commentText}}</div>
                 </div>
                 <div class="d-flex mb-3">
                   <!--                                                //??? code cũ-->
@@ -190,7 +190,7 @@
 <!--                        </div>-->
 
 <!--                        <div *ngIf="itemComment.lcUserId == 0 && itemComment.lcCommentId == 0"-->
-                  <div *ngIf="itemComment.userLiked == 0"
+<!--                  <div *ngIf="itemComment.userLiked == 0"-->
                   <div *ngIf="itemComment.lcUserId != idUserLocalstorage"
                        class="mr-2 "
                        (click)="handleLikeComment(itemComment)">

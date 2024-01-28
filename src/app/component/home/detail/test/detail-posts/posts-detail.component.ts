@@ -72,6 +72,7 @@ export class PostsDetailComponent implements OnInit {
   inputRating: number;
   dataRating: number;
   dataIsLike: any;
+  postIdLocalstorage: any;
 
   constructor(
     private fb: FormBuilder,
@@ -133,19 +134,12 @@ export class PostsDetailComponent implements OnInit {
 
     this.websocketService.receiveComment().subscribe((comment: any) => {
       this.formNotify.get("postId").setValue(this.idPostsLocalstorage);
-    this.formNotify.get("userId").setValue(this.idUserLocalstorage);
+      this.formNotify.get("userId").setValue(this.idUserLocalstorage);
       this.api.getDataCommentOfPost(this.formNotify.value).toPromise().then((data: any) => {
         this.dataComment = data;
         console.log('data getListLikeCommen1t: ', data.data)
       });
-
-      // this.api.getDetailListLikeComment(this.searchModel).toPromise().then((data: any) => {
-      //   this.dataIsLike = data.data;
-      // });
     });
-    // this.api.getListComment(this.searchModel).toPromise().then((data: any) => {
-    //   this.dataComment = data;
-    // });
 
     this.formRating = this.fb.group({
       userId: this.idUserLocalstorage,
@@ -160,17 +154,17 @@ export class PostsDetailComponent implements OnInit {
       }
     })
 
-    this.formNotify.get("postId").setValue(this.idPostsLocalstorage);
-    this.formNotify.get("userId").setValue(this.idUserLocalstorage);
-    this.api.getDataCommentOfPost(this.formNotify.value).toPromise().then((data: any) => {
-      console.log('data like comment: ', data)
-      this.dataComment = data;
-      // for (const item of data.data) {
-      //   if (item.userId == this.idUserLocalstorage && item.postId == this.idPostsLocalstorage) {
-      //     this.isSave = true;
-      //   }
-      // }
-    });
+    // this.formNotify.get("postId").setValue(this.idPostsLocalstorage);
+    // this.formNotify.get("userId").setValue(this.idUserLocalstorage);
+    // this.api.getDataCommentOfPost(this.formNotify.value).toPromise().then((data: any) => {
+    //   console.log('data like comment2: ', data)
+    //   this.dataComment = data;
+    //   // for (const item of data.data) {
+    //   //   if (item.userId == this.idUserLocalstorage && item.postId == this.idPostsLocalstorage) {
+    //   //     this.isSave = true;
+    //   //   }
+    //   // }
+    // });
 
     // this.api.getDetailListLikeComment(this.searchModel).toPromise().then((data: any) => {
     //   this.dataIsLike = data.data;
@@ -194,6 +188,19 @@ export class PostsDetailComponent implements OnInit {
 
       this.isLike = false;
       this.isSave = false;
+      this.postIdLocalstorage = params.get('id');
+
+      this.formNotify.get('postId').setValue(params.get('id'));
+      this.formNotify.get('userId').setValue(this.idUserLocalstorage);
+      this.api.getDataCommentOfPost(this.formNotify.value).toPromise().then((data: any) => {
+        console.log('data like comment: ', data)
+        this.dataComment = data;
+        // for (const item of data.data) {
+        //   if (item.userId == this.idUserLocalstorage && item.postId == this.idPostsLocalstorage) {
+        //     this.isSave = true;
+        //   }
+        // }
+      });
 
       this.api.getListLikePosts(this.searchModel).toPromise().then((data: any) => {
         this.dataLikePosts = data.data;
@@ -213,17 +220,6 @@ export class PostsDetailComponent implements OnInit {
         }
       });
 
-      this.formNotify.get('postId').setValue(this.idPostsLocalstorage);
-      this.formNotify.get('userId').setValue(this.idUserLocalstorage);
-      this.api.getDataCommentOfPost(this.formNotify.value).toPromise().then((data: any) => {
-        console.log('data like comment: ', data)
-        this.dataComment = data;
-        // for (const item of data.data) {
-        //   if (item.userId == this.idUserLocalstorage && item.postId == this.idPostsLocalstorage) {
-        //     this.isSave = true;
-        //   }
-        // }
-      });
 
       // this.api.getDetailListLikeComment(this.searchModel).toPromise().then((data: any) => {
       //   this.dataIsLike = data.data;
@@ -278,10 +274,10 @@ export class PostsDetailComponent implements OnInit {
       }
     });
 
-    this.formNotify.get('postId').setValue(this.idPostsLocalstorage);
+    this.formNotify.get('postId').setValue(this.idPostsLocalstorage ? this.idPostsLocalstorage : this.postIdLocalstorage);
     this.formNotify.get('userId').setValue(this.idUserLocalstorage);
     this.api.getDataCommentOfPost(this.formNotify.value).toPromise().then((data: any) => {
-      console.log('data like comment: ', data)
+      console.log('data like comment2213: ', data)
       this.dataComment = data;
       // for (const item of data.data) {
       //   if (item.userId == this.idUserLocalstorage && item.postId == this.idPostsLocalstorage) {
@@ -503,17 +499,17 @@ export class PostsDetailComponent implements OnInit {
     // this.formLikeComment.get('commentText').setValue(item.commentText);
     // this.formLikeComment.get('likeComment').setValue(1);
     // this.formLikeComment.get('status').setValue(1);
-    this.api.updateLikeComment(this.formLikeComment.value).subscribe((res: any) => {
-      console.log('res: ', res)
-      this.api.getDataCommentOfPost(this.formNotify.value).toPromise().then((data: any) => {
-        console.log('data getListLikeCommen1t: ', data.data)
-        this.dataComment = data;
-      });
-
-      // this.api.getDetailListLikeComment(this.searchModel).toPromise().then((data: any) => {
-      //   this.dataIsLike = data.data;
-      // });
-    })
+    // this.api.updateLikeComment(this.formLikeComment.value).subscribe((res: any) => {
+    //   console.log('res: ', res)
+    //   this.api.getDataCommentOfPost(this.formNotify.value).toPromise().then((data: any) => {
+    //     console.log('data getListLikeCommen1t: ', data.data)
+    //     this.dataComment = data;
+    //   });
+    //
+    //   // this.api.getDetailListLikeComment(this.searchModel).toPromise().then((data: any) => {
+    //   //   this.dataIsLike = data.data;
+    //   // });
+    // })
     this.websocketService.sendComment('1', '2');
 
   }
@@ -532,17 +528,17 @@ export class PostsDetailComponent implements OnInit {
     // this.formLikeComment.get('likeComment').setValue(0);
     // this.formLikeComment.get('status').setValue(1);
 
-    this.api.updateLikeComment(this.formLikeComment.value).subscribe((res: any) => {
-      console.log('res: ', res)
-      this.api.getDataCommentOfPost(this.formNotify.value).toPromise().then((data: any) => {
-        console.log('data getListLikeCommen1t: ', data.data)
-        this.dataComment = data;
-      });
-
-      // this.api.getDetailListLikeComment(this.searchModel).toPromise().then((data: any) => {
-      //   this.dataIsLike = data.data;
-      // });
-    })
+    // this.api.updateLikeComment(this.formLikeComment.value).subscribe((res: any) => {
+    //   console.log('res: ', res)
+    //   this.api.getDataCommentOfPost(this.formNotify.value).toPromise().then((data: any) => {
+    //     console.log('data getListLikeCommen1t: ', data.data)
+    //     this.dataComment = data;
+    //   });
+    //
+    //   // this.api.getDetailListLikeComment(this.searchModel).toPromise().then((data: any) => {
+    //   //   this.dataIsLike = data.data;
+    //   // });
+    // })
     this.websocketService.sendComment('1', '2');
   }
 
