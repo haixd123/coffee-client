@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {SearchModelEntity} from '../component/admin/search-model-entiry';
 import {BaseService} from '../shared/base-service/base-service.service';
 import {Comment} from '../component/admin/table-report/interface/comment';
@@ -154,8 +154,8 @@ export class Api extends BaseService {
     return this.post('/authors/likeComment/update', value);
   }
 
-  getListLikeComment(value: any) {
-    return this.post('/authors/likeComment/findTotalLikeCommentByPost', value);
+  getDataCommentOfPost(request:any):Observable<any> {
+    return this.httpClient.post(`http://localhost:8080/api/authors/post/comment`, request);
   }
 
   getDetailListLikeComment(value: any) {
