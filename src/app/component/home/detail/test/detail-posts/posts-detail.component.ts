@@ -132,7 +132,9 @@ export class PostsDetailComponent implements OnInit {
     this.idUserLocalstorage = JSON.parse(localStorage.getItem('user'))?.id;
 
     this.websocketService.receiveComment().subscribe((comment: any) => {
-      this.api.getDataCommentOfPost(this.searchModel).toPromise().then((data: any) => {
+      this.formNotify.get("postId").setValue(this.idPostsLocalstorage);
+    this.formNotify.get("userId").setValue(this.idUserLocalstorage);
+      this.api.getDataCommentOfPost(this.formNotify.value).toPromise().then((data: any) => {
         this.dataComment = data;
         console.log('data getListLikeCommen1t: ', data.data)
       });
