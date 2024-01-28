@@ -190,7 +190,6 @@
 <!--                        </div>-->
 
 <!--                        <div *ngIf="itemComment.lcUserId == 0 && itemComment.lcCommentId == 0"-->
-<<<<<<< Updated upstream
                   <div *ngIf="itemComment.userLiked == 0"
                        class="mr-2 "
                        (click)="handleLikeComment(itemComment)">
@@ -234,32 +233,6 @@
                          style="padding: 6px 40px 6px 40px"
                          class="hoverEditPosts d-flex justify-content-center"
                          (click)="editComment(itemComment)">Sửa
-=======
-                        <div *ngIf="itemComment.lcUserId != idUserLocalstorage"
-                             class="mr-2 "
-                             (click)="handleLikeComment(itemComment)">
-                          <a style="color: #000000a6" class="d-flex align-items-center">
-                            <i style="color: #000000a6" nz-icon nzType="like"
-                               nzTheme="outline" class="mr-2"></i>
-                             thích
-                          </a>
-                        </div>
-<!--                        <div *ngIf="itemComment.lcUserId != 0 && itemComment.lcCommentId != 0 && idUserLocalstorage == itemComment.lcUserId" class="mr-2 "-->
-                        <div *ngIf="idUserLocalstorage == itemComment.lcUserId" class="mr-2 "
-                             (click)="handleDisLikeComment(itemComment)">
-                          <a style="color: #1890ff" class="d-flex align-items-center">
-                            <i style="color: #1890ff" nz-icon nzType="like" nzTheme="fill"
-                               class="mr-2"></i>
-                             thích
-                          </a>
-                        </div>
-                        <div style="border-left: 1px solid #c3c3c3; color: #000000a6"
-                             class="pl-2"
-                             (click)="handleReplyComment(itemComment) ">
-                          <a>Trả lời</a>
-                        </div>
-                      </div>
->>>>>>> Stashed changes
                     </div>
                     <!--                          idOfPostUser == idUserLocalstorage -> Chủ bài viết cũng đc xóa comment của ng khác -->
                     <div

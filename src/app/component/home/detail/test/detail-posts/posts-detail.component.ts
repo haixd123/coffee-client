@@ -141,11 +141,6 @@ export class PostsDetailComponent implements OnInit {
 
       // this.api.getDetailListLikeComment(this.searchModel).toPromise().then((data: any) => {
       //   this.dataIsLike = data.data;
-<<<<<<< Updated upstream
-
-=======
-      //
->>>>>>> Stashed changes
       // });
     });
     // this.api.getListComment(this.searchModel).toPromise().then((data: any) => {
@@ -165,7 +160,6 @@ export class PostsDetailComponent implements OnInit {
       }
     })
 
-<<<<<<< Updated upstream
     this.formNotify.get("postId").setValue(this.idPostsLocalstorage);
     this.formNotify.get("userId").setValue(this.idUserLocalstorage);
     this.api.getDataCommentOfPost(this.formNotify.value).toPromise().then((data: any) => {
@@ -182,17 +176,6 @@ export class PostsDetailComponent implements OnInit {
     //   this.dataIsLike = data.data;
 
 
-=======
-    // this.api.getListLikeComment(this.formNotify.value).toPromise().then((data: any) => {
-    //   console.log('data like comment: ', data)
-    //   this.dataComment = data.data;
-    // });
-
-    // this.api.getDetailListLikeComment(this.searchModel).toPromise().then((data: any) => {
-    //   this.dataIsLike = data.data;
-    //
-    //
->>>>>>> Stashed changes
     // });
   }
 
@@ -244,11 +227,6 @@ export class PostsDetailComponent implements OnInit {
 
       // this.api.getDetailListLikeComment(this.searchModel).toPromise().then((data: any) => {
       //   this.dataIsLike = data.data;
-<<<<<<< Updated upstream
-
-=======
-      //
->>>>>>> Stashed changes
       // });
 
 
@@ -314,11 +292,6 @@ export class PostsDetailComponent implements OnInit {
 
     // this.api.getDetailListLikeComment(this.searchModel).toPromise().then((data: any) => {
     //   this.dataIsLike = data.data;
-<<<<<<< Updated upstream
-
-=======
-    //
->>>>>>> Stashed changes
     // });
 
     // this.api.getListComment(this.searchModel).toPromise().then((data: any) => {
@@ -539,11 +512,6 @@ export class PostsDetailComponent implements OnInit {
 
       // this.api.getDetailListLikeComment(this.searchModel).toPromise().then((data: any) => {
       //   this.dataIsLike = data.data;
-<<<<<<< Updated upstream
-
-=======
-      //
->>>>>>> Stashed changes
       // });
     })
     this.websocketService.sendComment('1', '2');
@@ -573,11 +541,6 @@ export class PostsDetailComponent implements OnInit {
 
       // this.api.getDetailListLikeComment(this.searchModel).toPromise().then((data: any) => {
       //   this.dataIsLike = data.data;
-<<<<<<< Updated upstream
-
-=======
-      //
->>>>>>> Stashed changes
       // });
     })
     this.websocketService.sendComment('1', '2');
