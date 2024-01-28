@@ -221,6 +221,20 @@ export class Api extends BaseService {
     return this.postRequestFile1(searchModel);
   }
 
+  getAllBillByPageable(
+    page: number,
+    size: number,
+  ): Observable<any> {
+    return this.httpClient.get<any>(
+      'http://localhost:8080/api/authors/bill',
+      {
+        params: new HttpParams()
+          .append('page', page + '')
+          .append('size', size + '')
+      }
+    );
+  }
+
   getBillByEmail(
     email: string,
     page: number,
