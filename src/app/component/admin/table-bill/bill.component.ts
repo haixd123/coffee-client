@@ -77,13 +77,13 @@ export class BillComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.handleSearch();
-    this.handleSearchByEmail();
+    // this.handleSearch();
+    // this.handleSearchByEmail();
     this.http.get('http://localhost:8080/api/authors/bill').subscribe((res: any) => {
       console.log('res all bill: ', res)
       this.dataChartTotal = res.data.content
-      // this.data = res.data.content;
-      // this.total = res.data.content.numberOfElements;
+      this.data = res.data.content;
+      this.total = res.data.totalElements;
 
       const totalByMonth = {};
       this.data.forEach(purchase => {
@@ -119,20 +119,21 @@ export class BillComponent implements OnInit {
 
   handleUpdate() {
 
-    this.searchModel.pageIndex = 1;
-    if (this.curPage > 1) {
-      this.searchModel.pageIndex = this.curPage;
-    }
-    this.searchModel.pageSize = 10;
-    if (this.formSearch.get('email').value == '') {
-      this.formSearch.get('email').setValue(null);
-    }
-    this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value)
-    this.api.getListBill(this.searchModel).toPromise().then((data: any) => {
-      console.log('this.curPage: ', this.curPage)
-      this.data = data.data;
-      this.total = data.optional;
-    });
+    // this.searchModel.pageIndex = 1;
+    // if (this.curPage > 1) {
+    //   this.searchModel.pageIndex = this.curPage;
+    // }
+    // this.searchModel.pageSize = 10;
+    // if (this.formSearch.get('email').value == '') {
+    //   this.formSearch.get('email').setValue(null);
+    // }
+    // this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value)
+    // this.api.getListBill(this.searchModel).toPromise().then((data: any) => {
+    //   console.log('this.curPage: ', this.curPage)
+    //   this.data = data.data;
+    //   this.total = data.optional;
+    // });
+
   }
 
   handleSort(value?: any) {
@@ -145,38 +146,44 @@ export class BillComponent implements OnInit {
   }
 
   handleSearchByEmail(event?: any) {
-    console.log('aaaaaaaaaaa')
-    // let a = this.formSearch.get('email').value
-    // this.searchModel.pageIndex = 1;
-    // this.searchModel.pageSize = 10;
-    if (this.formSearch.get('email').value == '') {
-      // a = null
-      this.formSearch.get('email').setValue(null);
+    if (this.formSearch.get('email').value == '' || this.formSearch.get('email').value == null) {
+      this.api.getAllBillByPageable(this.curPage - 1, 10).subscribe({
+        next: (res: any) => {
+          console.log('content all bill change page :: ', res.data.content);
+          this.data = res.data.content;
+          this.total = res.data.totalElements;
+        }
+      })
+    } else {
+      this.api.getBillByEmail(this.formSearch.get('email').value, this.curPage - 1, 10).subscribe({
+        next: (res: any) => {
+          console.log('content search by email :: ', res.data.content);
+          this.data = res.data.content;
+          this.total = res.data.totalElements;
+        }
+      })
     }
-    // this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
-    this.api.getBillByEmail(this.formSearch.get('email').value, this.curPage - 1, 10).subscribe({
+
+  }
+
+  handleSearch() {
+    // this.api.getBillByEmail(this.curPage - 1, 10).subscribe({
+    //   next: (res: any) => {
+    //     console.log('content all bill change page :: ', res.data.content);
+    //     this.data = res.data.content;
+    //     this.total = res.data.totalElements;
+    //   }
+    // })
+  }
+
+  changePage() {
+    this.api.getAllBillByPageable(this.curPage - 1, 10).subscribe({
       next: (res: any) => {
-        console.log('content :: ', res.data.content);
+        console.log('content all bill change page :: ', res.data.content);
         this.data = res.data.content;
         this.total = res.data.totalElements;
       }
     })
-  }
-
-  handleSearch() {
-    // this.searchModel.pageIndex = 1;
-    // this.searchModel.pageSize = 10;
-    // if (this.formSearch.get('email').value == '') {
-    //   this.formSearch.get('email').setValue(null);
-    // }
-    // this.searchModel = Object.assign({}, this.searchModel, this.formSearch.value);
-    this.handleUpdate();
-  }
-
-  changePage() {
-    // this.searchModel.pageIndex = this.curPage;
-    // this.searchModel.pageSize = 10;
-    this.handleUpdate();
   }
 
 
